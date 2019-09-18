@@ -1,0 +1,36 @@
+{
+  "name": "coh-content-db",
+  "version": "0.1.4",
+  "description": "City of Heroes Content Database",
+  "module": "dist/coh-content-db.js",
+  "files": [
+    "dist"
+  ],
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "webpack --mode=production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/n15g/coh-content-db.git"
+  },
+  "author": "n15g",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/n15g/coh-content-db/issues"
+  },
+  "homepage": "https://github.com/n15g/coh-content-db#readme",
+  "devDependencies": {
+    "@types/lodash": "^4.14.137",
+    "base64-inline-loader": "^1.1.1",
+    "clean-webpack-plugin": "^3.0.0",
+    "ts-loader": "^6.0.4",
+    "typescript": "^3.5.3",
+    "unminified-webpack-plugin": "^2.0.0",
+    "webpack": "^4.39.3",
+    "webpack-cli": "^3.3.7"
+  },
+  "dependencies": {
+    "lodash": "^4.17.15"
+  }
+}
