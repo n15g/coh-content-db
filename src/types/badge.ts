@@ -40,7 +40,7 @@ export interface IBadgeData {
     /**
      * Badge images.
      */
-    readonly images: string[];
+    readonly images?: string[];
 
     /**
      * Notes or tips about the badge.
@@ -63,9 +63,72 @@ export interface IBadgeData {
     readonly location?: number[];
 
     /**
-     * The number the badge appears as on Vidiot Maps.
+     * The number or letter the badge appears as on Vidiot Maps.
      */
-    readonly vidiotMapNumber?: number;
+    readonly vidiotMapKey?: string;
+
+    /**
+     * For badges that have partial fulfilment requirements, such as plaques for history badges, or other badges for meta-badges like accolades.
+     */
+    readonly partials?: IBadgePartialData[];
+}
+
+export interface IBadgePartialData {
+    /**
+     * Key.
+     */
+    readonly key: string;
+
+    /**
+     * Type of partial.
+     */
+    readonly type: BadgePartialType;
+
+    /**
+     * Map the partial is located on.
+     */
+    readonly mapKey?: string;
+
+    /**
+     * /loc coordinates.
+     */
+    readonly location?: number[];
+
+    /**
+     * Is it a wall plaque or a physical monument?
+     */
+    readonly plaqueType?: PlaqueType;
+
+    /**
+     * Plaque inscription.
+     */
+    readonly inscription?: string;
+
+    /**
+     * The number or letter the partial appears as on Vidiot Maps.
+     */
+    readonly vidiotMapKey?: string;
+
+
+    /**
+     * The badge required for this partial.
+     */
+    readonly badgeKey?: string;
+
+    /**
+     * Level of the invention required.
+     */
+    readonly inventionLevel?: number;
+
+    /**
+     * Number of invention crafts required.
+     */
+    readonly count?: number;
+
+    /**
+     * Any additional notes.
+     */
+    readonly notes?: string;
 }
 
 export enum BadgeType {
@@ -84,6 +147,16 @@ export enum BadgeType {
     CONSIGNMENT = "CONSIGNMENT",
     DAY_JOB = "DAY_JOB",
     AE = "AE"
+}
+
+export enum BadgePartialType {
+    PLAQUE = "PLAQUE",
+    BADGE = "BADGE",
+    INVENTION = "INVENTION",
+    /**
+     * Some invention badges require you to build x of two different invention levels, and 'one additional of either level'.
+     */
+    INVENTION_PLUS_ONE = "INVENTION_ADDITIONAL",
 }
 
 export interface IAlternateName {
@@ -111,6 +184,23 @@ export interface IAlignmentFlags {
     readonly p: boolean
 }
 
+export const ALIGNMENT_HERO: IAlignmentFlags = {h: true, v: false, p: false};
+export const ALIGNMENT_VILLAIN: IAlignmentFlags = {h: false, v: true, p: false};
+export const ALIGNMENT_PRAETORIAN: IAlignmentFlags = {h: false, v: false, p: true};
+export const ALIGNMENT_ANY: IAlignmentFlags = {h: true, v: true, p: true};
+
+export enum PlaqueType {
+    WALL_PLAQUE = "WALL_PLAQUE",
+    MONUMENT = "MONUMENT"
+}
+
 export interface IBadge extends IBadgeData {
     readonly serverGroup: IServerGroup;
+    readonly partials?: IBadgePartial[];
 }
+
+export interface IBadgePartial extends IBadgePartialData {
+    readonly serverGroup: IServerGroup;
+    readonly parent: IBadge;
+}
+

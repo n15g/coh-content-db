@@ -1,7 +1,7 @@
 import * as _ from "lodash";
 import {IServerData, IServerGroup, IServerGroupData, ServerGroupStatus} from "./types/server-group";
 import {ILink} from "./types/link";
-import {BadgeType, IAlignmentFlags, IAlternateName, IBadge, IBadgeData} from "./types/badge";
+import {BadgePartialType, BadgeType, IAlignmentFlags, IAlternateName, IBadge, IBadgeData, IBadgePartial, IBadgePartialData, PlaqueType} from "./types/badge";
 import {IGameMap, IGameMapData} from "./types/game-map";
 
 export class CohContentDb {
@@ -103,12 +103,13 @@ class Badge implements IBadge {
     public readonly alignment: IAlignmentFlags;
     public readonly badgeText?: string;
     public readonly acquisition?: string;
-    public readonly images: string[];
+    public readonly images?: string[];
     public readonly notes?: string;
     public readonly links?: ILink[];
     public readonly mapKey?: string;
     public readonly location?: number[];
-    public readonly vidiotMapNumber?: number;
+    public readonly vidiotMapKey?: string;
+    public readonly partials?: IBadgePartial[];
 
     public constructor(serverGroup: ServerGroup, data: IBadgeData) {
         this.serverGroup = serverGroup;
@@ -124,6 +125,42 @@ class Badge implements IBadge {
         this.links = data.links;
         this.mapKey = data.mapKey;
         this.location = data.location;
-        this.vidiotMapNumber = data.vidiotMapNumber;
+        this.vidiotMapKey = data.vidiotMapKey;
+
+        if (data.partials != undefined) {
+            this.partials = _.map(data.partials, (data) => new BadgePartial(this.serverGroup, this, data));
+        }
+    }
+}
+
+class BadgePartial implements IBadgePartial {
+    public readonly serverGroup: ServerGroup;
+    public readonly parent: Badge;
+    public readonly key: string;
+    public readonly type: BadgePartialType;
+    public readonly mapKey?: string;
+    public readonly location?: number[];
+    public readonly plaqueType?: PlaqueType;
+    public readonly inscription?: string;
+    public readonly vidiotMapKey?: string;
+    public readonly badgeKey?: string;
+    public readonly inventionLevel?: number;
+    public readonly count?: number;
+    public readonly notes?: string;
+
+    constructor(serverGroup: ServerGroup, parent: Badge, data: IBadgePartialData) {
+        this.key = data.key;
+        this.serverGroup = serverGroup;
+        this.parent = parent;
+        this.type = data.type;
+        this.mapKey = data.mapKey;
+        this.location = data.location;
+        this.plaqueType = data.plaqueType;
+        this.inscription = data.inscription;
+        this.vidiotMapKey = data.vidiotMapKey;
+        this.badgeKey = data.badgeKey;
+        this.inventionLevel = data.inventionLevel;
+        this.count = data.count;
+        this.notes = data.notes;
     }
 }

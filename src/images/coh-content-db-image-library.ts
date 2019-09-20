@@ -5,6 +5,7 @@ export const CohContentDbImageLibrary = {
             hero: require("./badge/exploration-hero.png"),
             praetorian: require("./badge/exploration-praetorian.png"),
             villain: require("./badge/exploration-villain.png")
-        }
+        },
+        history: require("./badge/history.png")
     }
 };
