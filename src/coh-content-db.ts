@@ -1,7 +1,7 @@
 import * as _ from "lodash";
 import {IServerData, IServerGroup, IServerGroupData, ServerGroupStatus} from "./types/server-group";
 import {ILink} from "./types/link";
-import {BadgePartialType, BadgeType, IAlignmentFlags, IAlternateName, IBadge, IBadgeData, IBadgePartial, IBadgePartialData, PlaqueType} from "./types/badge";
+import {BadgePartialType, BadgeType, IAlignmentFlags, IAlternateValue, IBadge, IBadgeData, IBadgePartial, IBadgePartialData, PlaqueType} from "./types/badge";
 import {IGameMap, IGameMapData} from "./types/game-map";
 
 export class CohContentDb {
@@ -98,12 +98,11 @@ class Badge implements IBadge {
     public readonly serverGroup: ServerGroup;
     public readonly key: string;
     public readonly type: BadgeType;
-    public readonly canonicalName: string;
-    public readonly alternateNames?: IAlternateName[];
+    public readonly names: IAlternateValue[];
     public readonly alignment: IAlignmentFlags;
-    public readonly badgeText?: string;
+    public readonly badgeText?: IAlternateValue[];
     public readonly acquisition?: string;
-    public readonly images?: string[];
+    public readonly imageKeys?: IAlternateValue[];
     public readonly notes?: string;
     public readonly links?: ILink[];
     public readonly mapKey?: string;
@@ -115,12 +114,11 @@ class Badge implements IBadge {
         this.serverGroup = serverGroup;
         this.key = data.key;
         this.type = data.type;
-        this.canonicalName = data.canonicalName;
-        this.alternateNames = data.alternateNames;
+        this.names = data.names;
         this.alignment = data.alignment;
         this.badgeText = data.badgeText;
         this.acquisition = data.acquisition;
-        this.images = data.images;
+        this.imageKeys = data.imageKeys;
         this.notes = data.notes;
         this.links = data.links;
         this.mapKey = data.mapKey;

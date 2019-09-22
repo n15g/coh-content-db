@@ -13,14 +13,9 @@ export interface IBadgeData {
     readonly type: BadgeType;
 
     /**
-     * The canonical, or default, name for the badge.
+     * The names this badge is known by.
      */
-    readonly canonicalName: string;
-
-    /**
-     * Alternate names the badge may be known as.
-     */
-    readonly alternateNames?: IAlternateName[];
+    readonly names: IAlternateValue[];
 
     /**
      * The alignments this badge can be obtained by.
@@ -30,7 +25,7 @@ export interface IBadgeData {
     /**
      * The in-game badge text.
      */
-    readonly badgeText?: string;
+    readonly badgeText?: IAlternateValue[];
 
     /**
      * The method used to acquire the badge.
@@ -40,7 +35,7 @@ export interface IBadgeData {
     /**
      * Badge images.
      */
-    readonly images?: string[];
+    readonly imageKeys?: IAlternateValue[];
 
     /**
      * Notes or tips about the badge.
@@ -159,12 +154,15 @@ export enum BadgePartialType {
     INVENTION_PLUS_ONE = "INVENTION_ADDITIONAL",
 }
 
-export interface IAlternateName {
-    readonly type: AlternateNameType,
-    readonly value: string
+export interface IAlternateValue {
+    readonly type?: Alternate;
+    readonly value: string;
 }
 
-export enum AlternateNameType {
+/**
+ * For badges that have alternate values based on the alignment (H/V/P) or sex (M/F) of the character.
+ */
+export enum Alternate {
     M = "M",
     F = "F",
     H = "H",

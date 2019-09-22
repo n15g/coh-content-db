@@ -22,7 +22,6 @@
   "homepage": "https://github.com/n15g/coh-content-db#readme",
   "devDependencies": {
     "@types/lodash": "^4.14.137",
-    "base64-inline-loader": "^1.1.1",
     "clean-webpack-plugin": "^3.0.0",
     "ts-loader": "^6.0.4",
     "typescript": "^3.5.3",
