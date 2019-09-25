@@ -108,6 +108,7 @@ class Badge implements IBadge {
     public readonly mapKey?: string;
     public readonly location?: number[];
     public readonly vidiotMapKey?: string;
+    public readonly effect?: string;
     public readonly partials?: IBadgePartial[];
 
     public constructor(serverGroup: ServerGroup, data: IBadgeData) {
@@ -123,6 +124,7 @@ class Badge implements IBadge {
         this.links = data.links;
         this.mapKey = data.mapKey;
         this.location = data.location;
+        this.effect = data.effect;
         this.vidiotMapKey = data.vidiotMapKey;
 
         if (data.partials != undefined) {

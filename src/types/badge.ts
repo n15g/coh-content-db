@@ -63,6 +63,11 @@ export interface IBadgeData {
     readonly vidiotMapKey?: string;
 
     /**
+     * A description of the effect the badge will have, such as a buff or granting a temporary power.
+     */
+    readonly effect?: string;
+
+    /**
      * For badges that have partial fulfilment requirements, such as plaques for history badges, or other badges for meta-badges like accolades.
      */
     readonly partials?: IBadgePartialData[];
