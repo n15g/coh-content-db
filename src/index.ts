@@ -1,6 +1,7 @@
 export * from "./types/badge";
-export * from "./types/server-group";
+export * from "./types/enhancement";
 export * from "./types/game-map";
+export * from "./types/server-group";
 export * from "./types/server-group";
 
 export {CohContentDb} from "./coh-content-db";

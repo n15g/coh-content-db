@@ -1,5 +1,6 @@
 import {ILink} from "./link";
 import {IServerGroup} from "./server-group";
+import {EnhancementCategory} from "./enhancement";
 
 export interface IBadgeData {
     /**
@@ -121,6 +122,11 @@ export interface IBadgePartialData {
     readonly inventionLevel?: number;
 
     /**
+     * The types of enhancements required to be crafted.
+     */
+    readonly inventionTypes?: EnhancementCategory[];
+
+    /**
      * Number of invention crafts required.
      */
     readonly count?: number;
@@ -154,9 +160,9 @@ export enum BadgePartialType {
     BADGE = "BADGE",
     INVENTION = "INVENTION",
     /**
-     * Some invention badges require you to build x of two different invention levels, and 'one additional of either level'.
+     * Some invention badges require you to build x of two different invention levels, 'plus one of either level'.
      */
-    INVENTION_PLUS_ONE = "INVENTION_ADDITIONAL",
+    INVENTION_PLUS_ONE = "INVENTION_PLUS_ONE",
 }
 
 export interface IAlternateValue {

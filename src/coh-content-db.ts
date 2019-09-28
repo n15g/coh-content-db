@@ -3,6 +3,7 @@ import {IServerData, IServerGroup, IServerGroupData, ServerGroupStatus} from "./
 import {ILink} from "./types/link";
 import {BadgePartialType, BadgeType, IAlignmentFlags, IAlternateValue, IBadge, IBadgeData, IBadgePartial, IBadgePartialData, PlaqueType} from "./types/badge";
 import {IGameMap, IGameMapData} from "./types/game-map";
+import {EnhancementCategory} from "./types/enhancement";
 
 export class CohContentDb {
     private readonly serverGroups: { [id: string]: ServerGroup } = {};
@@ -145,6 +146,7 @@ class BadgePartial implements IBadgePartial {
     public readonly vidiotMapKey?: string;
     public readonly badgeKey?: string;
     public readonly inventionLevel?: number;
+    public readonly inventionTypes?: EnhancementCategory[];
     public readonly count?: number;
     public readonly notes?: string;
 
@@ -160,6 +162,7 @@ class BadgePartial implements IBadgePartial {
         this.vidiotMapKey = data.vidiotMapKey;
         this.badgeKey = data.badgeKey;
         this.inventionLevel = data.inventionLevel;
+        this.inventionTypes = data.inventionTypes;
         this.count = data.count;
         this.notes = data.notes;
     }
