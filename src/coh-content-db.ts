@@ -5,6 +5,8 @@ import {BadgePartialType, BadgeType, IAlignmentFlags, IAlternateValue, IBadge, I
 import {IGameMap, IGameMapData} from "./types/game-map";
 import {EnhancementCategory} from "./types/enhancement";
 
+const KEY_FORMAT = /[^a-z0-9\-]/;
+
 export class CohContentDb {
     private readonly serverGroups: { [id: string]: ServerGroup } = {};
 
@@ -41,6 +43,8 @@ export class ServerGroup implements IServerGroup {
     private badgeCache: { [id: string]: Badge } = {};
 
     public constructor(key: string) {
+        validateKey(key);
+
         this.key = key;
     }
 
@@ -88,6 +92,8 @@ class GameMap implements IGameMap {
     public readonly links: ILink[];
 
     public constructor(serverGroup: ServerGroup, data: IGameMapData) {
+        validateKey(data.key);
+
         this.serverGroup = serverGroup;
         this.key = data.key;
         this.name = data.name;
@@ -113,6 +119,8 @@ class Badge implements IBadge {
     public readonly partials?: IBadgePartial[];
 
     public constructor(serverGroup: ServerGroup, data: IBadgeData) {
+        validateKey(data.key);
+
         this.serverGroup = serverGroup;
         this.key = data.key;
         this.type = data.type;
@@ -151,6 +159,8 @@ class BadgePartial implements IBadgePartial {
     public readonly notes?: string;
 
     constructor(serverGroup: ServerGroup, parent: Badge, data: IBadgePartialData) {
+        validateKey(data.key);
+
         this.key = data.key;
         this.serverGroup = serverGroup;
         this.parent = parent;
@@ -166,4 +176,8 @@ class BadgePartial implements IBadgePartial {
         this.count = data.count;
         this.notes = data.notes;
     }
+}
+
+function validateKey(key: string) {
+    if (KEY_FORMAT.test(key)) throw new Error(`Bad key: [${key}]; Keys can only contain lowercase characters, numbers and dashes.`);
 }
