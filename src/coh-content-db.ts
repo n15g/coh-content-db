@@ -38,6 +38,7 @@ export class ServerGroup implements IServerGroup {
     public servers?: IServerData[];
     public maps?: IGameMap[];
     public badges?: IBadge[];
+    public changelog?: { [id: string]: string[] };
 
     private mapCache: { [id: string]: GameMap } = {};
     private badgeCache: { [id: string]: Badge } = {};
@@ -73,6 +74,10 @@ export class ServerGroup implements IServerGroup {
                 this.badges.push(badge);
                 this.badgeCache[badge.key] = badge;
             });
+        }
+
+        if (data.changelog) {
+            this.changelog = data.changelog;
         }
     }
 

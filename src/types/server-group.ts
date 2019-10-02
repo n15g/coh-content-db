@@ -43,6 +43,11 @@ export interface IServerGroupData {
      * List of badges available on this server group.
      */
     readonly badges?: IBadgeData[];
+
+    /**
+     * Change log.
+     */
+    readonly changelog?: { [id: string]: string[] };
 }
 
 export interface IServerData {
