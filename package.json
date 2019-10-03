@@ -1,6 +1,6 @@
 {
   "name": "coh-content-db",
-  "version": "0.1.4",
+  "version": "1.0.0",
   "description": "City of Heroes Content Database",
   "module": "dist/coh-content-db.js",
   "files": [

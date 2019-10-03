@@ -11,17 +11,17 @@ export interface IBadgeData {
     /**
      * Badge type.
      */
-    readonly type: BadgeType;
+    readonly type?: BadgeType;
 
     /**
      * The names this badge is known by.
      */
-    readonly names: IAlternateValue[];
+    readonly names?: IAlternateValue[];
 
     /**
      * The alignments this badge can be obtained by.
      */
-    readonly alignment: IAlignmentFlags;
+    readonly alignment?: IAlignmentFlags;
 
     /**
      * The in-game badge text.
@@ -83,7 +83,7 @@ export interface IBadgePartialData {
     /**
      * Type of partial.
      */
-    readonly type: BadgePartialType;
+    readonly type?: BadgePartialType;
 
     /**
      * Map the partial is located on.
@@ -206,6 +206,8 @@ export enum PlaqueType {
 export interface IBadge extends IBadgeData {
     readonly serverGroup: IServerGroup;
     readonly partials?: IBadgePartial[];
+
+    getPartial(key: string): IBadgePartial | null;
 }
 
 export interface IBadgePartial extends IBadgePartialData {

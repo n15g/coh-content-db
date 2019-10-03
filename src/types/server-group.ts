@@ -1,5 +1,6 @@
 import {IBadge, IBadgeData} from "./badge";
 import {IGameMap, IGameMapData} from "./game-map";
+import {IArchetype, IArchetypeData} from "./archetype";
 
 /**
  * A server group is a collection of game servers.
@@ -33,6 +34,11 @@ export interface IServerGroupData {
      * Torchbearer, Excelsior, etc.
      */
     readonly servers?: IServerData[];
+
+    /**
+     * List of archetypes available on this group.
+     */
+    readonly archetypes?: IArchetypeData[];
 
     /**
      * List of game maps supported by this server group.
@@ -69,6 +75,8 @@ export enum ServerGroupStatus {
 export interface IServerGroup extends IServerGroupData {
     readonly maps?: IGameMap[];
     readonly badges?: IBadge[];
+
+    getArchetype(key: string): IArchetype | null;
 
     getMap(key: string): IGameMap | null;
 
