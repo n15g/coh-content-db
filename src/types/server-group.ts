@@ -73,6 +73,8 @@ export enum ServerGroupStatus {
 }
 
 export interface IServerGroup extends IServerGroupData {
+    readonly servers?: IServer[];
+    readonly archetypes?: IArchetype[];
     readonly maps?: IGameMap[];
     readonly badges?: IBadge[];
 
@@ -81,4 +83,8 @@ export interface IServerGroup extends IServerGroupData {
     getMap(key: string): IGameMap | null;
 
     getBadge(key: string): IBadge | null;
+}
+
+export interface IServer extends IServerData {
+
 }

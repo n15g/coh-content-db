@@ -1,4 +1,4 @@
-import {IBadge, IGameMap, IServerData, IServerGroup, IServerGroupData, ServerGroupStatus} from "..";
+import {IBadge, IGameMap, IServer, IServerGroup, IServerGroupData, ServerGroupStatus} from "..";
 import {IArchetype} from "../types/archetype";
 import * as _ from "lodash";
 import {Archetype} from "./archetype";
@@ -12,7 +12,7 @@ export class ServerGroup implements IServerGroup {
     public description?: string;
     public status?: ServerGroupStatus[];
     public repository?: string;
-    public servers?: IServerData[];
+    public servers?: IServer[];
     public archetypes: IArchetype[] = [];
     public maps: IGameMap[] = [];
     public badges: IBadge[] = [];
