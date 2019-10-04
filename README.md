@@ -1,6 +1,11 @@
 # coh-content-db
 City of Heroes Content Database
 
+### Installation
+```
+npm install coh-content-db
+```
+
 ### Usage
 
 Initialize the database, then load a server-group data pack, such as `coh-content-db-homecoming`:
