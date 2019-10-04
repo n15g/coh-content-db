@@ -19,10 +19,14 @@ contentDb.load(new Homecoming());
 
 Once loaded, you can start retrieving loaded data using the keys associated with the various content.
 
-####List Loaded Server Groups with their id:
+#### List Loaded Server Groups:
 ```
 contentDb.getServerGroups();
-// [key: "homecoming", serverGroup: Homecoming...]
+```
+
+#### Get a Server Group by key:
+```
+contentDb.getServerGroup("serverGroupKey");
 ```
 
 ### Build
