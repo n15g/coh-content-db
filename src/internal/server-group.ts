@@ -16,7 +16,7 @@ export class ServerGroup implements IServerGroup {
     public archetypes: IArchetype[] = [];
     public maps: IGameMap[] = [];
     public badges: IBadge[] = [];
-    public changelog: { [id: string]: string[] } = {};
+    public changelog: { [id: string]: string } = {};
 
     private archetypeCache: { [id: string]: Archetype } = {};
     private mapCache: { [id: string]: GameMap } = {};

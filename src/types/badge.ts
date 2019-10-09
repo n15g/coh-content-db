@@ -34,9 +34,9 @@ export interface IBadgeData {
     readonly acquisition?: string;
 
     /**
-     * Badge images.
+     * Badge images. Use the absolute url images hosted in a CDN or similar publicly-accessible location.
      */
-    readonly imageKeys?: IAlternateValue[];
+    readonly icons?: IAlternateValue[]
 
     /**
      * Notes or tips about the badge.
