@@ -53,7 +53,7 @@ export interface IServerGroupData {
     /**
      * Change log.
      */
-    readonly changelog?: { [id: string]: string[] };
+    readonly changelog?: { [id: string]: string };
 }
 
 export interface IServerData {

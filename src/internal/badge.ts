@@ -11,7 +11,7 @@ export class Badge implements IBadge {
     public alignment?: IAlignmentFlags;
     public badgeText?: IAlternateValue[];
     public acquisition?: string;
-    public imageKeys?: IAlternateValue[];
+    public icons?: IAlternateValue[];
     public notes?: string;
     public links?: ILink[];
     public mapKey?: string;
@@ -35,7 +35,7 @@ export class Badge implements IBadge {
         if (data.alignment != undefined) this.alignment = data.alignment;
         if (data.badgeText != undefined) this.badgeText = [...this.badgeText || [], ...data.badgeText];
         if (data.acquisition != undefined) this.acquisition = data.acquisition;
-        if (data.imageKeys != undefined) this.imageKeys = [...this.imageKeys || [], ...data.imageKeys];
+        if (data.icons != undefined) this.icons = [...this.icons || [], ...data.icons];
         if (data.notes != undefined) this.notes = data.notes;
         if (data.links != undefined) this.links = [...this.links || [], ...data.links];
         if (data.mapKey != undefined) this.mapKey = data.mapKey;
