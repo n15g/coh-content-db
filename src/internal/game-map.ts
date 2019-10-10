@@ -6,7 +6,7 @@ export class GameMap implements IGameMap {
     public readonly serverGroup: ServerGroup;
     public readonly key: string;
     public name: string;
-    public links: ILink[];
+    public links?: ILink[];
 
     public constructor(serverGroup: ServerGroup, key: string) {
         validateKey(key);
