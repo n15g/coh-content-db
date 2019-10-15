@@ -7,5 +7,7 @@ export const Changelog: { [id: string]: string } = {
         "* Badge icons have moved from `badge.imageKeys` to `badge.icons`.\n" +
         "* Changelog is now just a markdown block instead of a string array.\n",
 
-    "1.1.1": "* `IGameMap.links` is now optional."
+    "1.1.1": "* `IGameMap.links` is now optional.",
+
+    "1.1.2": "* https://github.com/n15g/coh-content-db/issues/3 - Added `setTitleId` property for badges. Used to store the `settitle` slash command number of the badge."
 };

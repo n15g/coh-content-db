@@ -17,6 +17,7 @@ export class Badge implements IBadge {
     public mapKey?: string;
     public location?: number[];
     public vidiotMapKey?: string;
+    public setTitleId?: number;
     public effect?: string;
     public partials?: BadgePartial[];
 
@@ -42,6 +43,7 @@ export class Badge implements IBadge {
         if (data.location != undefined) this.location = data.location;
         if (data.effect != undefined) this.effect = data.effect;
         if (data.vidiotMapKey != undefined) this.vidiotMapKey = data.vidiotMapKey;
+        if (data.setTitleId != undefined) this.setTitleId = data.setTitleId;
 
         if (data.partials != undefined) {
             _.each(data.partials, data =>

@@ -64,6 +64,11 @@ export interface IBadgeData {
     readonly vidiotMapKey?: string;
 
     /**
+     * Number used with the in-game `settitle` slash command to apply the badge.
+     */
+    readonly setTitleId?: number;
+
+    /**
      * A description of the effect the badge will have, such as a buff or granting a temporary power.
      */
     readonly effect?: string;
