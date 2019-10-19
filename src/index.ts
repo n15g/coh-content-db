@@ -7,3 +7,5 @@ export * from "./types/server-group";
 export {CohContentDb} from "./coh-content-db";
 
 export {Changelog} from "./_changelog";
+
+export * from "./content-refence-utils";
