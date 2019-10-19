@@ -1,10 +1,10 @@
-import {IBadge} from "./types/badge";
-import {IGameMap} from "./types/game-map";
+import {IBadgeData} from "./types/badge";
+import {IGameMapData} from "./types/game-map";
 
-export function badgeReference(badge: IBadge): string {
+export function badgeReference(badge: IBadgeData): string {
     return `[badge:${badge.key}]`;
 }
 
-export function mapReference(map: IGameMap): string {
+export function mapReference(map: IGameMapData): string {
     return `[map:${map.key}]`;
 }
