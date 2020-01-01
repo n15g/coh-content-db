@@ -20,6 +20,7 @@ export class Badge implements IBadge {
     public setTitleId?: number;
     public effect?: string;
     public partials?: BadgePartial[];
+    public ignoreInTotals?: boolean;
 
     private partialCache: { [id: string]: BadgePartial } = {};
 
@@ -44,6 +45,7 @@ export class Badge implements IBadge {
         if (data.effect != undefined) this.effect = data.effect;
         if (data.vidiotMapKey != undefined) this.vidiotMapKey = data.vidiotMapKey;
         if (data.setTitleId != undefined) this.setTitleId = data.setTitleId;
+        if (data.ignoreInTotals != undefined) this.ignoreInTotals = data.ignoreInTotals;
 
         if (data.partials != undefined) {
             _.each(data.partials, data =>

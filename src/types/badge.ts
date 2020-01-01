@@ -77,6 +77,11 @@ export interface IBadgeData {
      * For badges that have partial fulfilment requirements, such as plaques for history badges, or other badges for meta-badges like accolades.
      */
     readonly partials?: IBadgePartialData[];
+
+    /**
+     * Some badges are not included in the badge total count... such as Flames of Prometheus, which can be removed by redeeming it for a Notice of the Well.
+     */
+    readonly ignoreInTotals?: boolean;
 }
 
 export interface IBadgePartialData {
