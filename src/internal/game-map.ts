@@ -60,6 +60,8 @@ export class VidiotMapPoi implements IVidiotMapPoi {
     public notes?: string;
     public mapKey?: string;
     public badgeKey?: string;
+    public badgePartialKey?: string;
+
 
     constructor(serverGroup: ServerGroup, map: IGameMap, vidiotMap: IVidiotMap) {
         this.serverGroup = serverGroup;
@@ -73,6 +75,7 @@ export class VidiotMapPoi implements IVidiotMapPoi {
         if (data.notes != undefined) this.notes = data.notes;
         if (data.mapKey != undefined) this.mapKey = data.mapKey;
         if (data.badgeKey != undefined) this.badgeKey = data.badgeKey;
+        if (data.badgePartialKey != undefined) this.badgePartialKey = data.badgePartialKey;
 
         return this;
     }

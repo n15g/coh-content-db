@@ -29,6 +29,10 @@ export interface IVidiotMapPoiData {
      * If the POI is a badge, the badge.
      */
     readonly badgeKey?: string;
+    /**
+     * If the POI is a partial for a badge, the partial key.
+     */
+    readonly badgePartialKey?: string;
 }
 
 export interface IGameMap extends IGameMapData {
