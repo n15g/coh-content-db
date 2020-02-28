@@ -10,5 +10,7 @@ export const Changelog: { [id: string]: string } = {
     "1.1.3": "* Added some content reference utility functions.",
 
     "1.2.0": "* https://github.com/n15g/coh-content-db/issues/4 - Added a field `ignoreInTotals` to `Badge`, allowing badges to be ignored in badge total calculations, for badges like" +
-        " [Flames of Prometheus] and [Bug Hunter]."
+        " [Flames of Prometheus] and [Bug Hunter].",
+
+    "1.3.1": "* https://github.com/n15g/coh-content-db/issues/5 - Added vidiot map data to maps."
 };
