@@ -69,6 +69,11 @@ export interface IBadgeData {
     readonly setTitleId?: number;
 
     /**
+     * Some praetorian badges have a different settitle id.
+     */
+    readonly setTitleIdPraetorian?: number;
+
+    /**
      * A description of the effect the badge will have, such as a buff or granting a temporary power.
      */
     readonly effect?: string;

@@ -18,6 +18,7 @@ export class Badge implements IBadge {
     public location?: number[];
     public vidiotMapKey?: string;
     public setTitleId?: number;
+    public setTitleIdPraetorian?: number;
     public effect?: string;
     public partials?: BadgePartial[];
     public ignoreInTotals?: boolean;
@@ -45,6 +46,7 @@ export class Badge implements IBadge {
         if (data.effect != undefined) this.effect = data.effect;
         if (data.vidiotMapKey != undefined) this.vidiotMapKey = data.vidiotMapKey;
         if (data.setTitleId != undefined) this.setTitleId = data.setTitleId;
+        if (data.setTitleIdPraetorian != undefined) this.setTitleIdPraetorian = data.setTitleIdPraetorian;
         if (data.ignoreInTotals != undefined) this.ignoreInTotals = data.ignoreInTotals;
 
         if (data.partials != undefined) {
