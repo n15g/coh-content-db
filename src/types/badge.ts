@@ -210,6 +210,7 @@ export interface IAlignmentFlags {
 
 export const ALIGNMENT_HERO: IAlignmentFlags = {h: true, v: false, p: false};
 export const ALIGNMENT_VILLAIN: IAlignmentFlags = {h: false, v: true, p: false};
+export const ALIGNMENT_PRIMAL: IAlignmentFlags = {h: true, v: true, p: false};
 export const ALIGNMENT_PRAETORIAN: IAlignmentFlags = {h: false, v: false, p: true};
 export const ALIGNMENT_ANY: IAlignmentFlags = {h: true, v: true, p: true};
 
