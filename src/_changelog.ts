@@ -15,5 +15,6 @@ export const Changelog: { [id: string]: string } = {
     "1.3.1": "* https://github.com/n15g/coh-content-db/issues/5 - Added vidiot map data to maps.",
     "1.3.2": "* Added badge partial support for vidiot map POIs.",
 
-    "1.4.0": "* https://github.com/n15g/coh-content-db/issues/7 - Settitle ids for Praetorian badges."
+    "1.4.0": "* https://github.com/n15g/coh-content-db/issues/7 - Settitle ids for Praetorian badges.",
+    "1.4.1": "* https://github.com/n15g/coh-content-db/pull/9 - Added Primal alignment value.",
 };
