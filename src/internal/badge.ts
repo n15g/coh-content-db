@@ -1,7 +1,6 @@
 import {BadgePartialType, BadgeType, EnhancementCategory, IAlignmentFlags, IAlternateValue, IBadge, IBadgeData, IBadgePartial, IBadgePartialData, ILink, PlaqueType} from "..";
 import {ServerGroup} from "./server-group";
 import {getOrDefine, validateKey} from "./_common";
-import * as _ from "lodash";
 
 export class Badge implements IBadge {
     public readonly serverGroup: ServerGroup;
@@ -50,11 +49,11 @@ export class Badge implements IBadge {
         if (data.ignoreInTotals != undefined) this.ignoreInTotals = data.ignoreInTotals;
 
         if (data.partials != undefined) {
-            _.each(data.partials, data =>
+            data.partials.forEach(data =>
                 getOrDefine(data.key, this.partialCache, (key) => new BadgePartial(this.serverGroup, this, key))
                     .load(data)
             );
-            this.partials = _.values(this.partialCache);
+            this.partials = Object.values(this.partialCache);
         }
     }
 

@@ -1,4 +1,3 @@
-import * as _ from "lodash";
 import {IServerGroup, IServerGroupData} from "./types/server-group";
 import {getOrDefine} from "./internal/_common";
 import {ServerGroup} from "./internal/server-group";
@@ -39,7 +38,7 @@ export class CohContentDb implements ICohContentDb {
      * @override
      */
     getServerGroups(): IServerGroup[] {
-        return _.values(this.serverGroups);
+        return Object.values(this.serverGroups);
     }
 
     /**

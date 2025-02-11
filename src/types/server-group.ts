@@ -67,13 +67,13 @@ export enum ServerGroupStatus {
     WORK_IN_PROGRESS = "WORK_IN_PROGRESS",
 
     /**
-     * This server group has been sunset, and is not longer being maintained/developed.
+     * This server group has been sunset, and is no longer being maintained/developed.
      */
     SUNSET = "SUNSET"
 }
 
 export interface IServerGroup extends IServerGroupData {
-    readonly servers?: IServer[];
+    readonly servers?: IServerData[];
     readonly archetypes?: IArchetype[];
     readonly maps?: IGameMap[];
     readonly badges?: IBadge[];
@@ -83,8 +83,4 @@ export interface IServerGroup extends IServerGroupData {
     getMap(key: string): IGameMap | null;
 
     getBadge(key: string): IBadge | null;
-}
-
-export interface IServer extends IServerData {
-
 }

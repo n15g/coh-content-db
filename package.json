@@ -1,36 +1,39 @@
 {
   "name": "coh-content-db",
-  "version": "1.4.1",
+  "version": "2.0.0",
   "description": "City of Heroes Content Database",
-  "module": "dist/coh-content-db.js",
-  "files": [
-    "dist"
-  ],
-  "types": "dist/index.d.ts",
-  "scripts": {
-    "build": "webpack --mode=production",
-    "watch": "webpack --mode=production --watch"
+  "homepage": "https://github.com/n15g/coh-content-db#readme",
+  "bugs": {
+    "url": "https://github.com/n15g/coh-content-db/issues"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/n15g/coh-content-db.git"
   },
-  "author": "n15g",
-  "license": "GPL-3.0-or-later",
-  "bugs": {
-    "url": "https://github.com/n15g/coh-content-db/issues"
+  "license": "Unlicense",
+  "author": "N15g",
+  "main": "dist/coh-content-db.js",
+  "module": "dist/coh-content-db.mjs",
+  "types": "dist/coh-ocntent-db.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "rollup --config",
+    "lint": "eslint",
+    "push": "git push && git push --tags",
+    "watch": "rollup --config --watch"
   },
-  "homepage": "https://github.com/n15g/coh-content-db#readme",
   "devDependencies": {
-    "@types/lodash": "^4.14.137",
-    "clean-webpack-plugin": "^3.0.0",
-    "ts-loader": "^6.0.4",
-    "typescript": "^3.5.3",
-    "unminified-webpack-plugin": "^2.0.0",
-    "webpack": "^4.39.3",
-    "webpack-cli": "^3.3.7"
+    "eslint": "^9.20.0",
+    "globals": "^15.14.0",
+    "rollup": "^4.34.6",
+    "rollup-plugin-dts": "^6.1.1",
+    "rollup-plugin-esbuild": "^6.2.0",
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.24.0"
   },
-  "dependencies": {
-    "lodash": "^4.17.15"
+  "engines": {
+    "node": ">=20"
   }
 }

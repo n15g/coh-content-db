@@ -8,4 +8,4 @@ export {CohContentDb} from "./coh-content-db";
 
 export {Changelog} from "./_changelog";
 
-export * from "./content-refence-utils";
+export * from "./content-reference-utils";

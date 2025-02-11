@@ -1,6 +1,5 @@
-import {IBadge, IGameMap, IServer, IServerGroup, IServerGroupData, ServerGroupStatus} from "..";
+import {IBadge, IGameMap, IServerData, IServerGroup, IServerGroupData, ServerGroupStatus} from "..";
 import {IArchetype} from "../types/archetype";
-import * as _ from "lodash";
 import {Archetype} from "./archetype";
 import {GameMap} from "./game-map";
 import {Badge} from "./badge";
@@ -12,7 +11,7 @@ export class ServerGroup implements IServerGroup {
     public description?: string;
     public status?: ServerGroupStatus[];
     public repository?: string;
-    public servers?: IServer[];
+    public servers?: IServerData[];
     public archetypes: IArchetype[] = [];
     public maps: IGameMap[] = [];
     public badges: IBadge[] = [];
@@ -36,27 +35,27 @@ export class ServerGroup implements IServerGroup {
         if (data.servers != undefined) this.servers = data.servers;
 
         if (data.archetypes != undefined) {
-            _.each(data.archetypes, data =>
+            data.archetypes.forEach(data =>
                 getOrDefine(data.key, this.archetypeCache, (key) => new Archetype(this, key))
                     .load(data)
             );
-            this.archetypes = _.values(this.archetypeCache);
+            this.archetypes = Object.values(this.archetypeCache);
         }
 
         if (data.maps != undefined) {
-            _.each(data.maps, data =>
+            data.maps.forEach(data =>
                 getOrDefine(data.key, this.mapCache, (key) => new GameMap(this, key))
                     .load(data)
             );
-            this.maps = _.values(this.mapCache);
+            this.maps = Object.values(this.mapCache);
         }
 
         if (data.badges != undefined) {
-            _.each(data.badges, data =>
+            data.badges.forEach(data =>
                 getOrDefine(data.key, this.badgeCache, (key) => new Badge(this, key))
                     .load(data)
             );
-            this.badges = _.values(this.badgeCache);
+            this.badges = Object.values(this.badgeCache);
         }
 
         if (data.changelog) {
