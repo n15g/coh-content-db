@@ -21,7 +21,7 @@
   "scripts": {
     "build": "rollup --config",
     "lint": "eslint",
-    "test": "jest",
+    "test": "jest --coverage",
     "push": "git push && git push --tags",
     "watch": "rollup --config --watch"
   },

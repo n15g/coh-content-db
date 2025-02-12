@@ -12,14 +12,12 @@ export class CohContentDatabase {
   loadServerGroup(data: IServerGroupData) {
     const serverGroup = getOrDefine(data.key, this.serverGroups, key => new ServerGroup(key))
     serverGroup.load(data)
-    console.log(this.serverGroups)
   }
 
   /**
    * Get all the server groups currently loaded in the database.
    */
   listServerGroups(): IServerGroup[] {
-    console.log(this.serverGroups)
     return Object.values(this.serverGroups)
   }
 
