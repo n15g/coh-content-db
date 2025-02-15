@@ -1,5 +1,5 @@
 name: Build
-on: push
+on: pull_request
 jobs:
   Build:
     runs-on: ubuntu-latest
@@ -21,11 +21,6 @@ jobs:
 
       - name: Test
         run: npm run test
-
-      - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v5
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
 
       - name: Build
         run: npm run build
