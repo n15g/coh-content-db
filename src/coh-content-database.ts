@@ -1,10 +1,10 @@
-import { IServerGroup, IServerGroupData } from './types/server-group'
 import { getOrDefine } from './internal/_common'
-import { ServerGroup } from './internal/server-group'
 import { changelog } from './_changelog'
+import { ServerGroup } from './content/server-group'
+import { IServerGroupData } from './content/server-group-data'
 
 export class CohContentDatabase {
-  private readonly serverGroups: { [id: string]: ServerGroup } = {}
+  private readonly serverGroups: Record<string, ServerGroup> = {}
 
   /**
    * Load server group data package into the database.
@@ -18,7 +18,7 @@ export class CohContentDatabase {
   /**
    * Get all the server groups currently loaded in the database.
    */
-  listServerGroups(): IServerGroup[] {
+  listServerGroups(): ServerGroup[] {
     return Object.values(this.serverGroups)
   }
 
@@ -26,7 +26,7 @@ export class CohContentDatabase {
    * get a server group by key.
    * @param serverGroupKey The key.
    */
-  getServerGroup(serverGroupKey: string): IServerGroup | null {
+  getServerGroup(serverGroupKey: string): ServerGroup | null {
     return this.serverGroups[serverGroupKey]
   }
 
