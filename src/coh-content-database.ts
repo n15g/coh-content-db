@@ -1,6 +1,7 @@
 import { IServerGroup, IServerGroupData } from './types/server-group'
 import { getOrDefine } from './internal/_common'
 import { ServerGroup } from './internal/server-group'
+import { changelog } from './_changelog'
 
 export class CohContentDatabase {
   private readonly serverGroups: { [id: string]: ServerGroup } = {}
@@ -27,5 +28,9 @@ export class CohContentDatabase {
    */
   getServerGroup(serverGroupKey: string): IServerGroup | null {
     return this.serverGroups[serverGroupKey]
+  }
+
+  getChangelog(): Record<string, string> {
+    return changelog
   }
 }

@@ -22,7 +22,7 @@ import {CohContentDb} from "coh-content-db";
 import {Homecoming} from "coh-content-db-homecoming";
 
 const contentDb = new CohContentDb();
-contentDb.load(new Homecoming());
+contentDb.loadServerGroup(new Homecoming());
 ```
 
 Once loaded, you can start retrieving loaded data using the keys associated with the various content.

@@ -1,8 +1,7 @@
-// noinspection JSUnusedGlobalSymbols
-
 import { IBadge, IBadgeData } from './badge'
 import { IGameMap, IGameMapData } from './game-map'
-import { IArchetype, IArchetypeData } from './archetype'
+import { IArchetype } from './archetype'
+import { ArchetypeData } from '../content/archetype-data'
 
 /**
  * A server group is a collection of game servers.
@@ -40,7 +39,7 @@ export interface IServerGroupData {
   /**
    * List of archetypes available on this group.
    */
-  readonly archetypes?: IArchetypeData[]
+  readonly archetypes?: ArchetypeData[]
 
   /**
    * List of game maps supported by this server group.

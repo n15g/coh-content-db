@@ -1,9 +1,9 @@
-import { IBadge, IGameMap, IServerData, IServerGroup, IServerGroupData, ServerGroupStatus } from '..'
+import { IBadge, IGameMap, IServerData, IServerGroup, IServerGroupData, ServerGroupStatus, validateKey } from '..'
 import { IArchetype } from '../types/archetype'
 import { Archetype } from './archetype'
 import { GameMap } from './game-map'
 import { Badge } from './badge'
-import { getOrDefine, validateKey } from './_common'
+import { getOrDefine } from './_common'
 
 export class ServerGroup implements IServerGroup {
   public readonly key: string

@@ -1,12 +1,10 @@
-// noinspection JSUnusedGlobalSymbols
-
 import { IBadgeData } from './types/badge'
 import { IGameMapData } from './types/game-map'
 
-export function badgeReference(badge: IBadgeData): string {
+export function createBadgeReference(badge: IBadgeData): string {
   return `[badge:${badge.key}]`
 }
 
-export function mapReference(map: IGameMapData): string {
+export function createMapReference(map: IGameMapData): string {
   return `[map:${map.key}]`
 }

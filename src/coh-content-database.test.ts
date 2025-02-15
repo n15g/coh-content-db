@@ -38,4 +38,10 @@ describe(CohContentDatabase.name, () => {
       expect(sg?.key).toEqual('sg1')
     })
   })
+
+  describe(CohContentDatabase.prototype.getChangelog().name, () => {
+    test('should not be null', () => {
+      expect(new CohContentDatabase()).not.toBeNull()
+    })
+  })
 })
