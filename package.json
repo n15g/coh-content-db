@@ -15,9 +15,6 @@
   "main": "dist/coh-content-db.js",
   "module": "dist/coh-content-db.mjs",
   "types": "dist/coh-ocntent-db.d.ts",
-  "files": [
-    "dist"
-  ],
   "scripts": {
     "build": "rollup --config",
     "lint": "eslint",
