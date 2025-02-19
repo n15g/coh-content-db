@@ -7,7 +7,7 @@ import { BadgePartial } from './badge-partial'
 import { Key } from './key'
 
 export class Badge {
-  readonly #partialIndex: Record<string, BadgePartial> = {}
+  readonly #partialsIndex: Record<string, BadgePartial> = {}
 
   /**
    * The database key for this badge.
@@ -125,13 +125,17 @@ export class Badge {
     this.setTitle = data.setTitle
     this.ignoreInTotals = data.ignoreInTotals ?? false
 
-    this.partials = data.partials?.map(x => new BadgePartial(x)) ?? []
-    this.#partialIndex = Object.fromEntries(this.partials.map(x => [x.key, x]))
+    this.partials = data.partials?.map((data) => {
+      if (this.#partialsIndex[data.key] !== undefined) throw new Error(`Duplicate badge partial key [${data.key}]`)
+      const badge = new BadgePartial(data)
+      this.#partialsIndex[badge.key] = badge
+      return badge
+    })
   }
 
   getPartial(key: string): BadgePartial {
-    const result = this.#partialIndex[key]
-    if (result === undefined) throw new Error(`Unknown key [${key}]`)
+    const result = this.#partialsIndex[key]
+    if (result === undefined) throw new Error(`Unknown badge partial key [${key}]`)
     return result
   }
 }

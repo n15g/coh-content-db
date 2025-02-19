@@ -87,19 +87,19 @@ export class ServerGroup {
 
   getArchetype(key: string): Archetype {
     const result = this.#archetypeIndex[key]
-    if (result === undefined) throw new Error(`Unknown key [${key}]`)
+    if (result === undefined) throw new Error(`Unknown archetype key [${key}]`)
     return result
   }
 
   getMap(key: string): GameMap {
     const result = this.#mapIndex[key]
-    if (result === undefined) throw new Error(`Unknown key [${key}]`)
+    if (result === undefined) throw new Error(`Unknown map key [${key}]`)
     return result
   }
 
   getBadge(key: string): Badge {
     const result = this.#badgeIndex[key]
-    if (result === undefined) throw new Error(`Unknown key [${key}]`)
+    if (result === undefined) throw new Error(`Unknown badge key [${key}]`)
     return result
   }
 }

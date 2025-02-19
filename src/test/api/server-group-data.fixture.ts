@@ -8,7 +8,7 @@ export const serverGroupDataFixture = defineFixture<ServerGroupData>((t) => {
   t.key.as(index => `server-group-${index}`)
   t.name.as(index => `Server Group ${index}`)
   t.description?.asLoremIpsum()
-  t.repository?.withValue('https://nouri.org')
+  t.repository?.as(index => `https://nouri.org?id=${index}`)
   t.servers?.asArray()
   t.archetypes.arrayOfFixture({ fixture: archetypeDataFixture })
   t.maps.arrayOfFixture({ fixture: gameMapDataFixture })
