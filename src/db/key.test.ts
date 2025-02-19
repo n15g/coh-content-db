@@ -13,10 +13,10 @@ describe(Key.name, () => {
     })
 
     test('should reject invalid keys', () => {
-      expect(() => new Key('ABC')).toThrow('Bad key')
-      expect(() => new Key('abC')).toThrow('Bad key')
-      expect(() => new Key('abc%')).toThrow('Bad key')
-      expect(() => new Key('abc 123')).toThrow('Bad key')
+      expect(() => new Key('ABC')).toThrow('Invalid key')
+      expect(() => new Key('abC')).toThrow('Invalid key')
+      expect(() => new Key('abc%')).toThrow('Invalid key')
+      expect(() => new Key('abc 123')).toThrow('Invalid key')
     })
   })
 })

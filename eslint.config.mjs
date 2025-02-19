@@ -13,6 +13,7 @@ export default [
   ...tseslint.configs.stylistic,
   {
     rules: {
+      // eslint-disable-next-line unicorn/no-null
       '@typescript-eslint/naming-convention': ['error', { selector: 'objectLiteralProperty', format: null }], // camelCase, but ignore object literals
       '@typescript-eslint/explicit-member-accessibility': ['error', { accessibility: 'no-public' }], // don't use public access modifier
     },
@@ -24,9 +25,4 @@ export default [
   }),
 
   eslintPluginUnicorn.configs['flat/recommended'], // https://github.com/sindresorhus/eslint-plugin-unicorn/issues/2546,
-  /**
-   * https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-null.md
-   * https://github.com/sindresorhus/meta/discussions/7 "Most programmers I know are dumb" is not a good reason to get rid of nulls.
-   */
-  { rules: { 'unicorn/no-null': 'off' } },
 ]

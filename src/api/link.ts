@@ -1,4 +1,4 @@
-export interface ILink {
+export interface Link {
   title: string
   href: string
 }

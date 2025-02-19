@@ -1,4 +1,4 @@
-export const enhancementCategory = [
+export const ENHANCEMENT_CATEGORY = [
   'DEFENSE_DEBUFF',
   'TO_HIT_DEBUFF',
   'TAUNT',
@@ -27,4 +27,4 @@ export const enhancementCategory = [
   'RANGE',
 ] as const
 
-export type EnhancementCategory = typeof enhancementCategory[number]
+export type EnhancementCategory = typeof ENHANCEMENT_CATEGORY[number]

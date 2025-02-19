@@ -1,4 +1,4 @@
-const KEY_FORMAT = /[^a-z0-9\-]/
+const INVALID_KEY_PATTERN = /[^a-z0-9-]/
 
 export class Key {
   readonly #value: string
@@ -13,6 +13,6 @@ export class Key {
   }
 
   #validateKey(key: string) {
-    if (KEY_FORMAT.test(key)) throw new Error(`Bad key: [${key}]; Keys can only contain lowercase characters, numbers and dashes.`)
+    if (INVALID_KEY_PATTERN.test(key)) throw new Error(`Invalid key: [${key}]; Keys can only contain lowercase characters, numbers and dashes.`)
   }
 }

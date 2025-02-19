@@ -1,5 +1,5 @@
 import { Archetype } from './archetype'
-import { archetypeDataFixture, archetypeDataFixtureMinimal } from './archetype-data.fixture'
+import { archetypeDataFixture } from '../api/archetype-data.fixture'
 
 describe(Archetype.name, () => {
   describe('Constructor', () => {
@@ -22,8 +22,10 @@ describe(Archetype.name, () => {
     })
 
     test(`should be null if missing in data`, () => {
-      const data = archetypeDataFixtureMinimal.create()
-      expect(new Archetype(data).description).toBeNull()
+      const data = archetypeDataFixture
+        .omit('description')
+        .create()
+      expect(new Archetype(data).description).toBeUndefined()
     })
   })
 })

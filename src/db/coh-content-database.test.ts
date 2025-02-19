@@ -1,22 +1,23 @@
 import { CohContentDatabase } from './coh-content-database'
+import { serverGroupDataFixture } from '../api/server-group-data.fixture'
 
 describe(CohContentDatabase.name, () => {
   test('should be instantiable', () => {
     expect(new CohContentDatabase()).not.toBeNull()
   })
 
-  describe(CohContentDatabase.prototype.loadServerGroup.name, () => {
+  describe(CohContentDatabase.prototype.loadServerGroupData.name, () => {
     test('should load an empty server group', () => {
       const database = new CohContentDatabase()
-      database.loadServerGroup({ key: 'test' })
+      database.loadServerGroupData(serverGroupDataFixture.create())
     })
   })
 
   describe(CohContentDatabase.prototype.listServerGroups.name, () => {
     test('should load two server groups', () => {
       const database = new CohContentDatabase()
-      database.loadServerGroup({ key: 'sg1' })
-      database.loadServerGroup({ key: 'sg2' })
+      database.loadServerGroupData(serverGroupDataFixture.create({ key: 'sg1' }))
+      database.loadServerGroupData(serverGroupDataFixture.create({ key: 'sg2' }))
 
       const sgs = database.listServerGroups()
 
@@ -31,17 +32,11 @@ describe(CohContentDatabase.name, () => {
   describe(CohContentDatabase.prototype.getServerGroup.name, () => {
     test('should load a server group by key', () => {
       const database = new CohContentDatabase()
-      database.loadServerGroup({ key: 'sg1' })
+      database.loadServerGroupData(serverGroupDataFixture.create({ key: 'sg1' }))
 
       const sg = database.getServerGroup('sg1')
       expect(sg).not.toBeNull()
       expect(sg?.key).toEqual('sg1')
-    })
-  })
-
-  describe(CohContentDatabase.prototype.getChangelog().name, () => {
-    test('should not be null', () => {
-      expect(new CohContentDatabase()).not.toBeNull()
     })
   })
 })
