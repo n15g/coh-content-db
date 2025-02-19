@@ -4,6 +4,7 @@ import { ServerGroupData } from '../api/server-group-data'
 import { Key } from './key'
 import { Change } from '../api/change'
 import { GameMap } from './game-map'
+import { Link } from '../api/link'
 
 export class ServerGroup {
   readonly #archetypeIndex: Record<string, Archetype> = {}
@@ -33,6 +34,11 @@ export class ServerGroup {
   readonly repository?: string
 
   /**
+   * List of external links for this Server Group. Wiki, forums, etc.
+   */
+  readonly links?: Link[]
+
+  /**
    * List of the game server names in this server group.
    * Torchbearer, Excelsior, etc.
    */
@@ -54,34 +60,35 @@ export class ServerGroup {
   readonly badges: Badge[]
 
   /**
-   * Change log.
+   * Change log for this data package.
    */
-  readonly changelog: Change[]
+  readonly changelog?: Change[]
 
   constructor(data: ServerGroupData) {
     this.key = new Key(data.key).value
     this.name = data.name
     this.description = data.description
     this.repository = data.repository
-    this.servers = data.servers
-    this.archetypes = data.archetypes.map((data) => {
+    this.links = data.links
+    this.servers = data.servers ?? []
+    this.archetypes = data.archetypes?.map((data) => {
       if (this.#archetypeIndex[data.key] !== undefined) throw new Error(`Duplicate archetype key [${data.key}]`)
       const archetype = new Archetype(data)
       this.#archetypeIndex[archetype.key] = archetype
       return archetype
-    })
-    this.maps = data.maps.map((data) => {
+    }) ?? []
+    this.maps = data.maps?.map((data) => {
       if (this.#mapIndex[data.key] !== undefined) throw new Error(`Duplicate map key [${data.key}]`)
       const map = new GameMap(data)
       this.#mapIndex[map.key] = map
       return map
-    })
-    this.badges = data.badges.map((data) => {
+    }) ?? []
+    this.badges = data.badges?.map((data) => {
       if (this.#badgeIndex[data.key] !== undefined) throw new Error(`Duplicate badge key [${data.key}]`)
       const badge = new Badge(data)
       this.#badgeIndex[badge.key] = badge
       return badge
-    })
+    }) ?? []
     this.changelog = data.changelog
   }
 

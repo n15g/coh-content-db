@@ -2,6 +2,7 @@ import { ArchetypeData } from './archetype-data'
 import { GameMapData } from './game-map-data'
 import { BadgeData } from './badge-data'
 import { Change } from './change'
+import { Link } from './link'
 
 /**
  * A server group is a group or company that hosts a set of game servers, such as Homecoming (https://forums.homecomingservers.com/).
@@ -32,28 +33,33 @@ export interface ServerGroupData {
   readonly repository?: string
 
   /**
+   * List of external links for this Badge. Wiki, forums, etc.
+   */
+  readonly links?: Link[]
+
+  /**
    * List of the game server names in this server group.
    * Torchbearer, Excelsior, etc.
    */
-  readonly servers: string[]
+  readonly servers?: string[]
 
   /**
    * List of archetypes available in this server group.
    */
-  readonly archetypes: ArchetypeData[]
+  readonly archetypes?: ArchetypeData[]
 
   /**
    * List of game maps supported by this server group.
    */
-  readonly maps: GameMapData[]
+  readonly maps?: GameMapData[]
 
   /**
    * List of badges available on this server group.
    */
-  readonly badges: BadgeData[]
+  readonly badges?: BadgeData[]
 
   /**
-   * Change log.
+   * Change log for this data package.
    */
-  readonly changelog: Change[]
+  readonly changelog?: Change[]
 }
