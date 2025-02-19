@@ -1,7 +1,5 @@
-import { createBadgeReference, createMapReference } from './util'
-import { Badge } from './db/badge'
+import { Badge, createBadgeReference, createMapReference, GameMap } from '../main'
 import { badgeDataFixture } from './api/badge-data.fixture'
-import { GameMap } from './db/game-map'
 import { gameMapDataFixture } from './api/game-map-data.fixture'
 
 describe(createBadgeReference.name, () => {

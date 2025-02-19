@@ -1,4 +1,4 @@
-import { GameMapData } from './game-map-data'
+import { GameMapData } from '../../main'
 import { defineFixture } from 'efate'
 
 export const gameMapDataFixture = defineFixture<GameMapData>((t) => {

@@ -1,7 +1,5 @@
 import { defineFixture } from 'efate'
-import { BadgeData } from './badge-data'
-import { BADGE_TYPE } from './badge-type'
-import { ALIGNMENT } from './alignment'
+import { ALIGNMENT, BADGE_TYPE, BadgeData } from '../../main'
 import { badgePartialDataFixture } from './badge-partial-data.fixture'
 
 export const badgeDataFixture = defineFixture<BadgeData>((t) => {

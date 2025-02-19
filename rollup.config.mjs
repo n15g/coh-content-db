@@ -5,7 +5,7 @@ const name = 'coh-content-db'
 
 // noinspection JSUnusedGlobalSymbols
 export default [{
-  input: 'src/index.ts',
+  input: 'src/main/index.ts',
   plugins: [esbuild()],
   output: [{
     file: `dist/${name}.js`,
@@ -17,7 +17,7 @@ export default [{
     sourcemap: true,
   }],
 }, {
-  input: 'src/index.ts',
+  input: 'src/main/index.ts',
   plugins: [dts()],
   output: [{
     file: `dist/${name}.d.ts`,

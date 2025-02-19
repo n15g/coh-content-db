@@ -1,4 +1,4 @@
-import * as index from './index'
+import * as index from '../main/index'
 
 test('should export the changelog', () => {
   expect(index).toHaveProperty('CHANGELOG')

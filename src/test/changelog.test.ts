@@ -1,4 +1,4 @@
-import { CHANGELOG } from './changelog'
+import { CHANGELOG } from '../main'
 
 describe('CHANGELOG', () => {
   test('should be extant', () => {

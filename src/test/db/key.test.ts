@@ -1,4 +1,4 @@
-import { Key } from './key'
+import { Key } from '../../main'
 
 describe(Key.name, () => {
   describe('Constructor', () => {

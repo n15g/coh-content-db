@@ -1,4 +1,4 @@
-import { Alignment, ALIGNMENT } from './alignment'
+import { Alignment, ALIGNMENT } from '../../main'
 
 describe('ALIGNMENT', () => {
   test('should be an array', () => {

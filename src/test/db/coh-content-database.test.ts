@@ -1,4 +1,4 @@
-import { CohContentDatabase } from './coh-content-database'
+import { CohContentDatabase } from '../../main'
 import { serverGroupDataFixture } from '../api/server-group-data.fixture'
 
 describe(CohContentDatabase.name, () => {

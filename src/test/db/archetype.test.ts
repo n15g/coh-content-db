@@ -1,4 +1,4 @@
-import { Archetype } from './archetype'
+import { Archetype } from '../../main'
 import { archetypeDataFixture } from '../api/archetype-data.fixture'
 
 describe(Archetype.name, () => {

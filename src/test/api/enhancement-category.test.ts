@@ -1,4 +1,4 @@
-import { ENHANCEMENT_CATEGORY, EnhancementCategory } from './enhancement-category'
+import { ENHANCEMENT_CATEGORY, EnhancementCategory } from '../../main'
 
 describe('ENHANCEMENT_CATEGORY', () => {
   test('should be an array', () => {

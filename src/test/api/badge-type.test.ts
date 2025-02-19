@@ -1,4 +1,4 @@
-import { BADGE_TYPE, BadgeType } from './badge-type'
+import { BADGE_TYPE, BadgeType } from '../../main'
 
 describe('BADGE_TYPE', () => {
   test('should be an array', () => {

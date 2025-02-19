@@ -1,4 +1,4 @@
-import { PLAQUE_TYPE, PlaqueType } from './plaque-type'
+import { PLAQUE_TYPE, PlaqueType } from '../../main'
 
 describe('PLAQUE_TYPE', () => {
   test('should be an array', () => {

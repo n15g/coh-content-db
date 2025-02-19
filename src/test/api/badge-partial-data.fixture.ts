@@ -1,8 +1,5 @@
 import { defineFixture } from 'efate'
-import { BadgePartialData } from './badge-partial-data'
-import { ENHANCEMENT_CATEGORY } from './enhancement-category'
-import { BADGE_PARTIAL_TYPE } from './badge-partial-type'
-import { PLAQUE_TYPE } from './plaque-type'
+import { BADGE_PARTIAL_TYPE, BadgePartialData, ENHANCEMENT_CATEGORY, PLAQUE_TYPE } from '../../main'
 
 export const badgePartialDataFixture = defineFixture<BadgePartialData>((t) => {
   t.key.as(index => `badge-partial-${index}`)

@@ -1,5 +1,5 @@
 import { defineFixture } from 'efate'
-import { ArchetypeData } from './archetype-data'
+import { ArchetypeData } from '../../main'
 
 export const archetypeDataFixture = defineFixture<ArchetypeData>((t) => {
   t.key.as(index => `archetype-${index}`)

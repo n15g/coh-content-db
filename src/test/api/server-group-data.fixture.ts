@@ -1,9 +1,8 @@
 import { defineFixture } from 'efate'
-import { ServerGroupData } from './server-group-data'
+import { Change, ServerGroupData } from '../../main'
 import { archetypeDataFixture } from './archetype-data.fixture'
-import { Change } from './change'
-import { badgeDataFixture } from './badge-data.fixture'
 import { gameMapDataFixture } from './game-map-data.fixture'
+import { badgeDataFixture } from './badge-data.fixture'
 
 export const serverGroupDataFixture = defineFixture<ServerGroupData>((t) => {
   t.key.as(index => `server-group-${index}`)

@@ -1,4 +1,4 @@
-import { Sex, SEX } from './sex'
+import { Sex, SEX } from '../../main'
 
 describe('SEX', () => {
   test('should be an array', () => {

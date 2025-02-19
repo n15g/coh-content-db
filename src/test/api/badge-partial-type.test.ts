@@ -1,4 +1,4 @@
-import { BADGE_PARTIAL_TYPE, BadgePartialType } from './badge-partial-type'
+import { BADGE_PARTIAL_TYPE, BadgePartialType } from '../../main'
 
 describe('BADGE_PARTIAL_TYPE', () => {
   test('should be an array', () => {

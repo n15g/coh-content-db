@@ -14,7 +14,7 @@
   "author": "N15g",
   "main": "dist/coh-content-db.js",
   "module": "dist/coh-content-db.mjs",
-  "types": "dist/coh-ocntent-db.d.ts",
+  "types": "dist/coh-content-db.d.ts",
   "scripts": {
     "build": "rollup --config",
     "lint": "eslint",
