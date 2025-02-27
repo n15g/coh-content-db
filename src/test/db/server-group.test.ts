@@ -21,6 +21,13 @@ describe(ServerGroup.name, () => {
       })
       expect(() => new ServerGroup(data)).toThrow('Duplicate archetype key [foo]')
     })
+
+    test(`should accept an empty list`, () => {
+      const data = serverGroupDataFixture
+        .omit('archetypes')
+        .create()
+      expect(() => new ServerGroup(data).archetypes).toHaveLength(0)
+    })
   })
 
   describe('badges', () => {
@@ -33,6 +40,13 @@ describe(ServerGroup.name, () => {
       })
       expect(() => new ServerGroup(data)).toThrow('Duplicate badge key [foo]')
     })
+
+    test(`should accept an empty list`, () => {
+      const data = serverGroupDataFixture
+        .omit('badges')
+        .create()
+      expect(() => new ServerGroup(data).badges).toHaveLength(0)
+    })
   })
 
   describe('maps', () => {
@@ -44,6 +58,13 @@ describe(ServerGroup.name, () => {
         ],
       })
       expect(() => new ServerGroup(data)).toThrow('Duplicate map key [foo]')
+    })
+
+    test(`should accept an empty list`, () => {
+      const data = serverGroupDataFixture
+        .omit('maps')
+        .create()
+      expect(() => new ServerGroup(data).maps).toHaveLength(0)
     })
   })
 
