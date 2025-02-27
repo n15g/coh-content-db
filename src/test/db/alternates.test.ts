@@ -169,5 +169,55 @@ describe(Alternates.name, () => {
         { alignment: 'Y', sex: 'B', value: 'B Y' },
       ])
     })
+
+    test('should sort unspecified values by alpha', () => {
+      expect(new Alternates([
+        { value: 'A' },
+        { value: 'C' },
+        { value: 'B' },
+      ]).canonical).toStrictEqual([
+        { value: 'A' },
+        { value: 'B' },
+        { value: 'C' },
+      ])
+    })
+
+    test('should sort identical values similarly', () => {
+      expect(new Alternates([
+        { value: 'A' },
+        { value: 'B' },
+        { value: 'C' },
+        { value: 'B' },
+      ]).canonical).toStrictEqual([
+        { value: 'A' },
+        { value: 'B' },
+        { value: 'B' },
+        { value: 'C' },
+      ])
+    })
+
+    test('should sort unknown alignments by alpha', () => {
+      expect(new Alternates([
+        { alignment: 'A', value: 'A' },
+        { alignment: 'C', value: 'C' },
+        { alignment: 'B', value: 'B' },
+      ]).canonical).toStrictEqual([
+        { alignment: 'A', value: 'A' },
+        { alignment: 'B', value: 'B' },
+        { alignment: 'C', value: 'C' },
+      ])
+    })
+
+    test('should sort unknown sex by alpha', () => {
+      expect(new Alternates([
+        { sex: 'A', value: 'A' },
+        { sex: 'C', value: 'C' },
+        { sex: 'B', value: 'B' },
+      ]).canonical).toStrictEqual([
+        { sex: 'A', value: 'A' },
+        { sex: 'B', value: 'B' },
+        { sex: 'C', value: 'C' },
+      ])
+    })
   })
 })

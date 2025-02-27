@@ -17,9 +17,9 @@ describe(createBadgeReference.name, () => {
 
 describe(createMapReference.name, () => {
   test('should return the expected pattern', () => {
-    expect(createMapReference({ key: 'foo', name: 'Foo' })).toBe('[map:foo]')
-    expect(createMapReference({ key: 'bar', name: 'Bar' })).toBe('[map:bar]')
-    expect(createMapReference({ key: 'foo-bar', name: 'Foo Bar' })).toBe('[map:foo-bar]')
+    expect(createMapReference('foo')).toBe('[map:foo]')
+    expect(createMapReference('bar')).toBe('[map:bar]')
+    expect(createMapReference('foo-bar')).toBe('[map:foo-bar]')
   })
 
   test('should accept a GameMap object', () => {

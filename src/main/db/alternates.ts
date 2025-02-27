@@ -42,14 +42,13 @@ export class Alternates<T> {
     const bSpecificity = (b.alignment ? 2 : 0) + (b.sex ? 1 : 0)
     if (aSpecificity !== bSpecificity) return aSpecificity - bSpecificity // Order first by least-specific
 
-    if (a === b) return 0
     const alignmentComparison = this.#compareAlignment(a.alignment, b.alignment) // Next by alignment
     if (alignmentComparison !== 0) return alignmentComparison
 
     const sexComparison = this.#compareSex(a.sex, b.sex) // Last by sex
     if (sexComparison !== 0) return sexComparison
 
-    return String(a).localeCompare(String(b))
+    return String(a.value).localeCompare(String(b.value))
   }
 
   #compareAlignment(a: Alignment | string | undefined, b: Alignment | string | undefined): number {
@@ -57,8 +56,8 @@ export class Alternates<T> {
     if (a === undefined && b !== undefined) return -1
     if (b === undefined && a !== undefined) return 1
 
-    const aSort = ALIGNMENT_SORT[a ?? -1] ?? -1 // Unknown values get -1 priority
-    const bSort = ALIGNMENT_SORT[b ?? -1] ?? -1
+    const aSort = a === undefined ? -1 : ALIGNMENT_SORT[a] ?? -1 // Unknown values get -1 priority
+    const bSort = b === undefined ? -1 : ALIGNMENT_SORT[b] ?? -1
 
     if (aSort !== bSort) return bSort - aSort
 
