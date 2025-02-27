@@ -16,6 +16,8 @@ export default [
       // eslint-disable-next-line unicorn/no-null
       '@typescript-eslint/naming-convention': ['error', { selector: 'objectLiteralProperty', format: null }], // camelCase, but ignore object literals
       '@typescript-eslint/explicit-member-accessibility': ['error', { accessibility: 'no-public' }], // don't use public access modifier
+      '@typescript-eslint/explicit-function-return-type': ['error'], // require all functions define their return type explicitly
+      'eqeqeq': ['error'],
     },
   },
 
