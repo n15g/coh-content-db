@@ -10,10 +10,10 @@ export const serverGroupDataFixture = defineFixture<ServerGroupData>((t) => {
   t.description?.asLoremIpsum()
   t.repository?.as(index => `https://nouri.org?id=${index}`)
   t.servers?.asArray()
-  t.archetypes.arrayOfFixture({ fixture: archetypeDataFixture })
-  t.maps.arrayOfFixture({ fixture: gameMapDataFixture })
-  t.badges.arrayOfFixture({ fixture: badgeDataFixture })
-  t.changelog.arrayOfFixture({
+  t.archetypes?.arrayOfFixture({ fixture: archetypeDataFixture })
+  t.maps?.arrayOfFixture({ fixture: gameMapDataFixture })
+  t.badges?.arrayOfFixture({ fixture: badgeDataFixture })
+  t.changelog?.arrayOfFixture({
     fixture: defineFixture<Change>((t) => {
       t.version.as(index => `${index}`)
       t.date.as(() => new Date())

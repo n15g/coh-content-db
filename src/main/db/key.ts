@@ -12,7 +12,7 @@ export class Key {
     return this.#value
   }
 
-  #validateKey(key: string) {
+  #validateKey(key: string): void {
     if (INVALID_KEY_PATTERN.test(key)) throw new Error(`Invalid key: [${key}]; Keys can only contain lowercase characters, numbers and dashes.`)
   }
 }

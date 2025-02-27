@@ -1,7 +1,7 @@
 import { BadgePartialData } from './badge-partial-data'
 import { Link } from './link'
 import { BadgeType } from './badge-type'
-import { Alternate } from './alternate'
+import { AlternateData } from './alternate-data'
 import { Alignment } from './alignment'
 
 export interface BadgeData {
@@ -21,9 +21,9 @@ export interface BadgeData {
   /**
    * The name of this badge.
    *
-   * If the value differs by sex or alignment, include an {@link Alternate} for each variant.
+   * If the value differs by sex or alignment, include an {@link AlternateData} for each variant.
    */
-  readonly name: Alternate<string>[]
+  readonly name: AlternateData<string>[]
 
   /**
    * The character alignments that this badge is available to.
@@ -33,7 +33,7 @@ export interface BadgeData {
   /**
    * The badge text as it appears in-game. May vary by character sex or alignment.
    */
-  readonly badgeText?: Alternate<string>[]
+  readonly badgeText?: AlternateData<string>[]
 
   /**
    * Description of how to acquire the badge.
@@ -45,9 +45,9 @@ export interface BadgeData {
   /**
    * List of absolute URLs for this badge's icons.
    *
-   * If the value differs by sex or alignment, include an {@link Alternate} for each variant.
+   * If the value differs by sex or alignment, include an {@link AlternateData} for each variant.
    */
-  readonly icon?: Alternate<string>[]
+  readonly icon?: AlternateData<string>[]
 
   /**
    * Freeform notes or tips about the badge.

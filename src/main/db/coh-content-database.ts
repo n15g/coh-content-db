@@ -8,7 +8,7 @@ export class CohContentDatabase {
    * Load a server group data package into the database.
    * @param data The data to load.
    */
-  loadServerGroupData(data: ServerGroupData) {
+  loadServerGroupData(data: ServerGroupData): void {
     this.#serverGroups[data.key] = new ServerGroup(data)
   }
 

@@ -1,10 +1,10 @@
 import { BadgeType } from '../api/badge-type'
-import { Alternate } from '../api/alternate'
 import { Alignment } from '../api/alignment'
 import { Link } from '../api/link'
 import { BadgeData } from '../api/badge-data'
 import { BadgePartial } from './badge-partial'
 import { Key } from './key'
+import { Alternates } from './alternates'
 
 export class Badge {
   readonly #partialsIndex: Record<string, BadgePartial> = {}
@@ -24,7 +24,7 @@ export class Badge {
    *
    * May vary by character sex or alignment.
    */
-  readonly name: Alternate<string>[]
+  readonly name: Alternates<string>
 
   /**
    * The character alignments that this badge is available to.
@@ -34,7 +34,7 @@ export class Badge {
   /**
    * The badge text as it appears in-game. May vary by character sex or alignment.
    */
-  readonly badgeText?: Alternate<string>[]
+  readonly badgeText: Alternates<string>
 
   /**
    * Description of how to acquire the badge.
@@ -48,7 +48,7 @@ export class Badge {
    *
    * May vary by character sex or alignment.
    */
-  readonly icon?: Alternate<string>[]
+  readonly icon: Alternates<string>
 
   /**
    * Freeform notes or tips about the badge.
@@ -111,11 +111,11 @@ export class Badge {
   constructor(data: BadgeData) {
     this.key = new Key(data.key).value
     this.type = data.type
-    this.name = data.name
+    this.name = new Alternates(data.name)
     this.alignment = data.alignment
-    this.badgeText = data.badgeText
+    this.badgeText = new Alternates(data.badgeText ?? [])
     this.acquisition = data.acquisition
-    this.icon = data.icon
+    this.icon = new Alternates(data.icon ?? [])
     this.notes = data.notes
     this.links = data.links
     this.mapKey = data.mapKey

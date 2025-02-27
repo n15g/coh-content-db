@@ -1,6 +1,6 @@
 // API
 export * from './api/alignment'
-export * from './api/alternate'
+export * from './api/alternate-data'
 export * from './api/archetype-data'
 export * from './api/badge-data'
 export * from './api/badge-partial-data'

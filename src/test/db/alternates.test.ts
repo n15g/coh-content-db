@@ -1,0 +1,173 @@
+import { Alternates } from '../../main/db/alternates'
+
+describe(Alternates.name, () => {
+  describe('Constructor', () => {
+    test('should accept a list of alternate values', () => {
+      new Alternates([
+        { value: 'Default' },
+        { sex: 'M', value: 'Male' },
+        { alignment: 'H', value: 'Hero' },
+        { alignment: 'V', sex: 'M', value: 'Male Villain' },
+        { alignment: 'P', sex: 'F', value: 'Praetorian Female' },
+      ])
+    })
+  })
+
+  describe('getValue', () => {
+    test('should return undefined if there are no values', () => {
+      expect(new Alternates([]).getValue()).toBeUndefined()
+    })
+
+    test('should return the least-specific value when no classifiers are provided', () => {
+      expect(new Alternates([
+        { value: 'Default' },
+        { sex: 'M', value: 'Male' },
+        { alignment: 'H', value: 'Hero' },
+        { alignment: 'V', sex: 'M', value: 'Male Villain' },
+        { alignment: 'P', sex: 'F', value: 'Praetorian Female' },
+      ]).getValue()).toBe('Default')
+    })
+
+    test('should return the least-specific value when no classifiers are provided, regardless of insert order', () => {
+      expect(new Alternates([
+        { alignment: 'V', sex: 'M', value: 'Male Villain' },
+        { alignment: 'H', value: 'Hero' },
+        { value: 'Default' },
+        { sex: 'M', value: 'Male' },
+        { alignment: 'P', sex: 'F', value: 'Praetorian Female' },
+      ]).getValue()).toBe('Default')
+    })
+
+    test('should return the most specific match', () => {
+      expect(new Alternates([
+        { value: 'Default' },
+        { sex: 'M', value: 'Male' },
+        { alignment: 'H', value: 'Hero' },
+        { alignment: 'V', sex: 'M', value: 'Male Villain' },
+        { alignment: 'P', sex: 'F', value: 'Praetorian Female' },
+      ]).getValue('V', 'M')).toBe('Male Villain')
+    })
+
+    test('should return the most specific match, regardless of insert order', () => {
+      expect(new Alternates([
+        { alignment: 'P', sex: 'F', value: 'Praetorian Female' },
+        { sex: 'M', value: 'Male' },
+        { alignment: 'H', value: 'Hero' },
+        { alignment: 'V', sex: 'M', value: 'Male Villain' },
+        { value: 'Default' },
+      ]).getValue('V', 'M')).toBe('Male Villain')
+    })
+
+    test('should return undefined if there is no default', () => {
+      expect(new Alternates([
+        { sex: 'M', value: 'Male' },
+        { alignment: 'H', value: 'Hero' },
+        { alignment: 'V', sex: 'M', value: 'Male Villain' },
+        { alignment: 'P', sex: 'F', value: 'Praetorian Female' },
+      ]).getValue()).toBeUndefined()
+    })
+  })
+
+  describe('default', () => {
+    test('should return undefined if there are no values', () => {
+      expect(new Alternates([]).default).toBeUndefined()
+    })
+
+    test('should return the lowest priority value', () => {
+      expect(new Alternates([
+        { value: 'Default' },
+        { sex: 'M', value: 'Male' },
+        { alignment: 'H', value: 'Hero' },
+        { alignment: 'V', sex: 'M', value: 'Male Villain' },
+        { alignment: 'P', sex: 'F', value: 'Praetorian Female' },
+      ]).default).toBe('Default')
+
+      expect(new Alternates([
+        { alignment: 'V', sex: 'M', value: 'Male Villain' },
+        { alignment: 'P', sex: 'F', value: 'Praetorian Female' },
+        { sex: 'M', value: 'Male' },
+        { value: 'Default' },
+        { alignment: 'H', value: 'Hero' },
+      ]).default).toBe('Default')
+
+      expect(new Alternates([
+        { alignment: 'V', sex: 'M', value: 'Male Villain' },
+        { alignment: 'P', sex: 'F', value: 'Praetorian Female' },
+        { sex: 'M', value: 'Male' },
+        { alignment: 'H', value: 'Hero' },
+      ]).default).toBe('Male')
+    })
+  })
+
+  describe('canonical', () => {
+    test('should be empty if there are no values', () => {
+      expect(new Alternates([]).canonical).toHaveLength(0)
+    })
+
+    test('should return values sorted in canonical order', () => {
+      const result = new Alternates([
+        { alignment: 'H', sex: 'F', value: 'Female Hero' },
+        { alignment: 'P', value: 'Praetorian' },
+        { sex: 'F', value: 'Female' },
+        { alignment: 'H', sex: 'A', value: 'A Hero' },
+        { alignment: 'Y', sex: 'A', value: 'A Y' },
+        { alignment: 'V', sex: 'M', value: 'Male Villain' },
+        { alignment: 'V', sex: 'B', value: 'B Villain' },
+        { alignment: 'P', sex: 'M', value: 'Male Praetorian' },
+        { alignment: 'H', value: 'Hero' },
+        { alignment: 'V', sex: 'A', value: 'A Villain' },
+        { sex: 'A', value: 'A Sex' },
+        { alignment: 'X', sex: 'F', value: 'Female X' },
+        { alignment: 'H', sex: 'M', value: 'Male Hero' },
+        { alignment: 'X', value: 'X' },
+        { alignment: 'P', sex: 'B', value: 'B Praetorian' },
+        { alignment: 'P', sex: 'A', value: 'A Praetorian' },
+        { alignment: 'X', sex: 'M', value: 'Male X' },
+        { sex: 'M', value: 'Male' },
+        { alignment: 'X', sex: 'B', value: 'B X' },
+        { alignment: 'H', sex: 'B', value: 'B Hero' },
+        { alignment: 'V', value: 'Villain' },
+        { alignment: 'Y', sex: 'M', value: 'Male Y' },
+        { alignment: 'V', sex: 'F', value: 'Female Villain' },
+        { sex: 'B', value: 'B Sex' },
+        { alignment: 'Y', sex: 'B', value: 'B Y' },
+        { alignment: 'P', sex: 'F', value: 'Female Praetorian' },
+        { alignment: 'X', sex: 'A', value: 'A X' },
+        { value: 'Default' },
+        { alignment: 'Y', sex: 'F', value: 'Female Y' },
+      ]).canonical
+
+      expect(result).toStrictEqual([
+        { value: 'Default' },
+        { sex: 'M', value: 'Male' },
+        { sex: 'F', value: 'Female' },
+        { sex: 'A', value: 'A Sex' },
+        { sex: 'B', value: 'B Sex' },
+        { alignment: 'H', value: 'Hero' },
+        { alignment: 'V', value: 'Villain' },
+        { alignment: 'P', value: 'Praetorian' },
+        { alignment: 'X', value: 'X' },
+        { alignment: 'H', sex: 'M', value: 'Male Hero' },
+        { alignment: 'H', sex: 'F', value: 'Female Hero' },
+        { alignment: 'H', sex: 'A', value: 'A Hero' },
+        { alignment: 'H', sex: 'B', value: 'B Hero' },
+        { alignment: 'V', sex: 'M', value: 'Male Villain' },
+        { alignment: 'V', sex: 'F', value: 'Female Villain' },
+        { alignment: 'V', sex: 'A', value: 'A Villain' },
+        { alignment: 'V', sex: 'B', value: 'B Villain' },
+        { alignment: 'P', sex: 'M', value: 'Male Praetorian' },
+        { alignment: 'P', sex: 'F', value: 'Female Praetorian' },
+        { alignment: 'P', sex: 'A', value: 'A Praetorian' },
+        { alignment: 'P', sex: 'B', value: 'B Praetorian' },
+        { alignment: 'X', sex: 'M', value: 'Male X' },
+        { alignment: 'X', sex: 'F', value: 'Female X' },
+        { alignment: 'X', sex: 'A', value: 'A X' },
+        { alignment: 'X', sex: 'B', value: 'B X' },
+        { alignment: 'Y', sex: 'M', value: 'Male Y' },
+        { alignment: 'Y', sex: 'F', value: 'Female Y' },
+        { alignment: 'Y', sex: 'A', value: 'A Y' },
+        { alignment: 'Y', sex: 'B', value: 'B Y' },
+      ])
+    })
+  })
+})
