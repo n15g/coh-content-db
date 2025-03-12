@@ -3,7 +3,7 @@ import { Change } from './api/change'
 export const CHANGELOG: Change[] = [
   {
     version: '2.0.0',
-    date: new Date('2025-02-18'),
+    date: new Date('2025-03-12'),
     description: ''
       + '* Replaced redundant interfaces with their concrete equivalents.\n'
       + '* Replaced enums with extensible union types; Server groups with new badge types, enhancement types, etc. can now extend them locally.\n'

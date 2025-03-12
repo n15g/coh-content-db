@@ -56,7 +56,7 @@ export const TEST_SERVER_GROUP: ServerGroupData = {
 
 ## As a DB consumer
 
-Create a a new database instance, then load a server-group data pack, such as [coh-content-db-homecoming](https://github.com/n15g/coh-content-db-homecoming):
+Create a new database instance, then load a server-group data pack, such as [coh-content-db-homecoming](https://github.com/n15g/coh-content-db-homecoming):
 
 ```typescript
 import {CohContentDatabase} from 'coh-content-db';
