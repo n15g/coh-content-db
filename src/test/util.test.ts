@@ -13,6 +13,11 @@ describe(createBadgeReference.name, () => {
     const badge = new Badge(badgeDataFixture.create({ key: 'foo' }))
     expect(createBadgeReference(badge)).toBe('[badge:foo]')
   })
+
+  test('should accept a BadgeData object', () => {
+    const badge = badgeDataFixture.create({ key: 'foo' })
+    expect(createBadgeReference(badge)).toBe('[badge:foo]')
+  })
 })
 
 describe(createMapReference.name, () => {
@@ -24,6 +29,11 @@ describe(createMapReference.name, () => {
 
   test('should accept a GameMap object', () => {
     const map = new GameMap(gameMapDataFixture.create({ key: 'foo' }))
+    expect(createMapReference(map)).toBe('[map:foo]')
+  })
+
+  test('should accept a GameMapData object', () => {
+    const map = gameMapDataFixture.create({ key: 'foo' })
     expect(createMapReference(map)).toBe('[map:foo]')
   })
 })

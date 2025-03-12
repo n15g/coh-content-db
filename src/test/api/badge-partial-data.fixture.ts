@@ -5,7 +5,7 @@ export const badgePartialDataFixture = defineFixture<BadgePartialData>((t) => {
   t.key.as(index => `badge-partial-${index}`)
   t.type.pickFrom([...BADGE_PARTIAL_TYPE])
   t.mapKey?.asString()
-  t.location?.asArray()
+  t.loc?.asArray()
   t.plaqueType?.pickFrom([...PLAQUE_TYPE])
   t.inscription?.asLoremIpsum()
   t.vidiotMapKey?.asString()
