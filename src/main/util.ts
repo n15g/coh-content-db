@@ -1,5 +1,3 @@
-import { GameMap } from './db/game-map'
-
 /**
  * Create a reference string that can be used in most text strings to display a link to the given badge.
  * @param target The badge or badge key to target.
