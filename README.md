@@ -82,3 +82,12 @@ for (const badge of sg.badges) {
     console.log(badge.key)
 }
 ```
+
+## Publish
+
+Tags matching the pattern `v<X>.<Y>.<Z>` will attempt to publish to npm (this can only be achieved by the package manager (n15g).
+
+```shell
+npm version 1.4.x
+npm run push
+```
