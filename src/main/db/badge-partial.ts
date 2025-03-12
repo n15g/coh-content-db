@@ -8,7 +8,7 @@ export class BadgePartial {
   readonly key: string
   readonly type: BadgePartialType | string
   readonly mapKey?: string
-  readonly location?: number[]
+  readonly loc?: number[]
   readonly plaqueType?: PlaqueType | string
   readonly inscription?: string
   readonly vidiotMapKey?: string
@@ -22,7 +22,7 @@ export class BadgePartial {
     this.key = new Key(data.key).value
     this.type = data.type
     this.mapKey = data.mapKey
-    this.location = data.location
+    this.loc = data.loc
     this.plaqueType = data.plaqueType
     this.inscription = data.inscription
     this.vidiotMapKey = data.vidiotMapKey

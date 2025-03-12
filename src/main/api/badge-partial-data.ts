@@ -21,7 +21,7 @@ export interface BadgePartialData {
   /**
    * /loc coordinates.
    */
-  readonly location?: number[]
+  readonly loc?: number[]
 
   /**
    * Is it a wall plaque or a physical monument?

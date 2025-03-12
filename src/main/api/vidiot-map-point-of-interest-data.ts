@@ -1,6 +1,6 @@
 export interface VidiotMapPointOfInterestData {
   /**
-   * The location of the PoI on the map graphic.
+   * The pixel-space position of the PoI on the map graphic.
    *
    * Screen-space, pixels from top-left `[0, 0]`.
    */

@@ -2,7 +2,7 @@ import { VidiotMapPointOfInterestData } from '../api/vidiot-map-point-of-interes
 
 export class VidiotMapPointOfInterest {
   /**
-   * The location of the PoI on the map graphic.
+   * The pixel-space position of the PoI on the map graphic.
    *
    * Screen-space, pixels from top-left `[0, 0]`.
    */
