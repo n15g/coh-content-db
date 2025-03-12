@@ -44,7 +44,7 @@ jobs:
         with:
           draft: true
           token: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
-          files: 'dist'
+          files: 'dist/*'
 
       - name: Publish
         run: npm publish --provenance --access public
