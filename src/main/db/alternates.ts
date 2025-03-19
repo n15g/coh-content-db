@@ -40,10 +40,10 @@ export class Alternates<T> {
 
   /**
    * Create a joined string from the alternate values in canonical order.
-   * @param sep Separator to use. Default is ' / '
+   * @param separator Separator to use. Default is ' / '
    */
-  join(sep?: string): string {
-    return this.canonical.map(x => x.value).join(sep ?? ' / ')
+  toString(separator: string): string {
+    return this.canonical.map(x => x.value).join(separator)
   }
 
   #compareAlternates(a: AlternateData<T>, b: AlternateData<T>): number {

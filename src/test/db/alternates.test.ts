@@ -230,23 +230,13 @@ describe(Alternates.name, () => {
     })
   })
 
-  describe('join', () => {
-    test('should default to slash separator', () => {
-        expect(new Alternates([
-          { sex: 'A', value: 'A' },
-          { sex: 'B', value: 'B' },
-          { sex: 'C', value: 'C' },
-        ]).join()).toBe('A / B / C')
-      }
-    )
-
-    test('should accept other separators', () => {
-        expect(new Alternates([
-          { sex: 'A', value: 'A' },
-          { sex: 'B', value: 'B' },
-          { sex: 'C', value: 'C' },
-        ]).join(', ')).toBe('A, B, C')
-      }
-    )
+  describe('toString', () => {
+    test('should create a string separated by the separator', () => {
+      expect(new Alternates([
+        { sex: 'A', value: 'A' },
+        { sex: 'B', value: 'B' },
+        { sex: 'C', value: 'C' },
+      ]).toString(', ')).toBe('A, B, C')
+    })
   })
 })

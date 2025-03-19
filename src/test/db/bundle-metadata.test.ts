@@ -54,7 +54,7 @@ describe(BundleMetadata.name, () => {
   describe('changelog', () => {
     test(`should be read from the bundle`, () => {
       const bundle = new BundleMetadata(contentBundleFixture.create({
-        changelog: [{ version: 'foo', date: new Date('2025-03-12'), description: 'bar' }]
+        changelog: [{ version: 'foo', date: new Date('2025-03-12'), description: 'bar' }],
       }))
       expect(bundle.changelog).toStrictEqual([{ version: 'foo', date: new Date('2025-03-12'), description: 'bar' }])
     })

@@ -62,7 +62,6 @@ export class CohContentDatabase {
     }) ?? []
   }
 
-
   getArchetype(key: string): Archetype {
     const result = this.#archetypeIndex[key]
     if (result === undefined) throw new Error(`Unknown archetype key [${key}]`)
@@ -80,5 +79,4 @@ export class CohContentDatabase {
     if (result === undefined) throw new Error(`Unknown badge key [${key}]`)
     return result
   }
-
 }
