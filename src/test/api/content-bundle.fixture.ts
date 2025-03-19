@@ -1,12 +1,11 @@
 import { defineFixture } from 'efate'
-import { Change, ServerGroupData } from '../../main'
+import { Change, ContentBundle } from '../../main'
 import { archetypeDataFixture } from './archetype-data.fixture'
 import { gameMapDataFixture } from './game-map-data.fixture'
 import { badgeDataFixture } from './badge-data.fixture'
 
-export const serverGroupDataFixture = defineFixture<ServerGroupData>((t) => {
-  t.key.as(index => `server-group-${index}`)
-  t.name.as(index => `Server Group ${index}`)
+export const contentBundleFixture = defineFixture<ContentBundle>((t) => {
+  t.name.as(index => `Bundle ${index}`)
   t.description?.asLoremIpsum()
   t.repository?.as(index => `https://nouri.org?id=${index}`)
   t.servers?.asArray()

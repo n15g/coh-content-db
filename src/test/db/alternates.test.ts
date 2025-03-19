@@ -58,13 +58,22 @@ describe(Alternates.name, () => {
       ]).getValue('V', 'M')).toBe('Male Villain')
     })
 
-    test('should return undefined if there is no default', () => {
+    test('should return the lowest canonical value if there is no default', () => {
       expect(new Alternates([
-        { sex: 'M', value: 'Male' },
         { alignment: 'H', value: 'Hero' },
+        { sex: 'M', value: 'Male' },
+        { alignment: 'P', sex: 'F', value: 'Praetorian Female' },
+        { alignment: 'V', sex: 'M', value: 'Male Villain' },
+      ]).getValue()).toBe('Male')
+    })
+
+    test('should return the lowest canonical value if a specific is requested that does not exist', () => {
+      expect(new Alternates([
+        { alignment: 'H', value: 'Hero' },
+        { alignment: 'V', value: 'Villain' },
         { alignment: 'V', sex: 'M', value: 'Male Villain' },
         { alignment: 'P', sex: 'F', value: 'Praetorian Female' },
-      ]).getValue()).toBeUndefined()
+      ]).getValue(undefined, 'F')).toBe('Hero')
     })
   })
 
@@ -219,5 +228,25 @@ describe(Alternates.name, () => {
         { sex: 'C', value: 'C' },
       ])
     })
+  })
+
+  describe('join', () => {
+    test('should default to slash separator', () => {
+        expect(new Alternates([
+          { sex: 'A', value: 'A' },
+          { sex: 'B', value: 'B' },
+          { sex: 'C', value: 'C' },
+        ]).join()).toBe('A / B / C')
+      }
+    )
+
+    test('should accept other separators', () => {
+        expect(new Alternates([
+          { sex: 'A', value: 'A' },
+          { sex: 'B', value: 'B' },
+          { sex: 'C', value: 'C' },
+        ]).join(', ')).toBe('A, B, C')
+      }
+    )
   })
 })

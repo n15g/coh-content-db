@@ -2,7 +2,7 @@ import { CHANGELOG } from '../main'
 
 describe('CHANGELOG', () => {
   test('should be extant', () => {
-    expect(CHANGELOG).not.toBeNull()
+    expect(CHANGELOG).not.toBeUndefined()
     expect(CHANGELOG).not.toBeUndefined()
   })
 
@@ -22,14 +22,14 @@ describe('CHANGELOG', () => {
   test('should have dates', () => {
     for (const change of CHANGELOG) {
       const date = change.date
-      expect(date).not.toBeNull()
+      expect(date).not.toBeUndefined()
       expect(date).not.toBeUndefined()
     }
   })
 
   test('should have descriptions', () => {
     for (const change of CHANGELOG) {
-      expect(change).not.toBeNull()
+      expect(change).not.toBeUndefined()
       expect(change).not.toBeUndefined()
     }
   })

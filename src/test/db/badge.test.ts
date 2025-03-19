@@ -27,7 +27,7 @@ describe(Badge.name, () => {
         partials: [badgePartialDataFixture.create({ key: 'foo' })],
       })
 
-      expect(new Badge(data).getPartial('foo')).not.toBeNull()
+      expect(new Badge(data).getPartial('foo')).not.toBeUndefined()
     })
 
     test(`should throw error for unknown partial`, () => {

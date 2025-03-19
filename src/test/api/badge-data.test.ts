@@ -10,6 +10,6 @@ export const TEST_BADGE: BadgeData = {
 
 describe('BadgeData', () => {
   test('should be a usable interface', () => {
-    expect(TEST_BADGE).not.toBeNull()
+    expect(TEST_BADGE).not.toBeUndefined()
   })
 })

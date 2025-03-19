@@ -1,29 +1,84 @@
-import { ServerGroup } from './server-group'
-import { ServerGroupData } from '../api/server-group-data'
+import { ContentBundle } from '../api/content-bundle'
+import { Archetype } from './archetype'
+import { GameMap } from './game-map'
+import { Badge } from './badge'
+import { BundleMetadata } from './bundle-metadata'
 
 export class CohContentDatabase {
-  readonly #serverGroups: Record<string, ServerGroup> = {}
+  readonly #archetypeIndex: Record<string, Archetype> = {}
+  readonly #mapIndex: Record<string, GameMap> = {}
+  readonly #badgeIndex: Record<string, Badge> = {}
 
   /**
-   * Load a server group data package into the database.
-   * @param data The data to load.
+   * Metadata about the content bundle.
    */
-  loadServerGroupData(data: ServerGroupData): void {
-    this.#serverGroups[data.key] = new ServerGroup(data)
-  }
+  readonly metadata: BundleMetadata
 
   /**
-   * Get all the server groups currently loaded in the database.
+   * List of the game server names in this server group.
+   * Torchbearer, Excelsior, etc.
    */
-  listServerGroups(): ServerGroup[] {
-    return Object.values(this.#serverGroups)
-  }
+  readonly servers: string[]
 
   /**
-   * get a server group by key.
-   * @param serverGroupKey The key.
+   * List of archetypes available in this server group.
    */
-  getServerGroup(serverGroupKey: string): ServerGroup | null {
-    return this.#serverGroups[serverGroupKey]
+  readonly archetypes: Archetype[]
+
+  /**
+   * List of game maps supported by this server group.
+   */
+  readonly maps: GameMap[]
+
+  /**
+   * List of badges available on this server group.
+   */
+  readonly badges: Badge[]
+
+  /**
+   * Initialize the database with a content bundle.
+   * @param bundle The data to load.
+   */
+  constructor(bundle: ContentBundle) {
+    this.metadata = new BundleMetadata(bundle)
+    this.servers = bundle.servers ?? []
+    this.archetypes = bundle.archetypes?.map((data) => {
+      if (this.#archetypeIndex[data.key] !== undefined) throw new Error(`Duplicate archetype key [${data.key}]`)
+      const archetype = new Archetype(data)
+      this.#archetypeIndex[archetype.key] = archetype
+      return archetype
+    }) ?? []
+    this.maps = bundle.maps?.map((data) => {
+      if (this.#mapIndex[data.key] !== undefined) throw new Error(`Duplicate map key [${data.key}]`)
+      const map = new GameMap(data)
+      this.#mapIndex[map.key] = map
+      return map
+    }) ?? []
+    this.badges = bundle.badges?.map((data) => {
+      if (this.#badgeIndex[data.key] !== undefined) throw new Error(`Duplicate badge key [${data.key}]`)
+      const badge = new Badge(data)
+      this.#badgeIndex[badge.key] = badge
+      return badge
+    }) ?? []
   }
+
+
+  getArchetype(key: string): Archetype {
+    const result = this.#archetypeIndex[key]
+    if (result === undefined) throw new Error(`Unknown archetype key [${key}]`)
+    return result
+  }
+
+  getMap(key: string): GameMap {
+    const result = this.#mapIndex[key]
+    if (result === undefined) throw new Error(`Unknown map key [${key}]`)
+    return result
+  }
+
+  getBadge(key: string): Badge {
+    const result = this.#badgeIndex[key]
+    if (result === undefined) throw new Error(`Unknown badge key [${key}]`)
+    return result
+  }
+
 }

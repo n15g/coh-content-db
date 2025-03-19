@@ -5,23 +5,16 @@ import { Change } from './change'
 import { Link } from './link'
 
 /**
- * A server group is a group or company that hosts a set of game servers, such as Homecoming (https://forums.homecomingservers.com/).
+ * A content bundle holds the data that makes up one forked instance of the game since the original sunset, such as Homecoming (https://forums.homecomingservers.com/).
  */
-export interface ServerGroupData {
+export interface ContentBundle {
   /**
-   * Unique key used to reference this server group.
-   *
-   * Keys can only contain lowercase letters, numbers and hyphens (`-`).
-   */
-  readonly key: string
-
-  /**
-   * Name of the server group.
+   * Name of the fork this bundle contains data for.
    */
   readonly name: string
 
   /**
-   * Description of the server group.
+   * Description of the fork.
    *
    * Supports {@link https://www.markdownguide.org/|Markdown} format.
    */
@@ -38,23 +31,23 @@ export interface ServerGroupData {
   readonly links?: Link[]
 
   /**
-   * List of the game server names in this server group.
+   * List of the game server names in this fork.
    * Torchbearer, Excelsior, etc.
    */
   readonly servers?: string[]
 
   /**
-   * List of archetypes available in this server group.
+   * List of archetypes available in this fork.
    */
   readonly archetypes?: ArchetypeData[]
 
   /**
-   * List of game maps supported by this server group.
+   * List of game maps supported by this fork.
    */
   readonly maps?: GameMapData[]
 
   /**
-   * List of badges available on this server group.
+   * List of badges available on this fork.
    */
   readonly badges?: BadgeData[]
 

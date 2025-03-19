@@ -1,15 +1,14 @@
-import { ServerGroupData } from '../../main'
+import { ContentBundle } from '../../main'
 import { TEST_BADGE } from './badge-data.test'
 
 // If you change this test, update the example in the README as well
-export const TEST_SERVER_GROUP: ServerGroupData = {
-  key: 'my-server-group',
-  name: 'My Server Group',
+export const TEST_BUNDLE: ContentBundle = {
+  name: 'My Content Bundle',
   badges: [TEST_BADGE],
 }
 
 describe('ServerGroupData', () => {
   test('should be a usable interface', () => {
-    expect(TEST_SERVER_GROUP).not.toBeNull()
+    expect(TEST_BUNDLE).not.toBeUndefined()
   })
 })

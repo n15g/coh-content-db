@@ -20,7 +20,8 @@ export class Alternates<T> {
         && (entry.sex === undefined || entry.sex === sex)
       ) return entry.value
     }
-    return undefined
+
+    return this.default
   }
 
   /**
@@ -35,6 +36,14 @@ export class Alternates<T> {
    */
   get canonical(): AlternateData<T>[] {
     return this.#sortedValues
+  }
+
+  /**
+   * Create a joined string from the alternate values in canonical order.
+   * @param sep Separator to use. Default is ' / '
+   */
+  join(sep?: string): string {
+    return this.canonical.map(x => x.value).join(sep ?? ' / ')
   }
 
   #compareAlternates(a: AlternateData<T>, b: AlternateData<T>): number {
