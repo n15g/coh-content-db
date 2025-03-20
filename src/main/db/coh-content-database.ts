@@ -3,11 +3,14 @@ import { Archetype } from './archetype'
 import { GameMap } from './game-map'
 import { Badge } from './badge'
 import { BundleMetadata } from './bundle-metadata'
+import MiniSearch from 'minisearch'
+import { BadgeSearchDocument } from './badge-search-document'
 
 export class CohContentDatabase {
   readonly #archetypeIndex: Record<string, Archetype> = {}
   readonly #mapIndex: Record<string, GameMap> = {}
   readonly #badgeIndex: Record<string, Badge> = {}
+  readonly #badgeSearch: MiniSearch
 
   /**
    * Metadata about the content bundle.
@@ -60,6 +63,14 @@ export class CohContentDatabase {
       this.#badgeIndex[badge.key] = badge
       return badge
     }) ?? []
+
+    this.#badgeSearch = new MiniSearch({
+      fields: ['key', 'name', 'badgeText', 'acquisition'],
+      storeFields: ['key'],
+    })
+    for (const badge of this.badges) {
+      this.#badgeSearch.add(new BadgeSearchDocument(badge))
+    }
   }
 
   getArchetype(key: string): Archetype {
@@ -78,5 +89,12 @@ export class CohContentDatabase {
     const result = this.#badgeIndex[key]
     if (result === undefined) throw new Error(`Unknown badge key [${key}]`)
     return result
+  }
+
+  searchBadges(query?: string): Badge[] {
+    if (!query) return this.badges
+    const keys = this.#badgeSearch.search(query, { prefix: true, fuzzy: true })
+
+    return keys.map(result => this.getBadge(result['key']))
   }
 }
