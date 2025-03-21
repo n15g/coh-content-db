@@ -14,7 +14,7 @@ export const CHANGELOG: Change[] = [
       + '* Standardized pluralization of some field names (name, icon).\n'
       + '* Combined `settitle` ids into a single tuple field.\n'
       + '* Change from GNU to The Unlicense.\n'
-      + '* Removed dependency on lodash.\n'
+      + '* Removed all third-party dependencies.\n'
       + '* Moved from webpack to rollup for packaging.\n'
       + '* Add eslint for linting.\n'
       + '* Add jest for unit tests.\n'

@@ -17,13 +17,17 @@ export * from './api/vidiot-map-data'
 export * from './api/vidiot-map-point-of-interest-data'
 
 // DB
+export * from './db/alternates'
 export * from './db/archetype'
 export * from './db/badge'
+export * from './db/badge-index'
 export * from './db/badge-partial'
+export * from './db/badge-search-options'
+export * from './db/bundle-metadata'
 export * from './db/coh-content-database'
 export * from './db/game-map'
 export * from './db/key'
-export * from './db/bundle-metadata'
+export * from './db/search-results'
 export * from './db/vidiot-map'
 export * from './db/vidiot-map-point-of-interest'
 

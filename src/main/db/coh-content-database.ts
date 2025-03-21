@@ -3,14 +3,14 @@ import { Archetype } from './archetype'
 import { GameMap } from './game-map'
 import { Badge } from './badge'
 import { BundleMetadata } from './bundle-metadata'
-import MiniSearch from 'minisearch'
-import { BadgeSearchDocument } from './badge-search-document'
+import { BadgeIndex } from './badge-index'
+import { BadgeSearchOptions } from './badge-search-options'
+import { SearchResults } from './search-results'
 
 export class CohContentDatabase {
   readonly #archetypeIndex: Record<string, Archetype> = {}
   readonly #mapIndex: Record<string, GameMap> = {}
-  readonly #badgeIndex: Record<string, Badge> = {}
-  readonly #badgeSearch: MiniSearch
+  readonly #badgeIndex: BadgeIndex
 
   /**
    * Metadata about the content bundle.
@@ -45,32 +45,23 @@ export class CohContentDatabase {
   constructor(bundle: ContentBundle) {
     this.metadata = new BundleMetadata(bundle)
     this.servers = bundle.servers ?? []
+
     this.archetypes = bundle.archetypes?.map((data) => {
       if (this.#archetypeIndex[data.key] !== undefined) throw new Error(`Duplicate archetype key [${data.key}]`)
       const archetype = new Archetype(data)
       this.#archetypeIndex[archetype.key] = archetype
       return archetype
     }) ?? []
+
     this.maps = bundle.maps?.map((data) => {
       if (this.#mapIndex[data.key] !== undefined) throw new Error(`Duplicate map key [${data.key}]`)
       const map = new GameMap(data)
       this.#mapIndex[map.key] = map
       return map
     }) ?? []
-    this.badges = bundle.badges?.map((data) => {
-      if (this.#badgeIndex[data.key] !== undefined) throw new Error(`Duplicate badge key [${data.key}]`)
-      const badge = new Badge(data)
-      this.#badgeIndex[badge.key] = badge
-      return badge
-    }) ?? []
 
-    this.#badgeSearch = new MiniSearch({
-      fields: ['key', 'name', 'badgeText', 'acquisition'],
-      storeFields: ['key'],
-    })
-    for (const badge of this.badges) {
-      this.#badgeSearch.add(new BadgeSearchDocument(badge))
-    }
+    this.badges = bundle.badges?.map(data => new Badge(data)) ?? []
+    this.#badgeIndex = new BadgeIndex(this.badges)
   }
 
   getArchetype(key: string): Archetype {
@@ -86,15 +77,16 @@ export class CohContentDatabase {
   }
 
   getBadge(key: string): Badge {
-    const result = this.#badgeIndex[key]
-    if (result === undefined) throw new Error(`Unknown badge key [${key}]`)
-    return result
+    return this.#badgeIndex.getBadge(key)
   }
 
-  searchBadges(query?: string): Badge[] {
-    if (!query) return this.badges
-    const keys = this.#badgeSearch.search(query, { prefix: true, fuzzy: true })
-
-    return keys.map(result => this.getBadge(result['key']))
+  /**
+   * Search, sort and filter the badge list.
+   * This is a fairly brute-forced approach and will not be as performant as loading the badge data into a traditional
+   * database engine, but is sufficient for most operations.
+   * @param options {@link BadgeSearchOptions}
+   */
+  searchBadges(options?: BadgeSearchOptions): SearchResults<Badge> {
+    return this.#badgeIndex.searchBadges(options)
   }
 }
