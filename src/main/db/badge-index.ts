@@ -34,13 +34,14 @@ export class BadgeIndex {
       ? this.#badges.filter(badge => satisfiesQueryPredicate(badge, options?.query))
       : this.#badges
 
-    const paged = options?.pageSize ? filtered.slice(options?.pageIndex ?? 0, ((options?.pageIndex ?? 0) + 1) * options?.pageSize) : filtered
+    const paged = options?.pageSize ? filtered.slice((options?.pageIndex ?? 0) * options.pageSize, ((options?.pageIndex ?? 0) + 1) * options?.pageSize) : filtered
 
     return {
       value: paged,
       pageIndex: options?.pageIndex ?? 0,
       pageSize: options?.pageSize,
-      total: filtered.length,
+      totalEntries: filtered.length,
+      totalPages: options?.pageSize ? Math.ceil(filtered.length / (options?.pageSize)) : 1,
     }
   }
 }

@@ -1,6 +1,5 @@
 import { badgeDataFixture } from '../api/badge-data.fixture'
-import { BadgeIndex } from '../../main/db/badge-index'
-import { Badge } from '../../main'
+import { Badge, BadgeIndex } from '../../main'
 
 describe(BadgeIndex.name, () => {
   describe('Constructor', () => {
@@ -35,13 +34,8 @@ describe(BadgeIndex.name, () => {
       ]
 
       const result = new BadgeIndex(data).searchBadges({ query: { str: 'Foo', on: { name: true } } })
-
-      expect(result.value).toHaveLength(3)
       const keys = result.value.map(x => x.key)
-      expect(keys).toContain('match-1')
-      expect(keys).toContain('match-2')
-      expect(keys).toContain('match-3')
-      expect(keys).not.toContainEqual(['miss-1'])
+      expect(keys).toStrictEqual(['match-1', 'match-2', 'match-3'])
     })
 
     test(`should match on badge text`, () => {
@@ -54,14 +48,8 @@ describe(BadgeIndex.name, () => {
       ]
 
       const result = new BadgeIndex(data).searchBadges({ query: { str: 'Foo', on: { badgeText: true } } })
-
-      expect(result.value).toHaveLength(3)
       const keys = result.value.map(x => x.key)
-      expect(keys).toContain('match-1')
-      expect(keys).toContain('match-2')
-      expect(keys).toContain('match-3')
-      expect(keys).not.toContain('miss-1')
-      expect(keys).not.toContain('miss-2')
+      expect(keys).toStrictEqual(['match-1', 'match-2', 'match-3'])
     })
 
     test(`should match on acquisition`, () => {
@@ -73,13 +61,8 @@ describe(BadgeIndex.name, () => {
       ]
 
       const result = new BadgeIndex(data).searchBadges({ query: { str: 'Foo', on: { acquisition: true } } })
-
-      expect(result.value).toHaveLength(2)
       const keys = result.value.map(x => x.key)
-      expect(keys).toContain('match-1')
-      expect(keys).toContain('match-2')
-      expect(keys).not.toContain('miss-1')
-      expect(keys).not.toContain('miss-2')
+      expect(keys).toStrictEqual(['match-1', 'match-2'])
     })
 
     test(`should match on effect`, () => {
@@ -91,13 +74,8 @@ describe(BadgeIndex.name, () => {
       ]
 
       const result = new BadgeIndex(data).searchBadges({ query: { str: 'Foo', on: { effect: true } } })
-
-      expect(result.value).toHaveLength(2)
       const keys = result.value.map(x => x.key)
-      expect(keys).toContain('match-1')
-      expect(keys).toContain('match-2')
-      expect(keys).not.toContain('miss-1')
-      expect(keys).not.toContain('miss-2')
+      expect(keys).toStrictEqual(['match-1', 'match-2'])
     })
 
     test(`should match on notes`, () => {
@@ -109,13 +87,8 @@ describe(BadgeIndex.name, () => {
       ]
 
       const result = new BadgeIndex(data).searchBadges({ query: { str: 'Foo', on: { notes: true } } })
-
-      expect(result.value).toHaveLength(2)
       const keys = result.value.map(x => x.key)
-      expect(keys).toContain('match-1')
-      expect(keys).toContain('match-2')
-      expect(keys).not.toContain('miss-1')
-      expect(keys).not.toContain('miss-2')
+      expect(keys).toStrictEqual(['match-1', 'match-2'])
     })
 
     test(`should match on setTitle`, () => {
@@ -130,10 +103,7 @@ describe(BadgeIndex.name, () => {
 
       expect(result.value).toHaveLength(2)
       const keys = result.value.map(x => x.key)
-      expect(keys).toContain('match-1')
-      expect(keys).toContain('match-2')
-      expect(keys).not.toContain('miss-1')
-      expect(keys).not.toContain('miss-2')
+      expect(keys).toStrictEqual(['match-1', 'match-2'])
     })
 
     test(`should match the start of a string`, () => {
@@ -144,12 +114,8 @@ describe(BadgeIndex.name, () => {
       ]
 
       const result = new BadgeIndex(data).searchBadges({ query: { str: 'Fo', on: { acquisition: true } } })
-
-      expect(result.value).toHaveLength(2)
       const keys = result.value.map(x => x.key)
-      expect(keys).toContain('match-1')
-      expect(keys).toContain('match-2')
-      expect(keys).not.toContainEqual(['miss-1'])
+      expect(keys).toStrictEqual(['match-1', 'match-2'])
     })
 
     test(`should return everything for an empty query`, () => {
@@ -160,9 +126,8 @@ describe(BadgeIndex.name, () => {
       ]
 
       const result = new BadgeIndex(data).searchBadges()
-
-      expect(result.value).toHaveLength(3)
       const keys = result.value.map(x => x.key)
+      expect(keys).toStrictEqual(['foo-1', 'foo-2', 'bar-1'])
       expect(keys).toContain('foo-1')
       expect(keys).toContain('foo-2')
       expect(keys).toContain('bar-1')
@@ -176,12 +141,8 @@ describe(BadgeIndex.name, () => {
       ]
 
       const result = new BadgeIndex(data).searchBadges({ query: { str: 'foo', on: { acquisition: true } } })
-
-      expect(result.value).toHaveLength(2)
       const keys = result.value.map(x => x.key)
-      expect(keys).toContain('match-1')
-      expect(keys).toContain('match-2')
-      expect(keys).not.toContain('miss-1')
+      expect(keys).toStrictEqual(['match-1', 'match-2'])
     })
 
     test(`should default to querying on name only`, () => {
@@ -193,11 +154,133 @@ describe(BadgeIndex.name, () => {
 
       const result = new BadgeIndex(data).searchBadges({ query: { str: 'foo' } })
 
-      expect(result.value).toHaveLength(1)
       const keys = result.value.map(x => x.key)
-      expect(keys).toContain('match-1')
-      expect(keys).not.toContain('miss-1')
-      expect(keys).not.toContain('miss-2')
+      expect(keys).toStrictEqual(['match-1'])
     })
+
+    test(`should return all results with no pagination data`, () => {
+      const data = [
+        new Badge(badgeDataFixture.create({ key: 'badge-1' })),
+        new Badge(badgeDataFixture.create({ key: 'badge-2' })),
+        new Badge(badgeDataFixture.create({ key: 'badge-3' })),
+        new Badge(badgeDataFixture.create({ key: 'badge-4' })),
+        new Badge(badgeDataFixture.create({ key: 'badge-5' })),
+        new Badge(badgeDataFixture.create({ key: 'badge-6' })),
+      ]
+
+      const result = new BadgeIndex(data).searchBadges()
+      const keys = result.value.map(x => x.key)
+      expect(keys).toStrictEqual(['badge-1', 'badge-2', 'badge-3', 'badge-4', 'badge-5', 'badge-6'])
+    })
+
+    test(`should return the requested page size`, () => {
+      const data = [
+        new Badge(badgeDataFixture.create({ key: 'badge-1' })),
+        new Badge(badgeDataFixture.create({ key: 'badge-2' })),
+        new Badge(badgeDataFixture.create({ key: 'badge-3' })),
+        new Badge(badgeDataFixture.create({ key: 'badge-4' })),
+        new Badge(badgeDataFixture.create({ key: 'badge-5' })),
+        new Badge(badgeDataFixture.create({ key: 'badge-6' })),
+      ]
+
+      const result = new BadgeIndex(data).searchBadges({ pageSize: 2 })
+      expect(result.value).toHaveLength(2)
+    })
+  })
+
+  test(`should return the start of the array with no page specified`, () => {
+    const data = [
+      new Badge(badgeDataFixture.create({ key: 'badge-1' })),
+      new Badge(badgeDataFixture.create({ key: 'badge-2' })),
+      new Badge(badgeDataFixture.create({ key: 'badge-3' })),
+      new Badge(badgeDataFixture.create({ key: 'badge-4' })),
+      new Badge(badgeDataFixture.create({ key: 'badge-5' })),
+      new Badge(badgeDataFixture.create({ key: 'badge-6' })),
+    ]
+
+    const result = new BadgeIndex(data).searchBadges({ pageSize: 2 })
+    const keys = result.value.map(x => x.key)
+    expect(keys).toStrictEqual(['badge-1', 'badge-2'])
+  })
+
+  test(`should return results from the middle of the array with a page specified`, () => {
+    const data = [
+      new Badge(badgeDataFixture.create({ key: 'badge-1' })),
+      new Badge(badgeDataFixture.create({ key: 'badge-2' })),
+      new Badge(badgeDataFixture.create({ key: 'badge-3' })),
+      new Badge(badgeDataFixture.create({ key: 'badge-4' })),
+      new Badge(badgeDataFixture.create({ key: 'badge-5' })),
+      new Badge(badgeDataFixture.create({ key: 'badge-6' })),
+    ]
+
+    const result = new BadgeIndex(data).searchBadges({ pageIndex: 1, pageSize: 2 })
+    const keys = result.value.map(x => x.key)
+    expect(keys).toStrictEqual(['badge-3', 'badge-4'])
+  })
+
+  test(`should return a partial page if at the end of the array`, () => {
+    const data = [
+      new Badge(badgeDataFixture.create({ key: 'badge-1' })),
+      new Badge(badgeDataFixture.create({ key: 'badge-2' })),
+      new Badge(badgeDataFixture.create({ key: 'badge-3' })),
+      new Badge(badgeDataFixture.create({ key: 'badge-4' })),
+      new Badge(badgeDataFixture.create({ key: 'badge-5' })),
+    ]
+
+    const result = new BadgeIndex(data).searchBadges({ pageIndex: 2, pageSize: 2 })
+    const keys = result.value.map(x => x.key)
+    expect(keys).toStrictEqual(['badge-5'])
+  })
+
+  test(`should return the correct total entry count`, () => {
+    const data = [
+      new Badge(badgeDataFixture.create({ key: 'badge-1' })),
+      new Badge(badgeDataFixture.create({ key: 'badge-2' })),
+      new Badge(badgeDataFixture.create({ key: 'badge-3' })),
+      new Badge(badgeDataFixture.create({ key: 'badge-4' })),
+      new Badge(badgeDataFixture.create({ key: 'badge-5' })),
+    ]
+
+    const result = new BadgeIndex(data).searchBadges({ pageIndex: 2, pageSize: 2 })
+    expect(result.totalEntries).toBe(5)
+  })
+
+  test(`should return the page size`, () => {
+    const data = [
+      new Badge(badgeDataFixture.create({ key: 'badge-1' })),
+      new Badge(badgeDataFixture.create({ key: 'badge-2' })),
+      new Badge(badgeDataFixture.create({ key: 'badge-3' })),
+      new Badge(badgeDataFixture.create({ key: 'badge-4' })),
+      new Badge(badgeDataFixture.create({ key: 'badge-5' })),
+    ]
+
+    const result = new BadgeIndex(data).searchBadges({ pageSize: 2 })
+    expect(result.pageSize).toBe(2)
+  })
+
+  test(`should return the correct total page count`, () => {
+    const data = [
+      new Badge(badgeDataFixture.create({ key: 'badge-1' })),
+      new Badge(badgeDataFixture.create({ key: 'badge-2' })),
+      new Badge(badgeDataFixture.create({ key: 'badge-3' })),
+      new Badge(badgeDataFixture.create({ key: 'badge-4' })),
+      new Badge(badgeDataFixture.create({ key: 'badge-5' })),
+    ]
+
+    const result = new BadgeIndex(data).searchBadges({ pageSize: 2 })
+    expect(result.totalPages).toBe(3)
+  })
+
+  test(`should return a total page count of 1 when no page size is provided`, () => {
+    const data = [
+      new Badge(badgeDataFixture.create({ key: 'badge-1' })),
+      new Badge(badgeDataFixture.create({ key: 'badge-2' })),
+      new Badge(badgeDataFixture.create({ key: 'badge-3' })),
+      new Badge(badgeDataFixture.create({ key: 'badge-4' })),
+      new Badge(badgeDataFixture.create({ key: 'badge-5' })),
+    ]
+
+    const result = new BadgeIndex(data).searchBadges()
+    expect(result.totalPages).toBe(1)
   })
 })
