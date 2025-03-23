@@ -30,6 +30,16 @@ export interface BadgeSearchOptions {
   }
 
   /**
+   * Sort results.
+   *
+   * Badges are assumed to be in canonical order in the content bundle, and should match the in-game display order.
+   */
+  sort?: {
+    by?: 'CANONICAL' | 'BADGE_NAME' | 'MAP_NAME'
+    dir?: 'ASC' | 'DESC'
+  }
+
+  /**
    * How many results per page
    */
   pageSize?: number

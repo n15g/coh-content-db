@@ -1,5 +1,12 @@
 import { badgeDataFixture } from '../api/badge-data.fixture'
-import { Badge, BadgeIndex } from '../../main'
+import { Badge, BadgeIndex, GameMap } from '../../main'
+import { gameMapDataFixture } from '../api/game-map-data.fixture'
+
+const TEST_MAPS = [
+  new GameMap(gameMapDataFixture.create({ key: 'atlas-park', name: 'Atlas Park' })),
+  new GameMap(gameMapDataFixture.create({ key: 'perez-park', name: 'Perez Park' })),
+  new GameMap(gameMapDataFixture.create({ key: 'abandoned-sewer-network', name: 'Abandoned Sewer Network' })),
+]
 
 describe(BadgeIndex.name, () => {
   describe('Constructor', () => {
@@ -25,7 +32,6 @@ describe(BadgeIndex.name, () => {
   })
 
   describe('searchBadges', () => {
-
     test(`should return everything for an empty query`, () => {
       const data = [
         new Badge(badgeDataFixture.create({ key: 'foo-1', acquisition: 'Foo 1' })),
@@ -348,6 +354,130 @@ describe(BadgeIndex.name, () => {
 
       const result = new BadgeIndex(data).searchBadges()
       expect(result.totalPages).toBe(1)
+    })
+  })
+
+  describe('sort', () => {
+    test(`should not modify sort if not specified`, () => {
+      const data = [
+        new Badge(badgeDataFixture.create({ key: 'badge-1' })),
+        new Badge(badgeDataFixture.create({ key: 'badge-2' })),
+        new Badge(badgeDataFixture.create({ key: 'badge-3' })),
+        new Badge(badgeDataFixture.create({ key: 'badge-4' })),
+      ]
+
+      const result = new BadgeIndex(data, TEST_MAPS).searchBadges()
+
+      const keys = result.value.map(x => x.key)
+      expect(keys).toStrictEqual(['badge-1', 'badge-2', 'badge-3', 'badge-4'])
+    })
+
+    test(`should reverse default sort with desc`, () => {
+      const data = [
+        new Badge(badgeDataFixture.create({ key: 'badge-1' })),
+        new Badge(badgeDataFixture.create({ key: 'badge-2' })),
+        new Badge(badgeDataFixture.create({ key: 'badge-3' })),
+        new Badge(badgeDataFixture.create({ key: 'badge-4' })),
+      ]
+
+      const result = new BadgeIndex(data, TEST_MAPS).searchBadges({ sort: { dir: 'DESC' } })
+
+      const keys = result.value.map(x => x.key)
+      expect(keys).toStrictEqual(['badge-4', 'badge-3', 'badge-2', 'badge-1'])
+    })
+
+    test(`should sort by badge name`, () => {
+      const data = [
+        new Badge(badgeDataFixture.create({ key: 'badge-1', name: [{ value: 'Abc' }] })),
+        new Badge(badgeDataFixture.create({ key: 'badge-2', name: [{ value: 'XYZ' }] })),
+        new Badge(badgeDataFixture.create({ key: 'badge-3', name: [{ value: 'AAB' }] })),
+      ]
+
+      const result = new BadgeIndex(data, TEST_MAPS).searchBadges({ sort: { by: 'BADGE_NAME' } })
+
+      const keys = result.value.map(x => x.key)
+      expect(keys).toStrictEqual(['badge-3', 'badge-1', 'badge-2'])
+    })
+
+    test(`should sort by badge name descending`, () => {
+      const data = [
+        new Badge(badgeDataFixture.create({ key: 'badge-1', name: [{ value: 'Abc' }] })),
+        new Badge(badgeDataFixture.create({ key: 'badge-2', name: [{ value: 'XYZ' }] })),
+        new Badge(badgeDataFixture.create({ key: 'badge-3', name: [{ value: 'AAB' }] })),
+      ]
+
+      const result = new BadgeIndex(data, TEST_MAPS).searchBadges({ sort: { by: 'BADGE_NAME', dir: 'DESC' } })
+
+      const keys = result.value.map(x => x.key)
+      expect(keys).toStrictEqual(['badge-2', 'badge-1', 'badge-3'])
+    })
+
+    test(`should use the default badge name when sorting by name`, () => {
+      const data = [
+        new Badge(badgeDataFixture.create({ key: 'badge-1', name: [{ value: 'Abc' }] })),
+        new Badge(badgeDataFixture.create({ key: 'badge-2', name: [{ value: 'XYZ' }, { sex: 'F', value: 'AAA' }] })),
+        new Badge(badgeDataFixture.create({ key: 'badge-3', name: [{ value: 'AAB' }] })),
+      ]
+
+      const result = new BadgeIndex(data, TEST_MAPS).searchBadges({ sort: { by: 'BADGE_NAME' } })
+
+      const keys = result.value.map(x => x.key)
+      expect(keys).toStrictEqual(['badge-3', 'badge-1', 'badge-2'])
+    })
+
+    test(`should sort by map name`, () => {
+      const data = [
+        new Badge(badgeDataFixture.create({ key: 'badge-1', mapKey: 'atlas-park' })),
+        new Badge(badgeDataFixture.create({ key: 'badge-2', mapKey: 'perez-park' })),
+        new Badge(badgeDataFixture.create({ key: 'badge-3', mapKey: 'abandoned-sewer-network' })),
+      ]
+
+      const result = new BadgeIndex(data, TEST_MAPS).searchBadges({ sort: { by: 'MAP_NAME' } })
+
+      const keys = result.value.map(x => x.key)
+      expect(keys).toStrictEqual(['badge-3', 'badge-1', 'badge-2'])
+    })
+
+    test(`should sort by map name descending`, () => {
+      const data = [
+        new Badge(badgeDataFixture.create({ key: 'badge-1', mapKey: 'atlas-park' })),
+        new Badge(badgeDataFixture.create({ key: 'badge-2', mapKey: 'perez-park' })),
+        new Badge(badgeDataFixture.create({ key: 'badge-3', mapKey: 'abandoned-sewer-network' })),
+      ]
+
+      const result = new BadgeIndex(data, TEST_MAPS).searchBadges({ sort: { by: 'MAP_NAME', dir: 'DESC' } })
+
+      const keys = result.value.map(x => x.key)
+      expect(keys).toStrictEqual(['badge-2', 'badge-1', 'badge-3'])
+    })
+
+    test(`should maintain canonical as secondary sort when sorting by map name`, () => {
+      const data = [
+        new Badge(badgeDataFixture.create({ key: 'badge-1', mapKey: 'atlas-park' })),
+        new Badge(badgeDataFixture.create({ key: 'badge-2', mapKey: 'perez-park' })),
+        new Badge(badgeDataFixture.create({ key: 'badge-3', mapKey: 'atlas-park' })),
+        new Badge(badgeDataFixture.create({ key: 'badge-4', mapKey: 'abandoned-sewer-network' })),
+      ]
+
+      const result = new BadgeIndex(data, TEST_MAPS).searchBadges({ sort: { by: 'MAP_NAME' } })
+
+      const keys = result.value.map(x => x.key)
+      expect(keys).toStrictEqual(['badge-4', 'badge-1', 'badge-3', 'badge-2'])
+    })
+
+    test(`should sort unknown map names to the end`, () => {
+      const data = [
+        new Badge(badgeDataFixture.create({ key: 'badge-1', mapKey: 'atlas-park' })),
+        new Badge(badgeDataFixture.create({ key: 'badge-2', mapKey: 'unknown' })),
+        new Badge(badgeDataFixture.create({ key: 'badge-3', mapKey: 'perez-park' })),
+        new Badge(badgeDataFixture.create({ key: 'badge-4', mapKey: 'unexpected' })),
+        new Badge(badgeDataFixture.create({ key: 'badge-5', mapKey: 'abandoned-sewer-network' })),
+      ]
+
+      const result = new BadgeIndex(data, TEST_MAPS).searchBadges({ sort: { by: 'MAP_NAME' } })
+
+      const keys = result.value.map(x => x.key)
+      expect(keys).toStrictEqual(['badge-5', 'badge-1', 'badge-3', 'badge-2', 'badge-4'])
     })
   })
 })
