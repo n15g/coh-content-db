@@ -61,7 +61,7 @@ export class CohContentDatabase {
     }) ?? []
 
     this.badges = bundle.badges?.map(data => new Badge(data)) ?? []
-    this.#badgeIndex = new BadgeIndex(this.badges)
+    this.#badgeIndex = new BadgeIndex(this.badges, this.maps)
   }
 
   getArchetype(key: string): Archetype {

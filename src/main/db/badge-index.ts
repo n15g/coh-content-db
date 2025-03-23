@@ -31,7 +31,7 @@ export class BadgeIndex {
 
   searchBadges(options?: BadgeSearchOptions): SearchResults<Badge> {
     const filtered = (options?.query || options?.filter)
-      ? this.#badges.filter(badge => satisfiesQueryPredicate(badge, options?.query))
+      ? this.#badges.filter(badge => satisfiesQueryPredicate(badge, options?.query) && satisfiesFilterPredicate(badge, options?.filter))
       : this.#badges
 
     const paged = options?.pageSize ? filtered.slice((options?.pageIndex ?? 0) * options.pageSize, ((options?.pageIndex ?? 0) + 1) * options?.pageSize) : filtered
@@ -54,4 +54,10 @@ function satisfiesQueryPredicate(badge: Badge, query?: BadgeSearchOptions['query
     || (query?.on?.effect && badge.effect?.toLowerCase().includes(queryString))
     || (query?.on?.notes && badge.notes?.toLowerCase().includes(queryString))
     || (query?.on?.setTitle && (badge.setTitle?.id?.toString().includes(queryString) || badge.setTitle?.praetorianId?.toString().includes(queryString))))
+}
+
+function satisfiesFilterPredicate(badge: Badge, filter?: BadgeSearchOptions['filter']): boolean {
+  return (!filter?.type || badge.type === filter.type)
+    && (!filter?.mapKey || badge.mapKey === filter.mapKey)
+    && (!filter?.alignment || badge.alignment.includes(filter.alignment))
 }
