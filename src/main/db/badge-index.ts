@@ -1,7 +1,7 @@
 import { Badge } from './badge'
 import { BadgeSearchOptions } from './badge-search-options'
 import { GameMap } from './game-map'
-import { SearchResults } from './search-results'
+import { Paged } from './paged'
 
 export class BadgeIndex {
   readonly #badges: Badge[] = []
@@ -29,20 +29,20 @@ export class BadgeIndex {
     return result
   }
 
-  searchBadges(options?: BadgeSearchOptions): SearchResults<Badge> {
+  searchBadges(options?: BadgeSearchOptions): Paged<Badge> {
     const filtered = (options?.query || options?.filter)
       ? this.#badges.filter(badge => this.#satisfiesQueryPredicate(badge, options?.query) && this.#satisfiesFilterPredicate(badge, options?.filter))
       : this.#badges
 
-    const paged = options?.pageSize ? filtered.slice((options?.pageIndex ?? 0) * options.pageSize, ((options?.pageIndex ?? 0) + 1) * options?.pageSize) : filtered
+    const paged = options?.pageSize ? filtered.slice(((options?.page ?? 1) - 1) * options.pageSize, (options?.page ?? 1) * options?.pageSize) : filtered
 
     const sorted = this.#sort(paged, options?.sort)
 
     return {
-      value: sorted,
-      pageIndex: options?.pageIndex ?? 0,
+      items: sorted,
+      page: options?.page ?? 1,
       pageSize: options?.pageSize,
-      totalEntries: filtered.length,
+      totalItems: filtered.length,
       totalPages: options?.pageSize ? Math.ceil(filtered.length / (options?.pageSize)) : 1,
     }
   }

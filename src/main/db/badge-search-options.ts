@@ -40,12 +40,12 @@ export interface BadgeSearchOptions {
   }
 
   /**
+   * The page (1-based)
+   */
+  page?: number
+
+  /**
    * How many results per page
    */
   pageSize?: number
-
-  /**
-   * The page index (starting at 0)
-   */
-  pageIndex?: number
 }

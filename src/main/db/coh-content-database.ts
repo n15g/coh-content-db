@@ -5,7 +5,7 @@ import { Badge } from './badge'
 import { BundleMetadata } from './bundle-metadata'
 import { BadgeIndex } from './badge-index'
 import { BadgeSearchOptions } from './badge-search-options'
-import { SearchResults } from './search-results'
+import { Paged } from './paged'
 
 export class CohContentDatabase {
   readonly #archetypeIndex: Record<string, Archetype> = {}
@@ -86,7 +86,7 @@ export class CohContentDatabase {
    * database engine, but is sufficient for most operations.
    * @param options {@link BadgeSearchOptions}
    */
-  searchBadges(options?: BadgeSearchOptions): SearchResults<Badge> {
+  searchBadges(options?: BadgeSearchOptions): Paged<Badge> {
     return this.#badgeIndex.searchBadges(options)
   }
 }

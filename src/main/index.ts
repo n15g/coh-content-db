@@ -27,7 +27,7 @@ export * from './db/bundle-metadata'
 export * from './db/coh-content-database'
 export * from './db/game-map'
 export * from './db/key'
-export * from './db/search-results'
+export * from './db/paged'
 export * from './db/vidiot-map'
 export * from './db/vidiot-map-point-of-interest'
 
