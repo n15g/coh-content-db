@@ -1,10 +1,10 @@
 import { BadgeType } from '../api/badge-type'
-import { Alignment } from '../api/alignment'
 import { Link } from '../api/link'
 import { BadgeData } from '../api/badge-data'
 import { BadgePartial } from './badge-partial'
 import { Key } from './key'
 import { Alternates } from './alternates'
+import { Alignments } from './alignments'
 
 export class Badge {
   readonly #partialsIndex: Record<string, BadgePartial> = {}
@@ -29,7 +29,7 @@ export class Badge {
   /**
    * The character alignments that this badge is available to.
    */
-  readonly alignment: Alignment[]
+  readonly alignment: Alignments
 
   /**
    * The badge text as it appears in-game. May vary by character sex or alignment.
@@ -112,7 +112,7 @@ export class Badge {
     this.key = new Key(data.key).value
     this.type = data.type
     this.name = new Alternates(data.name)
-    this.alignment = data.alignment
+    this.alignment = new Alignments(data.alignment)
     this.badgeText = new Alternates(data.badgeText ?? [])
     this.acquisition = data.acquisition
     this.icon = new Alternates(data.icon ?? [])

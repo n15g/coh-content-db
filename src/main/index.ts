@@ -17,6 +17,7 @@ export * from './api/vidiot-map-data'
 export * from './api/vidiot-map-point-of-interest-data'
 
 // DB
+export * from './db/alignments'
 export * from './db/alternates'
 export * from './db/archetype'
 export * from './db/badge'

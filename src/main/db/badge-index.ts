@@ -60,7 +60,7 @@ export class BadgeIndex {
   #satisfiesFilterPredicate(badge: Badge, filter?: BadgeSearchOptions['filter']): boolean {
     return (!filter?.type || badge.type === filter.type)
       && (!filter?.mapKey || badge.mapKey === filter.mapKey)
-      && (!filter?.alignment || badge.alignment.includes(filter.alignment))
+      && (!filter?.alignment || badge.alignment.items.includes(filter.alignment))
   }
 
   #sort(badges: Badge[], sort?: BadgeSearchOptions['sort']): Badge[] {
