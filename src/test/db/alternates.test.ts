@@ -118,64 +118,30 @@ describe(Alternates.name, () => {
         { alignment: 'H', sex: 'F', value: 'Female Hero' },
         { alignment: 'P', value: 'Praetorian' },
         { sex: 'F', value: 'Female' },
-        { alignment: 'H', sex: 'A', value: 'A Hero' },
-        { alignment: 'Y', sex: 'A', value: 'A Y' },
         { alignment: 'V', sex: 'M', value: 'Male Villain' },
-        { alignment: 'V', sex: 'B', value: 'B Villain' },
         { alignment: 'P', sex: 'M', value: 'Male Praetorian' },
         { alignment: 'H', value: 'Hero' },
-        { alignment: 'V', sex: 'A', value: 'A Villain' },
-        { sex: 'A', value: 'A Sex' },
-        { alignment: 'X', sex: 'F', value: 'Female X' },
         { alignment: 'H', sex: 'M', value: 'Male Hero' },
-        { alignment: 'X', value: 'X' },
-        { alignment: 'P', sex: 'B', value: 'B Praetorian' },
-        { alignment: 'P', sex: 'A', value: 'A Praetorian' },
-        { alignment: 'X', sex: 'M', value: 'Male X' },
         { sex: 'M', value: 'Male' },
-        { alignment: 'X', sex: 'B', value: 'B X' },
-        { alignment: 'H', sex: 'B', value: 'B Hero' },
         { alignment: 'V', value: 'Villain' },
-        { alignment: 'Y', sex: 'M', value: 'Male Y' },
         { alignment: 'V', sex: 'F', value: 'Female Villain' },
-        { sex: 'B', value: 'B Sex' },
-        { alignment: 'Y', sex: 'B', value: 'B Y' },
         { alignment: 'P', sex: 'F', value: 'Female Praetorian' },
-        { alignment: 'X', sex: 'A', value: 'A X' },
         { value: 'Default' },
-        { alignment: 'Y', sex: 'F', value: 'Female Y' },
       ]).canonical
 
       expect(result).toStrictEqual([
         { value: 'Default' },
         { sex: 'M', value: 'Male' },
         { sex: 'F', value: 'Female' },
-        { sex: 'A', value: 'A Sex' },
-        { sex: 'B', value: 'B Sex' },
         { alignment: 'H', value: 'Hero' },
         { alignment: 'V', value: 'Villain' },
         { alignment: 'P', value: 'Praetorian' },
-        { alignment: 'X', value: 'X' },
         { alignment: 'H', sex: 'M', value: 'Male Hero' },
         { alignment: 'H', sex: 'F', value: 'Female Hero' },
-        { alignment: 'H', sex: 'A', value: 'A Hero' },
-        { alignment: 'H', sex: 'B', value: 'B Hero' },
         { alignment: 'V', sex: 'M', value: 'Male Villain' },
         { alignment: 'V', sex: 'F', value: 'Female Villain' },
-        { alignment: 'V', sex: 'A', value: 'A Villain' },
-        { alignment: 'V', sex: 'B', value: 'B Villain' },
         { alignment: 'P', sex: 'M', value: 'Male Praetorian' },
         { alignment: 'P', sex: 'F', value: 'Female Praetorian' },
-        { alignment: 'P', sex: 'A', value: 'A Praetorian' },
-        { alignment: 'P', sex: 'B', value: 'B Praetorian' },
-        { alignment: 'X', sex: 'M', value: 'Male X' },
-        { alignment: 'X', sex: 'F', value: 'Female X' },
-        { alignment: 'X', sex: 'A', value: 'A X' },
-        { alignment: 'X', sex: 'B', value: 'B X' },
-        { alignment: 'Y', sex: 'M', value: 'Male Y' },
-        { alignment: 'Y', sex: 'F', value: 'Female Y' },
-        { alignment: 'Y', sex: 'A', value: 'A Y' },
-        { alignment: 'Y', sex: 'B', value: 'B Y' },
       ])
     })
 
@@ -204,38 +170,14 @@ describe(Alternates.name, () => {
         { value: 'C' },
       ])
     })
-
-    test('should sort unknown alignments by alpha', () => {
-      expect(new Alternates([
-        { alignment: 'A', value: 'A' },
-        { alignment: 'C', value: 'C' },
-        { alignment: 'B', value: 'B' },
-      ]).canonical).toStrictEqual([
-        { alignment: 'A', value: 'A' },
-        { alignment: 'B', value: 'B' },
-        { alignment: 'C', value: 'C' },
-      ])
-    })
-
-    test('should sort unknown sex by alpha', () => {
-      expect(new Alternates([
-        { sex: 'A', value: 'A' },
-        { sex: 'C', value: 'C' },
-        { sex: 'B', value: 'B' },
-      ]).canonical).toStrictEqual([
-        { sex: 'A', value: 'A' },
-        { sex: 'B', value: 'B' },
-        { sex: 'C', value: 'C' },
-      ])
-    })
   })
 
   describe('toString', () => {
     test('should create a string separated by the separator', () => {
       expect(new Alternates([
-        { sex: 'A', value: 'A' },
-        { sex: 'B', value: 'B' },
-        { sex: 'C', value: 'C' },
+        { sex: 'M', value: 'A' },
+        { sex: 'F', value: 'B' },
+        { alignment: 'H', value: 'C' },
       ]).toString(', ')).toBe('A, B, C')
     })
   })

@@ -17,7 +17,7 @@ export class Badge {
   /**
    * The type of badge.
    */
-  readonly type: BadgeType | string
+  readonly type: BadgeType
 
   /**
    * The name of this badge.

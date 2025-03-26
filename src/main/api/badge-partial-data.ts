@@ -11,7 +11,7 @@ export interface BadgePartialData {
   /**
    * Type of partial.
    */
-  readonly type: BadgePartialType | string
+  readonly type: BadgePartialType
 
   /**
    * Map the partial is located on.
@@ -26,7 +26,7 @@ export interface BadgePartialData {
   /**
    * Is it a wall plaque or a physical monument?
    */
-  readonly plaqueType?: PlaqueType | string
+  readonly plaqueType?: PlaqueType
 
   /**
    * Plaque inscription.
@@ -51,7 +51,7 @@ export interface BadgePartialData {
   /**
    * The types of enhancements required to be crafted.
    */
-  readonly inventionTypes?: (EnhancementCategory | string)[]
+  readonly inventionTypes?: EnhancementCategory[]
 
   /**
    * Number of invention crafts required.

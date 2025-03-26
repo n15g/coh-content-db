@@ -8,12 +8,12 @@ export interface AlternateData<V> {
   /**
    * The character alignment this alternate applies to.
    */
-  readonly alignment?: Alignment | string
+  readonly alignment?: Alignment
 
   /**
    * The character sex this alternate applies to.
    */
-  readonly sex?: Sex | string
+  readonly sex?: Sex
 
   /**
    * The value for this combination.

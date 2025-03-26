@@ -13,7 +13,7 @@ export class Alternates<T> {
     this.#sortedValues.sort((a, b) => this.#compareAlternates(a, b))
   }
 
-  getValue(alignment?: Alignment | string, sex?: Sex | string): T | undefined {
+  getValue(alignment?: Alignment, sex?: Sex): T | undefined {
     for (let index = this.#sortedValues.length; index--;) {
       const entry = this.#sortedValues[index]
       if ((entry.alignment === undefined || entry.alignment === alignment)
@@ -60,7 +60,7 @@ export class Alternates<T> {
     return String(a.value).localeCompare(String(b.value))
   }
 
-  #compareAlignment(a: Alignment | string | undefined, b: Alignment | string | undefined): number {
+  #compareAlignment(a?: Alignment, b?: Alignment): number {
     if (a === b) return 0
     if (a === undefined && b !== undefined) return -1
     if (b === undefined && a !== undefined) return 1
@@ -70,11 +70,10 @@ export class Alternates<T> {
 
     if (aSort !== bSort) return bSort - aSort
 
-    // Unknown values (not in ALIGNMENT_SORT) are sorted alphabetically
-    return a?.localeCompare(b ?? '') ?? 0
+    return 0
   }
 
-  #compareSex(a?: Sex | string | undefined, b?: Sex | string | undefined): number {
+  #compareSex(a?: Sex, b?: Sex): number {
     if (a === b) return 0
     if (a === undefined && b !== undefined) return -1
     if (b === undefined && a !== undefined) return 1
@@ -84,7 +83,6 @@ export class Alternates<T> {
 
     if (aSort !== bSort) return bSort - aSort
 
-    // Unknown values (not in SEX_SORT) are sorted alphabetically
-    return a?.localeCompare(b ?? '') ?? 0
+    return 0
   }
 }

@@ -6,15 +6,15 @@ import { Key } from './key'
 
 export class BadgePartial {
   readonly key: string
-  readonly type: BadgePartialType | string
+  readonly type: BadgePartialType
   readonly mapKey?: string
   readonly loc?: number[]
-  readonly plaqueType?: PlaqueType | string
+  readonly plaqueType?: PlaqueType
   readonly inscription?: string
   readonly vidiotMapKey?: string
   readonly badgeKey?: string
   readonly inventionLevel?: number
-  readonly inventionTypes?: (EnhancementCategory | string)[]
+  readonly inventionTypes?: EnhancementCategory[]
   readonly inventionCount?: number
   readonly notes?: string
 
