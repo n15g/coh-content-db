@@ -70,8 +70,8 @@ export class BadgeIndex {
     if (!sort.by || sort.by === 'CANONICAL') return sort.dir === 'DESC' ? badges.reverse() : badges
 
     if (sort.by === 'BADGE_NAME') return ascending
-      ? badges.sort((a, b) => a.name.default?.localeCompare(b.name.default ?? '') ?? 0)
-      : badges.sort((a, b) => b.name.default?.localeCompare(a.name.default ?? '') ?? 0)
+      ? badges.sort((a, b) => a.name.default?.value.localeCompare(b.name.default?.value ?? '') ?? 0)
+      : badges.sort((a, b) => b.name.default?.value.localeCompare(a.name.default?.value ?? '') ?? 0)
 
     return badges.sort((a, b) => {
       const aIndex = this.#mapOrder[a.mapKey ?? '']

@@ -1,4 +1,4 @@
-import { Alternates } from '../../main/db/alternates'
+import { Alternates } from '../../main'
 
 describe(Alternates.name, () => {
   describe('Constructor', () => {
@@ -89,7 +89,7 @@ describe(Alternates.name, () => {
         { alignment: 'H', value: 'Hero' },
         { alignment: 'V', sex: 'M', value: 'Male Villain' },
         { alignment: 'P', sex: 'F', value: 'Praetorian Female' },
-      ]).default).toBe('Default')
+      ]).default?.value).toBe('Default')
 
       expect(new Alternates([
         { alignment: 'V', sex: 'M', value: 'Male Villain' },
@@ -97,14 +97,14 @@ describe(Alternates.name, () => {
         { sex: 'M', value: 'Male' },
         { value: 'Default' },
         { alignment: 'H', value: 'Hero' },
-      ]).default).toBe('Default')
+      ]).default?.value).toBe('Default')
 
       expect(new Alternates([
         { alignment: 'V', sex: 'M', value: 'Male Villain' },
         { alignment: 'P', sex: 'F', value: 'Praetorian Female' },
         { sex: 'M', value: 'Male' },
         { alignment: 'H', value: 'Hero' },
-      ]).default).toBe('Male')
+      ]).default?.value).toBe('Male')
     })
   })
 

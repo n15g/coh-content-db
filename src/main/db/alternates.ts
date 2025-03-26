@@ -21,14 +21,14 @@ export class Alternates<T> {
       ) return entry.value
     }
 
-    return this.default
+    return this.default?.value
   }
 
   /**
    * Get the default value for this list of alternates, the value with the highest priority and lowest specificity.
    */
-  get default(): T | undefined {
-    return this.#sortedValues[0]?.value
+  get default(): AlternateData<T> | undefined {
+    return this.#sortedValues[0]
   }
 
   /**
