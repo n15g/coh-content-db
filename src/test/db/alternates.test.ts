@@ -157,17 +157,17 @@ describe(Alternates.name, () => {
       ])
     })
 
-    test('should sort identical values similarly', () => {
+    test('should sort identical values by value alpha', () => {
       expect(new Alternates([
-        { value: 'A' },
-        { value: 'B' },
-        { value: 'C' },
-        { value: 'B' },
+        { alignment: 'V', value: 'B' },
+        { sex: 'M', value: 'D' },
+        { alignment: 'V', value: 'A' },
+        { sex: 'M', value: 'C' },
       ]).canonical).toStrictEqual([
-        { value: 'A' },
-        { value: 'B' },
-        { value: 'B' },
-        { value: 'C' },
+        { sex: 'M', value: 'C' },
+        { sex: 'M', value: 'D' },
+        { alignment: 'V', value: 'A' },
+        { alignment: 'V', value: 'B' },
       ])
     })
   })

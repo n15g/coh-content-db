@@ -68,9 +68,7 @@ export class Alternates<T> {
     const aSort = a === undefined ? -1 : ALIGNMENT_SORT[a] ?? -1 // Unknown values get -1 priority
     const bSort = b === undefined ? -1 : ALIGNMENT_SORT[b] ?? -1
 
-    if (aSort !== bSort) return bSort - aSort
-
-    return 0
+    return bSort - aSort
   }
 
   #compareSex(a?: Sex, b?: Sex): number {
@@ -81,8 +79,6 @@ export class Alternates<T> {
     const aSort = SEX_SORT[a ?? -1] ?? -1 // Unknown values get -1 priority
     const bSort = SEX_SORT[b ?? -1] ?? -1
 
-    if (aSort !== bSort) return bSort - aSort
-
-    return 0
+    return bSort - aSort
   }
 }

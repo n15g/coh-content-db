@@ -140,4 +140,19 @@ describe(CohContentDatabase.name, () => {
       expect(() => new CohContentDatabase(data).getBadge('foo')).toThrow('Unknown badge key [foo]')
     })
   })
+
+  describe('searchBadges', () => {
+    test(`should search the badge list`, () => {
+      const data = contentBundleFixture.create({
+        badges: [
+          badgeDataFixture.create({ key: 'foo', name: [{ value: 'Foo' }] }),
+          badgeDataFixture.create({ key: 'bar', name: [{ value: 'Bar' }] }),
+        ],
+      })
+
+      const result = new CohContentDatabase(data).searchBadges({ query: { str: 'oo' } })
+      expect(result.totalItems).toBe(1)
+      expect(result.items.map(x => x.key)).toStrictEqual(['foo'])
+    })
+  })
 })
