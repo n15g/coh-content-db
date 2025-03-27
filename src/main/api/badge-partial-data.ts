@@ -32,7 +32,7 @@ export interface BadgePartialData {
   /**
    * Plaque inscription.
    */
-  readonly inscription?: string
+  readonly plaqueInscription?: string
 
   /**
    * The number or letter the partial appears as on Vidiot Maps.
