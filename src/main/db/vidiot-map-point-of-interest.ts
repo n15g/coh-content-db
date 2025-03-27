@@ -1,4 +1,5 @@
 import { VidiotMapPointOfInterestData } from '../api/vidiot-map-point-of-interest-data'
+import { MarkdownString } from '../api/markdown-string'
 
 export class VidiotMapPointOfInterest {
   /**
@@ -10,10 +11,8 @@ export class VidiotMapPointOfInterest {
 
   /**
    * Freeform notes about the PoI.
-   *
-   * Supports {@link https://www.markdownguide.org/|Markdown} format.
    */
-  readonly notes?: string
+  readonly notes?: MarkdownString
 
   /**
    * If the POI is a zone transfer, the map it transfers to.

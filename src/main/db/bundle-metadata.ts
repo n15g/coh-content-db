@@ -1,6 +1,7 @@
 import { ContentBundle } from '../api/content-bundle'
 import { Change } from '../api/change'
 import { Link } from '../api/link'
+import { MarkdownString } from '../api/markdown-string'
 
 export class BundleMetadata {
   /**
@@ -10,10 +11,8 @@ export class BundleMetadata {
 
   /**
    * Description of the server group.
-   *
-   * Supports {@link https://www.markdownguide.org/|Markdown} format.
    */
-  readonly description?: string
+  readonly description?: MarkdownString
 
   /**
    * Repository where the db content package is maintained.

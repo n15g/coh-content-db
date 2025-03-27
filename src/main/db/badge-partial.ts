@@ -3,6 +3,7 @@ import { PlaqueType } from '../api/plaque-type'
 import { BadgePartialType } from '../api/badge-partial-type'
 import { EnhancementCategory } from '../api/enhancement-category'
 import { Key } from './key'
+import { MarkdownString } from '../api/markdown-string'
 
 export class BadgePartial {
   readonly key: string
@@ -16,7 +17,7 @@ export class BadgePartial {
   readonly inventionLevel?: number
   readonly inventionTypes?: EnhancementCategory[]
   readonly inventionCount?: number
-  readonly notes?: string
+  readonly notes?: MarkdownString
 
   constructor(data: BadgePartialData) {
     this.key = new Key(data.key).value

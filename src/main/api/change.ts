@@ -1,3 +1,5 @@
+import { MarkdownString } from './markdown-string'
+
 export interface Change {
   /**
    * The version number in {@link http://semver.org|semver} format.
@@ -7,8 +9,9 @@ export interface Change {
    * Date of the change.
    */
   date: Date
+
   /**
-   * Description of the change in {@link https://www.markdownguide.org/|Markdown} format.
+   * Description of the change.
    */
-  description: string
+  description: MarkdownString
 }

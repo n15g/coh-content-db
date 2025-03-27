@@ -3,6 +3,7 @@ import { Link } from './link'
 import { BadgeType } from './badge-type'
 import { AlternateData } from './alternate-data'
 import { Alignment } from './alignment'
+import { MarkdownString } from './markdown-string'
 
 export interface BadgeData {
 
@@ -37,10 +38,8 @@ export interface BadgeData {
 
   /**
    * Description of how to acquire the badge.
-   *
-   * Supports {@link https://www.markdownguide.org/|Markdown} format.
    */
-  readonly acquisition?: string
+  readonly acquisition?: MarkdownString
 
   /**
    * List of absolute URLs for this badge's icons.
@@ -51,10 +50,8 @@ export interface BadgeData {
 
   /**
    * Freeform notes or tips about the badge.
-   *
-   * Supports {@link https://www.markdownguide.org/|Markdown} format.
    */
-  readonly notes?: string
+  readonly notes?: MarkdownString
 
   /**
    * List of external links for this Badge. Wiki, forums, etc.
@@ -92,10 +89,8 @@ export interface BadgeData {
 
   /**
    * A description of the effect the badge will have, such as a buff or granting a temporary power.
-   *
-   * Supports {@link https://www.markdownguide.org/|Markdown} format.
    */
-  readonly effect?: string
+  readonly effect?: MarkdownString
 
   /**
    * A list of requirements for badges that have partial fulfilment steps, such as visiting plaques for history badges, or collecting other badges for meta-badges like accolades.

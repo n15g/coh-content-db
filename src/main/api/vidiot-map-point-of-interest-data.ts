@@ -1,3 +1,5 @@
+import { MarkdownString } from './markdown-string'
+
 export interface VidiotMapPointOfInterestData {
   /**
    * The pixel-space position of the PoI on the map graphic.
@@ -8,10 +10,8 @@ export interface VidiotMapPointOfInterestData {
 
   /**
    * Freeform notes about the PoI.
-   *
-   * Supports {@link https://www.markdownguide.org/|Markdown} format.
    */
-  readonly notes?: string
+  readonly notes?: MarkdownString
 
   /**
    * If the POI is a zone transfer, the map it transfers to.

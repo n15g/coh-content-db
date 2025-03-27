@@ -3,6 +3,7 @@ import { GameMapData } from './game-map-data'
 import { BadgeData } from './badge-data'
 import { Change } from './change'
 import { Link } from './link'
+import { MarkdownString } from './markdown-string'
 
 /**
  * A content bundle holds the data that makes up one forked instance of the game since the original sunset, such as Homecoming (https://forums.homecomingservers.com/).
@@ -15,10 +16,8 @@ export interface ContentBundle {
 
   /**
    * Description of the fork.
-   *
-   * Supports {@link https://www.markdownguide.org/|Markdown} format.
    */
-  readonly description?: string
+  readonly description?: MarkdownString
 
   /**
    * Repository where the db content package is maintained.

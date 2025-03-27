@@ -53,16 +53,40 @@ export const TEST_SERVER_GROUP: ContentBundle = {
 }
 ```
 
+### Markdown and Links
+
+Fields with long text values can typically accept [Markdown](https://www.markdownguide.org/) format. These fields will also be typed with the tag type [MarkdownString](src/main/api/markdown-string.ts).
+
+Within markdown, you can construct a link to a badge or map using the special `badge://` and `map://` protocol indicators that consumer apps can use to provide runtime links or tooltips.
+This replaces the custom `[badge:xyz]` format from v1 and data packages will need to update accordingly.
+
+To create a link, use the standard Markdown link format, with the url as following:
+
+```markdown
+This is a link to the [Ghoulish](badge://ghoulish) badge.
+```
+
+There are convenience functions also provided to construct the URI automatically that can be used as follows:
+
+```typescript
+import { badgeLink, badgeUri } from 'coh-content-db'
+
+const uri = `This is a link to the [Ghoulish](${badgeUri('ghoulish')}) badge.`
+// This is a link to the [Ghoulish](badge://ghoulish) badge.
+const link = `This is a link to the ${badgeLink('ghoulish')} badge.`
+// This is a link to the [ghoulish](badge://ghoulish) badge.
+```
+
 ## As a DB consumer
 
 Create a new database instance, then load a content bundle, such as [coh-content-db-homecoming](https://github.com/n15g/coh-content-db-homecoming):
 
 ```typescript
-import { CohContentDatabase } from 'coh-content-db';
-import { Homecoming } from 'coh-content-db-homecoming';
+import { CohContentDatabase } from 'coh-content-db'
+import { Homecoming } from 'coh-content-db-homecoming'
 
-const db = new CohContentDatabase();
-db.loadBundle(new Homecoming());
+const db = new CohContentDatabase()
+db.loadBundle(new Homecoming())
 ```
 
 #### Access the content

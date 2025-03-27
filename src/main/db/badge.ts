@@ -5,6 +5,7 @@ import { BadgePartial } from './badge-partial'
 import { Key } from './key'
 import { Alternates } from './alternates'
 import { Alignments } from './alignments'
+import { MarkdownString } from '../api/markdown-string'
 
 export class Badge {
   readonly #partialsIndex: Record<string, BadgePartial> = {}
@@ -38,10 +39,8 @@ export class Badge {
 
   /**
    * Description of how to acquire the badge.
-   *
-   * Supports {@link https://www.markdownguide.org/|Markdown} format.
    */
-  readonly acquisition?: string
+  readonly acquisition?: MarkdownString
 
   /**
    * Absolute URL to this badge's icon.
@@ -52,10 +51,8 @@ export class Badge {
 
   /**
    * Freeform notes or tips about the badge.
-   *
-   * Supports {@link https://www.markdownguide.org/|Markdown} format.
    */
-  readonly notes?: string
+  readonly notes?: MarkdownString
 
   /**
    * List of external links for this Badge. Wiki, forums, etc.
@@ -93,10 +90,8 @@ export class Badge {
 
   /**
    * A description of the effect the badge will have, such as a buff or granting a temporary power.
-   *
-   * Supports {@link https://www.markdownguide.org/|Markdown} format.
    */
-  readonly effect?: string
+  readonly effect?: MarkdownString
 
   /**
    * A list of requirements for badges that have partial fulfilment steps, such as visiting plaques for history badges, or collecting other badges for meta-badges like accolades.

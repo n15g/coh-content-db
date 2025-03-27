@@ -1,6 +1,7 @@
 import { EnhancementCategory } from './enhancement-category'
 import { BadgePartialType } from './badge-partial-type'
 import { PlaqueType } from './plaque-type'
+import { MarkdownString } from './markdown-string'
 
 export interface BadgePartialData {
   /**
@@ -61,5 +62,5 @@ export interface BadgePartialData {
   /**
    * Any additional notes.
    */
-  readonly notes?: string
+  readonly notes?: MarkdownString
 }
