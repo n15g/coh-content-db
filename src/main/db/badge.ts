@@ -129,7 +129,6 @@ export class Badge {
 
     this.requirements = badgeData.requirements?.map((inner, index) => {
       const existingKeysInGroup = new Set<string>()
-      console.log(badgeData) // todo
       return inner.map((requirementData) => {
         if (existingKeysInGroup.has(requirementData.key)) throw new Error(`Duplicate badge requirement key [${badgeData.key}:${requirementData.key}] in group [${index + 1}]`)
         existingKeysInGroup.add(requirementData.key)
