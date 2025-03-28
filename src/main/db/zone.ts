@@ -1,4 +1,3 @@
-import { VidiotMap } from './vidiot-map'
 import { Link } from '../api/link'
 import { ZoneData } from '../api/zone-data'
 import { Key } from './key'
@@ -21,15 +20,9 @@ export class Zone {
    */
   readonly links?: Link[]
 
-  /**
-   * List of Vidiot Map assets for this zone.
-   */
-  readonly vidiotMaps?: VidiotMap[]
-
   constructor(data: ZoneData) {
     this.key = new Key(data.key).value
     this.name = data.name
     this.links = data.links
-    this.vidiotMaps = data.vidiotMaps?.map(data => new VidiotMap(data))
   }
 }

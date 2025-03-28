@@ -13,8 +13,6 @@ export * from './api/link'
 export * from './api/markdown-string'
 export * from './api/plaque-type'
 export * from './api/sex'
-export * from './api/vidiot-map-data'
-export * from './api/vidiot-map-point-of-interest-data'
 export * from './api/zone-data'
 
 // DB
@@ -29,8 +27,6 @@ export * from './db/bundle-metadata'
 export * from './db/coh-content-database'
 export * from './db/key'
 export * from './db/paged'
-export * from './db/vidiot-map'
-export * from './db/vidiot-map-point-of-interest'
 export * from './db/zone'
 
 // ROOT

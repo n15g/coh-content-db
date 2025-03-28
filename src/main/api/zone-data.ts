@@ -1,5 +1,4 @@
 import { Link } from './link'
-import { VidiotMapData } from './vidiot-map-data'
 
 export interface ZoneData {
   /**
@@ -18,9 +17,4 @@ export interface ZoneData {
    * List of external links for this Zone. Wiki, forums, etc.
    */
   readonly links?: Link[]
-
-  /**
-   * List of Vidiot Map assets for this zone.
-   */
-  readonly vidiotMaps?: VidiotMapData[]
 }
