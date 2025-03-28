@@ -45,6 +45,16 @@ export interface BadgeRequirementData {
   readonly badgeKey?: string
 
   /**
+   * Story arc name.
+   */
+  readonly arcName?: string
+
+  /**
+   * Story arc contact name.
+   */
+  readonly arcContactName?: string
+
+  /**
    * Level of the invention required.
    */
   readonly inventionLevel?: number

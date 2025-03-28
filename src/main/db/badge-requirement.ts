@@ -47,6 +47,16 @@ export class BadgeRequirement {
   readonly badgeKey?: string
 
   /**
+   * Story arc name.
+   */
+  readonly arcName?: string
+
+  /**
+   * Story arc contact name.
+   */
+  readonly arcContactName?: string
+
+  /**
    * Level of the invention required.
    */
   readonly inventionLevel?: number
@@ -75,6 +85,8 @@ export class BadgeRequirement {
     this.plaqueInscription = data.plaqueInscription
     this.vidiotMapKey = data.vidiotMapKey
     this.badgeKey = data.badgeKey
+    this.arcName = data.arcName
+    this.arcContactName = data.arcContactName
     this.inventionLevel = data.inventionLevel
     this.inventionTypes = data.inventionTypes
     this.inventionCount = data.inventionCount

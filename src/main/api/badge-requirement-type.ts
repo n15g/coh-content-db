@@ -2,6 +2,7 @@ export const BADGE_REQUIREMENT_TYPE = [
   'PLAQUE',
   'BADGE',
   'INVENTION',
+  'ARC', // Complete a story arc
   'INVENTION_PLUS_ONE', // Some invention badges require you to build x of two different invention levels, 'plus one of either level'.
 ] as const
 
