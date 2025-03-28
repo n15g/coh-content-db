@@ -2,7 +2,7 @@ import { CohContentDatabase } from '../../main'
 import { contentBundleFixture } from '../api/content-bundle.fixture'
 import { archetypeDataFixture } from '../api/archetype-data.fixture'
 import { badgeDataFixture } from '../api/badge-data.fixture'
-import { gameMapDataFixture } from '../api/game-map-data.fixture'
+import { zoneDataFixture } from '../api/zone-data.fixture'
 
 describe(CohContentDatabase.name, () => {
   test('should load a basic bundle', () => {
@@ -32,7 +32,7 @@ describe(CohContentDatabase.name, () => {
           archetypeDataFixture.create({ key: 'foo' }),
         ],
       })
-      expect(() => new CohContentDatabase(data)).toThrow('Duplicate archetype key [foo]')
+      expect(() => new CohContentDatabase(data)).toThrow(`Duplicate archetype key 'foo'`)
     })
 
     test(`should accept an undefined field`, () => {
@@ -68,22 +68,22 @@ describe(CohContentDatabase.name, () => {
     })
   })
 
-  describe('maps', () => {
-    test(`should throw an error on duplicate map`, () => {
+  describe('zones', () => {
+    test(`should throw an error on duplicate zone`, () => {
       const data = contentBundleFixture.create({
-        maps: [
-          gameMapDataFixture.create({ key: 'foo' }),
-          gameMapDataFixture.create({ key: 'foo' }),
+        zones: [
+          zoneDataFixture.create({ key: 'foo' }),
+          zoneDataFixture.create({ key: 'foo' }),
         ],
       })
-      expect(() => new CohContentDatabase(data)).toThrow('Duplicate map key [foo]')
+      expect(() => new CohContentDatabase(data)).toThrow(`Duplicate zone key 'foo'`)
     })
 
     test(`should accept an undefined field`, () => {
       const data = contentBundleFixture
-        .omit('maps')
+        .omit('zones')
         .create()
-      expect(() => new CohContentDatabase(data).maps).toHaveLength(0)
+      expect(() => new CohContentDatabase(data).zones).toHaveLength(0)
     })
   })
 
@@ -101,43 +101,43 @@ describe(CohContentDatabase.name, () => {
         archetypes: [],
       })
 
-      expect(() => new CohContentDatabase(data).getArchetype('foo')).toThrow('Unknown archetype key [foo]')
+      expect(() => new CohContentDatabase(data).getArchetype('foo')).toThrow(`Unknown archetype key 'foo'`)
     })
   })
 
-  describe('getMap', () => {
-    test(`should retrieve map from the index`, () => {
+  describe('getZone', () => {
+    test(`should retrieve zone from the index`, () => {
       const data = contentBundleFixture.create({
-        maps: [gameMapDataFixture.create({ key: 'foo' })],
+        zones: [zoneDataFixture.create({ key: 'foo' })],
       })
 
-      expect(new CohContentDatabase(data).getMap('foo')).not.toBeUndefined()
+      expect(new CohContentDatabase(data).getZone('foo')).not.toBeUndefined()
     })
 
-    test(`should throw error for unknown map`, () => {
+    test(`should throw error for unknown zone`, () => {
       const data = contentBundleFixture.create({
-        maps: [],
+        zones: [],
       })
 
-      expect(() => new CohContentDatabase(data).getMap('foo')).toThrow('Unknown map key [foo]')
+      expect(() => new CohContentDatabase(data).getZone('foo')).toThrow(`Unknown zone key 'foo'`)
     })
   })
 
-  describe('mapExists', () => {
-    test(`should return true for a map that exists`, () => {
+  describe('zoneExists', () => {
+    test(`should return true for a zone that exists`, () => {
       const data = contentBundleFixture.create({
-        maps: [gameMapDataFixture.create({ key: 'foo' })],
+        zones: [zoneDataFixture.create({ key: 'foo' })],
       })
 
-      expect(new CohContentDatabase(data).mapExists('foo')).toBeTruthy()
+      expect(new CohContentDatabase(data).zoneExists('foo')).toBeTruthy()
     })
 
-    test(`should return false for a map that does not exist`, () => {
+    test(`should return false for a zone that does not exist`, () => {
       const data = contentBundleFixture.create({
-        maps: [],
+        zones: [],
       })
 
-      expect(new CohContentDatabase(data).mapExists('foo')).toBeFalsy()
+      expect(new CohContentDatabase(data).zoneExists('foo')).toBeFalsy()
     })
   })
 

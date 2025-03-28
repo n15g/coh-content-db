@@ -12,7 +12,7 @@ export const badgeDataFixture = defineFixture<BadgeData>((t) => {
   t.icon?.as(() => [{ value: 'https://nouri.org' }])
   t.notes?.asLoremIpsum()
   t.links?.as(() => [{ href: 'https://nouri.org' }])
-  t.mapKey?.asString()
+  t.zoneKey?.asString()
   t.loc?.as(index => [index, index, index])
   t.vidiotMapKey?.asString()
   t.setTitle?.as((index) => {

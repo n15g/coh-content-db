@@ -1,5 +1,5 @@
 import { ArchetypeData } from './archetype-data'
-import { GameMapData } from './game-map-data'
+import { ZoneData } from './zone-data'
 import { BadgeData } from './badge-data'
 import { Change } from './change'
 import { Link } from './link'
@@ -41,9 +41,9 @@ export interface ContentBundle {
   readonly archetypes?: ArchetypeData[]
 
   /**
-   * List of game maps supported by this fork.
+   * List of zones supported by this fork.
    */
-  readonly maps?: GameMapData[]
+  readonly zones?: ZoneData[]
 
   /**
    * List of badges available on this fork.

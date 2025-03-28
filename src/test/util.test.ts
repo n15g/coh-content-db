@@ -1,6 +1,6 @@
-import { Badge, badgeLink, badgeUri, GameMap, mapLink, mapUri } from '../main'
+import { Badge, badgeLink, badgeUri, Zone, zoneLink, zoneUri } from '../main'
 import { badgeDataFixture } from './api/badge-data.fixture'
-import { gameMapDataFixture } from './api/game-map-data.fixture'
+import { zoneDataFixture } from './api/zone-data.fixture'
 
 describe(badgeUri.name, () => {
   test('should return the expected pattern', () => {
@@ -38,38 +38,38 @@ describe(badgeLink.name, () => {
   })
 })
 
-describe(mapUri.name, () => {
+describe(zoneUri.name, () => {
   test('should return the expected pattern', () => {
-    expect(mapUri('foo')).toBe('map://foo')
-    expect(mapUri('bar')).toBe('map://bar')
-    expect(mapUri('foo-bar')).toBe('map://foo-bar')
+    expect(zoneUri('foo')).toBe('zone://foo')
+    expect(zoneUri('bar')).toBe('zone://bar')
+    expect(zoneUri('foo-bar')).toBe('zone://foo-bar')
   })
 
-  test('should accept a GameMap object', () => {
-    const map = new GameMap(gameMapDataFixture.create({ key: 'foo' }))
-    expect(mapUri(map)).toBe('map://foo')
+  test('should accept a Zone object', () => {
+    const zone = new Zone(zoneDataFixture.create({ key: 'foo' }))
+    expect(zoneUri(zone)).toBe('zone://foo')
   })
 
-  test('should accept a GameMapData object', () => {
-    const map = gameMapDataFixture.create({ key: 'foo' })
-    expect(mapUri(map)).toBe('map://foo')
+  test('should accept a ZoneData object', () => {
+    const zone = zoneDataFixture.create({ key: 'foo' })
+    expect(zoneUri(zone)).toBe('zone://foo')
   })
 })
 
-describe(mapLink.name, () => {
+describe(zoneLink.name, () => {
   test('should return the expected pattern', () => {
-    expect(mapLink('foo')).toBe('[foo](map://foo)')
-    expect(mapLink('bar')).toBe('[bar](map://bar)')
-    expect(mapLink('foo-bar')).toBe('[foo-bar](map://foo-bar)')
+    expect(zoneLink('foo')).toBe('[foo](zone://foo)')
+    expect(zoneLink('bar')).toBe('[bar](zone://bar)')
+    expect(zoneLink('foo-bar')).toBe('[foo-bar](zone://foo-bar)')
   })
 
-  test('should accept a GameMap object', () => {
-    const map = new GameMap(gameMapDataFixture.create({ key: 'foo' }))
-    expect(mapLink(map)).toBe('[foo](map://foo)')
+  test('should accept a Zone object', () => {
+    const zone = new Zone(zoneDataFixture.create({ key: 'foo' }))
+    expect(zoneLink(zone)).toBe('[foo](zone://foo)')
   })
 
-  test('should accept a GameMapData object', () => {
-    const map = gameMapDataFixture.create({ key: 'foo' })
-    expect(mapLink(map)).toBe('[foo](map://foo)')
+  test('should accept a ZoneData object', () => {
+    const zone = zoneDataFixture.create({ key: 'foo' })
+    expect(zoneLink(zone)).toBe('[foo](zone://foo)')
   })
 })

@@ -17,9 +17,9 @@ export class BadgeRequirement {
   readonly type: BadgeRequirementType
 
   /**
-   * Map the requirement is located on.
+   * Zone the requirement is located in.
    */
-  readonly mapKey?: string
+  readonly zoneKey?: string
 
   /**
    * /loc coordinates.
@@ -79,7 +79,7 @@ export class BadgeRequirement {
   constructor(data: BadgeRequirementData) {
     this.key = new Key(data.key).value
     this.type = data.type
-    this.mapKey = data.mapKey
+    this.zoneKey = data.zoneKey
     this.loc = data.loc
     this.plaqueType = data.plaqueType
     this.plaqueInscription = data.plaqueInscription

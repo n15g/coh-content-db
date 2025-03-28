@@ -60,17 +60,17 @@ export class Badge {
   readonly links?: Link[]
 
   /**
-   * For exploration badges, the key of the {@link GameMap} that this badge is found on.
+   * For exploration badges, the key of the {@link Zone} that this badge is found on.
    */
-  readonly mapKey?: string
+  readonly zoneKey?: string
 
   /**
-   * For exploration badges, the `/loc` coordinates of the badge on the in-game map.
+   * For exploration badges, the `/loc` coordinates of the badge.
    */
   readonly loc?: [number, number, number]
 
   /**
-   * For badges that appear on a Vidiot Map, the number or letter the badge appears as.
+   * For plaques that appear on a Vidiot Map, the number or letter the badge appears as.
    */
   readonly vidiotMapKey?: string
 
@@ -120,16 +120,16 @@ export class Badge {
     this.icon = new Alternates(badgeData.icon ?? [])
     this.notes = badgeData.notes
     this.links = badgeData.links
-    this.mapKey = badgeData.mapKey
+    this.zoneKey = badgeData.zoneKey
     this.loc = badgeData.loc
     this.effect = badgeData.effect
     this.vidiotMapKey = badgeData.vidiotMapKey
     this.setTitle = badgeData.setTitle
     this.ignoreInTotals = badgeData.ignoreInTotals ?? false
 
-    this.requirements = badgeData.requirements?.map((inner, index) => {
+    this.requirements = badgeData.requirements?.map((groups, index) => {
       const existingKeysInGroup = new Set<string>()
-      return inner.map((requirementData) => {
+      return groups.map((requirementData) => {
         if (existingKeysInGroup.has(requirementData.key)) throw new Error(`Duplicate badge requirement key [${badgeData.key}:${requirementData.key}] in group [${index + 1}]`)
         existingKeysInGroup.add(requirementData.key)
 

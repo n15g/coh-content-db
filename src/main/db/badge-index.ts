@@ -1,17 +1,17 @@
 import { Badge } from './badge'
 import { BadgeSearchOptions } from './badge-search-options'
-import { GameMap } from './game-map'
+import { Zone } from './zone'
 import { Paged } from './paged'
 
 export class BadgeIndex {
   readonly #badges: Badge[] = []
   readonly #badgeIndex: Record<string, Badge> = {}
 
-  readonly #mapOrder: Record<string, number> = {}
+  readonly #zoneOrder: Record<string, number> = {}
 
-  constructor(badges: Badge[], maps?: GameMap[]) {
-    this.#mapOrder = Object.fromEntries(
-      maps
+  constructor(badges: Badge[], zones?: Zone[]) {
+    this.#zoneOrder = Object.fromEntries(
+      zones
         ?.sort((a, b) => a.name.localeCompare(b.name))
         ?.map((x, index) => [x.key, index]) ?? [],
     )
@@ -63,7 +63,7 @@ export class BadgeIndex {
 
   #satisfiesFilterPredicate(badge: Badge, filter?: BadgeSearchOptions['filter']): boolean {
     return (!filter?.type || badge.type === filter.type)
-      && (!filter?.mapKey || badge.mapKey === filter.mapKey)
+      && (!filter?.zoneKey || badge.zoneKey === filter.zoneKey)
       && (!filter?.alignment || badge.alignment.items.includes(filter.alignment))
   }
 
@@ -78,8 +78,8 @@ export class BadgeIndex {
       : badges.sort((a, b) => b.name.default?.value.localeCompare(a.name.default?.value ?? '') ?? 0)
 
     return badges.sort((a, b) => {
-      const aIndex = this.#mapOrder[a.mapKey ?? '']
-      const bIndex = this.#mapOrder[b.mapKey ?? '']
+      const aIndex = this.#zoneOrder[a.zoneKey ?? '']
+      const bIndex = this.#zoneOrder[b.zoneKey ?? '']
 
       if (aIndex === bIndex) return 0
       if (aIndex === undefined) return ascending ? 1 : -1

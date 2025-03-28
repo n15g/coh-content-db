@@ -59,17 +59,17 @@ export interface BadgeData {
   readonly links?: Link[]
 
   /**
-   * For exploration badges, the key of the {@link GameMapData|GameMap} that this badge is found on.
+   * For exploration badges, the key of the {@link ZoneData|Zone} that this badge is found on.
    */
-  readonly mapKey?: string
+  readonly zoneKey?: string
 
   /**
-   * For exploration badges, the `/loc` coordinates of the badge on the in-game map.
+   * For exploration badges, the `/loc` coordinates of the badge.
    */
   readonly loc?: [number, number, number]
 
   /**
-   * For badges that appear on a Vidiot Map, the number or letter the badge appears as.
+   * For plaques that appear on a Vidiot Map, the number or letter the badge appears as.
    */
   readonly vidiotMapKey?: string
 

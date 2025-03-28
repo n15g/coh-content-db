@@ -14,9 +14,9 @@ export interface VidiotMapPointOfInterestData {
   readonly notes?: MarkdownString
 
   /**
-   * If the POI is a zone transfer, the map it transfers to.
+   * If the POI is a zone transfer, the zone it transfers to.
    */
-  readonly mapKey?: string
+  readonly zoneKey?: string
 
   /**
    * If the POI is a badge, the badge.

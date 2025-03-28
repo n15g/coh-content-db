@@ -7,6 +7,6 @@ test('should export the changelog', () => {
 test('should export badge reference utils', () => {
   expect(index).toHaveProperty('badgeUri')
   expect(index).toHaveProperty('badgeLink')
-  expect(index).toHaveProperty('mapUri')
-  expect(index).toHaveProperty('mapLink')
+  expect(index).toHaveProperty('zoneUri')
+  expect(index).toHaveProperty('zoneLink')
 })

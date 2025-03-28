@@ -15,9 +15,9 @@ export class VidiotMapPointOfInterest {
   readonly notes?: MarkdownString
 
   /**
-   * If the POI is a zone transfer, the map it transfers to.
+   * If the POI is a zone transfer, the zone it transfers to.
    */
-  readonly mapKey?: string
+  readonly zoneKey?: string
 
   /**
    * If the POI is a badge, the badge.
@@ -32,7 +32,7 @@ export class VidiotMapPointOfInterest {
   constructor(data: VidiotMapPointOfInterestData) {
     this.pos = data.pos
     this.notes = data.notes
-    this.mapKey = data.mapKey
+    this.zoneKey = data.zoneKey
     this.badgeKey = data.badgeKey
     this.badgeRequirementKey = data.badgeRequirementKey
   }

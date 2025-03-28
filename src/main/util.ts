@@ -1,3 +1,8 @@
+import { BadgeData } from './api/badge-data'
+import { Badge } from './db/badge'
+import { ZoneData } from './api/zone-data'
+import { Zone } from './db/zone'
+
 /**
  * Returns the URI of the given badge that can be used in {@link MarkdownString} links.
  *
@@ -5,7 +10,7 @@
  *
  * @param target The badge or badge key to target.
  */
-export function badgeUri(target: string | { key: string }): string {
+export function badgeUri(target: string | Badge | BadgeData): string {
   const key = typeof target === 'string' ? target : target.key
   return `badge://${key}`
 }
@@ -15,33 +20,33 @@ export function badgeUri(target: string | { key: string }): string {
  *
  * Link format: `[<key>](badge://<key>)`
  *
- * @param target The badge or badge key to target.
+ * @param target The {@link Badge} or badge key to target.
  */
-export function badgeLink(target: string | { key: string }): string {
+export function badgeLink(target: string | Badge | BadgeData): string {
   const key = typeof target === 'string' ? target : target.key
   return `[${key}](${badgeUri(target)})`
 }
 
 /**
- * Returns the URI of the given map that can be used in {@link MarkdownString} links.
+ * Returns the URI of the given zone that can be used in {@link MarkdownString} links.
  *
- * URI format: `map://<key>`
+ * URI format: `zone://<key>`
  *
- * @param target The {@link GameMap} or map key to target.
+ * @param target The {@link Zone} or zone key to target.
  */
-export function mapUri(target: string | { key: string }): string {
+export function zoneUri(target: string | Zone | ZoneData): string {
   const key = typeof target === 'string' ? target : target.key
-  return `map://${key}`
+  return `zone://${key}`
 }
 
 /**
- * Returns a {@link MarkdownString} link to the given map.
+ * Returns a {@link MarkdownString} link to the given zone.
  *
- * Link format: `[<key>](map://<key>)`
+ * Link format: `[<key>](zone://<key>)`
  *
- * @param target The map or map key to target.
+ * @param target The {@link Zone} or zone key to target.
  */
-export function mapLink(target: string | { key: string }): string {
+export function zoneLink(target: string | Zone | ZoneData): string {
   const key = typeof target === 'string' ? target : target.key
-  return `[${key}](${mapUri(target)})`
+  return `[${key}](${zoneUri(target)})`
 }

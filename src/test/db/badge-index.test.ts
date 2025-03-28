@@ -1,11 +1,11 @@
 import { badgeDataFixture } from '../api/badge-data.fixture'
-import { Badge, BadgeIndex, GameMap } from '../../main'
-import { gameMapDataFixture } from '../api/game-map-data.fixture'
+import { Badge, BadgeIndex, Zone } from '../../main'
+import { zoneDataFixture } from '../api/zone-data.fixture'
 
-const TEST_MAPS = [
-  new GameMap(gameMapDataFixture.create({ key: 'atlas-park', name: 'Atlas Park' })),
-  new GameMap(gameMapDataFixture.create({ key: 'perez-park', name: 'Perez Park' })),
-  new GameMap(gameMapDataFixture.create({ key: 'abandoned-sewer-network', name: 'Abandoned Sewer Network' })),
+const TEST_Zones = [
+  new Zone(zoneDataFixture.create({ key: 'atlas-park', name: 'Atlas Park' })),
+  new Zone(zoneDataFixture.create({ key: 'perez-park', name: 'Perez Park' })),
+  new Zone(zoneDataFixture.create({ key: 'abandoned-sewer-network', name: 'Abandoned Sewer Network' })),
 ]
 
 describe(BadgeIndex.name, () => {
@@ -212,15 +212,15 @@ describe(BadgeIndex.name, () => {
 
       test(`should filter on badge type`, () => {
         const data = [
-          new Badge(badgeDataFixture.create({ key: 'badge-1', mapKey: 'atlas-park' })),
-          new Badge(badgeDataFixture.create({ key: 'badge-2', mapKey: 'perez-park' })),
-          new Badge(badgeDataFixture.create({ key: 'badge-3', mapKey: 'abandoned-sewer-network' })),
-          new Badge(badgeDataFixture.create({ key: 'badge-4', mapKey: 'atlas-park' })),
-          new Badge(badgeDataFixture.create({ key: 'badge-5', mapKey: 'perez-park' })),
-          new Badge(badgeDataFixture.create({ key: 'badge-6', mapKey: undefined })),
+          new Badge(badgeDataFixture.create({ key: 'badge-1', zoneKey: 'atlas-park' })),
+          new Badge(badgeDataFixture.create({ key: 'badge-2', zoneKey: 'perez-park' })),
+          new Badge(badgeDataFixture.create({ key: 'badge-3', zoneKey: 'abandoned-sewer-network' })),
+          new Badge(badgeDataFixture.create({ key: 'badge-4', zoneKey: 'atlas-park' })),
+          new Badge(badgeDataFixture.create({ key: 'badge-5', zoneKey: 'perez-park' })),
+          new Badge(badgeDataFixture.create({ key: 'badge-6', zoneKey: undefined })),
         ]
 
-        const result = new BadgeIndex(data).searchBadges({ filter: { mapKey: 'perez-park' } })
+        const result = new BadgeIndex(data).searchBadges({ filter: { zoneKey: 'perez-park' } })
         const keys = result.items.map(x => x.key)
         expect(keys).toStrictEqual(['badge-2', 'badge-5'])
       })
@@ -382,7 +382,7 @@ describe(BadgeIndex.name, () => {
           new Badge(badgeDataFixture.create({ key: 'badge-4' })),
         ]
 
-        const result = new BadgeIndex(data, TEST_MAPS).searchBadges()
+        const result = new BadgeIndex(data, TEST_Zones).searchBadges()
 
         const keys = result.items.map(x => x.key)
         expect(keys).toStrictEqual(['badge-1', 'badge-2', 'badge-3', 'badge-4'])
@@ -396,7 +396,7 @@ describe(BadgeIndex.name, () => {
           new Badge(badgeDataFixture.create({ key: 'badge-4' })),
         ]
 
-        const result = new BadgeIndex(data, TEST_MAPS).searchBadges({ sort: { dir: 'DESC' } })
+        const result = new BadgeIndex(data, TEST_Zones).searchBadges({ sort: { dir: 'DESC' } })
 
         const keys = result.items.map(x => x.key)
         expect(keys).toStrictEqual(['badge-4', 'badge-3', 'badge-2', 'badge-1'])
@@ -409,7 +409,7 @@ describe(BadgeIndex.name, () => {
           new Badge(badgeDataFixture.create({ key: 'badge-3', name: [{ value: 'AAB' }] })),
         ]
 
-        const result = new BadgeIndex(data, TEST_MAPS).searchBadges({ sort: { by: 'BADGE_NAME' } })
+        const result = new BadgeIndex(data, TEST_Zones).searchBadges({ sort: { by: 'BADGE_NAME' } })
 
         const keys = result.items.map(x => x.key)
         expect(keys).toStrictEqual(['badge-3', 'badge-1', 'badge-2'])
@@ -422,7 +422,7 @@ describe(BadgeIndex.name, () => {
           new Badge(badgeDataFixture.create({ key: 'badge-3', name: [{ value: 'AAB' }] })),
         ]
 
-        const result = new BadgeIndex(data, TEST_MAPS).searchBadges({ sort: { by: 'BADGE_NAME', dir: 'DESC' } })
+        const result = new BadgeIndex(data, TEST_Zones).searchBadges({ sort: { by: 'BADGE_NAME', dir: 'DESC' } })
 
         const keys = result.items.map(x => x.key)
         expect(keys).toStrictEqual(['badge-2', 'badge-1', 'badge-3'])
@@ -435,62 +435,62 @@ describe(BadgeIndex.name, () => {
           new Badge(badgeDataFixture.create({ key: 'badge-3', name: [{ value: 'AAB' }] })),
         ]
 
-        const result = new BadgeIndex(data, TEST_MAPS).searchBadges({ sort: { by: 'BADGE_NAME' } })
+        const result = new BadgeIndex(data, TEST_Zones).searchBadges({ sort: { by: 'BADGE_NAME' } })
 
         const keys = result.items.map(x => x.key)
         expect(keys).toStrictEqual(['badge-3', 'badge-1', 'badge-2'])
       })
 
-      test(`should sort by map name`, () => {
+      test(`should sort by zone name`, () => {
         const data = [
-          new Badge(badgeDataFixture.create({ key: 'badge-1', mapKey: 'atlas-park' })),
-          new Badge(badgeDataFixture.create({ key: 'badge-2', mapKey: 'perez-park' })),
-          new Badge(badgeDataFixture.create({ key: 'badge-3', mapKey: 'abandoned-sewer-network' })),
+          new Badge(badgeDataFixture.create({ key: 'badge-1', zoneKey: 'atlas-park' })),
+          new Badge(badgeDataFixture.create({ key: 'badge-2', zoneKey: 'perez-park' })),
+          new Badge(badgeDataFixture.create({ key: 'badge-3', zoneKey: 'abandoned-sewer-network' })),
         ]
 
-        const result = new BadgeIndex(data, TEST_MAPS).searchBadges({ sort: { by: 'MAP_NAME' } })
+        const result = new BadgeIndex(data, TEST_Zones).searchBadges({ sort: { by: 'ZONE_NAME' } })
 
         const keys = result.items.map(x => x.key)
         expect(keys).toStrictEqual(['badge-3', 'badge-1', 'badge-2'])
       })
 
-      test(`should sort by map name descending`, () => {
+      test(`should sort by zone name descending`, () => {
         const data = [
-          new Badge(badgeDataFixture.create({ key: 'badge-1', mapKey: 'atlas-park' })),
-          new Badge(badgeDataFixture.create({ key: 'badge-2', mapKey: 'perez-park' })),
-          new Badge(badgeDataFixture.create({ key: 'badge-3', mapKey: 'abandoned-sewer-network' })),
+          new Badge(badgeDataFixture.create({ key: 'badge-1', zoneKey: 'atlas-park' })),
+          new Badge(badgeDataFixture.create({ key: 'badge-2', zoneKey: 'perez-park' })),
+          new Badge(badgeDataFixture.create({ key: 'badge-3', zoneKey: 'abandoned-sewer-network' })),
         ]
 
-        const result = new BadgeIndex(data, TEST_MAPS).searchBadges({ sort: { by: 'MAP_NAME', dir: 'DESC' } })
+        const result = new BadgeIndex(data, TEST_Zones).searchBadges({ sort: { by: 'ZONE_NAME', dir: 'DESC' } })
 
         const keys = result.items.map(x => x.key)
         expect(keys).toStrictEqual(['badge-2', 'badge-1', 'badge-3'])
       })
 
-      test(`should maintain canonical as secondary sort when sorting by map name`, () => {
+      test(`should maintain canonical as secondary sort when sorting by zone name`, () => {
         const data = [
-          new Badge(badgeDataFixture.create({ key: 'badge-1', mapKey: 'atlas-park' })),
-          new Badge(badgeDataFixture.create({ key: 'badge-2', mapKey: 'perez-park' })),
-          new Badge(badgeDataFixture.create({ key: 'badge-3', mapKey: 'atlas-park' })),
-          new Badge(badgeDataFixture.create({ key: 'badge-4', mapKey: 'abandoned-sewer-network' })),
+          new Badge(badgeDataFixture.create({ key: 'badge-1', zoneKey: 'atlas-park' })),
+          new Badge(badgeDataFixture.create({ key: 'badge-2', zoneKey: 'perez-park' })),
+          new Badge(badgeDataFixture.create({ key: 'badge-3', zoneKey: 'atlas-park' })),
+          new Badge(badgeDataFixture.create({ key: 'badge-4', zoneKey: 'abandoned-sewer-network' })),
         ]
 
-        const result = new BadgeIndex(data, TEST_MAPS).searchBadges({ sort: { by: 'MAP_NAME' } })
+        const result = new BadgeIndex(data, TEST_Zones).searchBadges({ sort: { by: 'ZONE_NAME' } })
 
         const keys = result.items.map(x => x.key)
         expect(keys).toStrictEqual(['badge-4', 'badge-1', 'badge-3', 'badge-2'])
       })
 
-      test(`should sort unknown map names to the end`, () => {
+      test(`should sort unknown zone names to the end`, () => {
         const data = [
-          new Badge(badgeDataFixture.create({ key: 'badge-1', mapKey: 'atlas-park' })),
-          new Badge(badgeDataFixture.create({ key: 'badge-2', mapKey: 'unknown' })),
-          new Badge(badgeDataFixture.create({ key: 'badge-3', mapKey: 'perez-park' })),
-          new Badge(badgeDataFixture.create({ key: 'badge-4', mapKey: 'unexpected' })),
-          new Badge(badgeDataFixture.create({ key: 'badge-5', mapKey: 'abandoned-sewer-network' })),
+          new Badge(badgeDataFixture.create({ key: 'badge-1', zoneKey: 'atlas-park' })),
+          new Badge(badgeDataFixture.create({ key: 'badge-2', zoneKey: 'unknown' })),
+          new Badge(badgeDataFixture.create({ key: 'badge-3', zoneKey: 'perez-park' })),
+          new Badge(badgeDataFixture.create({ key: 'badge-4', zoneKey: 'unexpected' })),
+          new Badge(badgeDataFixture.create({ key: 'badge-5', zoneKey: 'abandoned-sewer-network' })),
         ]
 
-        const result = new BadgeIndex(data, TEST_MAPS).searchBadges({ sort: { by: 'MAP_NAME' } })
+        const result = new BadgeIndex(data, TEST_Zones).searchBadges({ sort: { by: 'ZONE_NAME' } })
 
         const keys = result.items.map(x => x.key)
         expect(keys).toStrictEqual(['badge-5', 'badge-1', 'badge-3', 'badge-2', 'badge-4'])

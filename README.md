@@ -25,7 +25,7 @@ that can be loaded into the db for consumption by DB consumers such as [Badger](
 
 For an example data package, see the [coh-content-db-homecoming](https://github.com/n15g/coh-content-db-homecoming) project.
 
-### Defining archetypes, map, badges, etc.
+### Defining archetypes, zones, badges, etc.
 
 To define content, create a new instance using the appropriate `Data` interface and provide values for the required fields:
 
@@ -57,7 +57,7 @@ export const TEST_SERVER_GROUP: ContentBundle = {
 
 Fields with long text values can typically accept [Markdown](https://www.markdownguide.org/) format. These fields will also be typed with the tag type [MarkdownString](src/main/api/markdown-string.ts).
 
-Within markdown, you can construct a link to a badge or map using the special `badge://` and `map://` protocol indicators that consumer apps can use to provide runtime links or tooltips.
+Within markdown, you can construct a link to a badge or zone using the special `badge://` and `zone://` protocol indicators that consumer apps can use to provide runtime links or tooltips.
 This replaces the custom `[badge:xyz]` format from v1 and data packages will need to update accordingly.
 
 To create a link, use the standard Markdown link format, with the url as following:

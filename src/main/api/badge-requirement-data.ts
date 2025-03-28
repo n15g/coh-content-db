@@ -15,9 +15,9 @@ export interface BadgeRequirementData {
   readonly type: BadgeRequirementType
 
   /**
-   * Map the requirement is located on.
+   * Zone the requirement is located in.
    */
-  readonly mapKey?: string
+  readonly zoneKey?: string
 
   /**
    * /loc coordinates.

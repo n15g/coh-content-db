@@ -25,7 +25,7 @@ export interface BadgeSearchOptions {
    */
   filter?: {
     type?: BadgeType
-    mapKey?: string
+    zoneKey?: string
     alignment?: Alignment
   }
 
@@ -35,7 +35,7 @@ export interface BadgeSearchOptions {
    * Badges are assumed to be in canonical order in the content bundle, and should match the in-game display order.
    */
   sort?: {
-    by?: 'CANONICAL' | 'BADGE_NAME' | 'MAP_NAME'
+    by?: 'CANONICAL' | 'BADGE_NAME' | 'ZONE_NAME'
     dir?: 'ASC' | 'DESC'
   }
 

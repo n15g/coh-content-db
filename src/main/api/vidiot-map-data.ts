@@ -7,7 +7,7 @@ export interface VidiotMapData {
   readonly imageUrl: string
 
   /**
-   * Name to display for the Vidiot map.
+   * Name to display for the Vidiot Map.
    */
   readonly name?: string
 

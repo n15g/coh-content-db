@@ -1,6 +1,6 @@
 import { ContentBundle } from '../api/content-bundle'
 import { Archetype } from './archetype'
-import { GameMap } from './game-map'
+import { Zone } from './zone'
 import { Badge } from './badge'
 import { BundleMetadata } from './bundle-metadata'
 import { BadgeIndex } from './badge-index'
@@ -9,7 +9,7 @@ import { Paged } from './paged'
 
 export class CohContentDatabase {
   readonly #archetypeIndex: Record<string, Archetype> = {}
-  readonly #mapIndex: Record<string, GameMap> = {}
+  readonly #zoneIndex: Record<string, Zone> = {}
   readonly #badgeIndex: BadgeIndex
 
   /**
@@ -18,23 +18,24 @@ export class CohContentDatabase {
   readonly metadata: BundleMetadata
 
   /**
-   * List of the game server names in this server group.
+   * List of the game server names.
+   *
    * Torchbearer, Excelsior, etc.
    */
   readonly servers: string[]
 
   /**
-   * List of archetypes available in this server group.
+   * List of archetypes.
    */
   readonly archetypes: Archetype[]
 
   /**
-   * List of game maps supported by this server group.
+   * List of game zones.
    */
-  readonly maps: GameMap[]
+  readonly zones: Zone[]
 
   /**
-   * List of badges available on this server group.
+   * List of badges.
    */
   readonly badges: Badge[]
 
@@ -47,37 +48,37 @@ export class CohContentDatabase {
     this.servers = bundle.servers ?? []
 
     this.archetypes = bundle.archetypes?.map((data) => {
-      if (this.#archetypeIndex[data.key] !== undefined) throw new Error(`Duplicate archetype key [${data.key}]`)
+      if (this.#archetypeIndex[data.key] !== undefined) throw new Error(`Duplicate archetype key '${data.key}'`)
       const archetype = new Archetype(data)
       this.#archetypeIndex[archetype.key] = archetype
       return archetype
     }) ?? []
 
-    this.maps = bundle.maps?.map((data) => {
-      if (this.#mapIndex[data.key] !== undefined) throw new Error(`Duplicate map key [${data.key}]`)
-      const map = new GameMap(data)
-      this.#mapIndex[map.key] = map
-      return map
+    this.zones = bundle.zones?.map((data) => {
+      if (this.#zoneIndex[data.key] !== undefined) throw new Error(`Duplicate zone key '${data.key}'`)
+      const zone = new Zone(data)
+      this.#zoneIndex[zone.key] = zone
+      return zone
     }) ?? []
 
     this.badges = bundle.badges?.map(data => new Badge(data)) ?? []
-    this.#badgeIndex = new BadgeIndex(this.badges, this.maps)
+    this.#badgeIndex = new BadgeIndex(this.badges, this.zones)
   }
 
   getArchetype(key: string): Archetype {
     const result = this.#archetypeIndex[key]
-    if (result === undefined) throw new Error(`Unknown archetype key [${key}]`)
+    if (result === undefined) throw new Error(`Unknown archetype key '${key}'`)
     return result
   }
 
-  getMap(key: string): GameMap {
-    const result = this.#mapIndex[key]
-    if (result === undefined) throw new Error(`Unknown map key [${key}]`)
+  getZone(key: string): Zone {
+    const result = this.#zoneIndex[key]
+    if (result === undefined) throw new Error(`Unknown zone key '${key}'`)
     return result
   }
 
-  mapExists(key: string): boolean {
-    return !!this.#mapIndex[key]
+  zoneExists(key: string): boolean {
+    return !!this.#zoneIndex[key]
   }
 
   getBadge(key: string): Badge {
