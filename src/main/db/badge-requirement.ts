@@ -1,23 +1,23 @@
-import { BadgePartialData } from '../api/badge-partial-data'
+import { BadgeRequirementData } from '../api/badge-requirement-data'
 import { PlaqueType } from '../api/plaque-type'
-import { BadgePartialType } from '../api/badge-partial-type'
+import { BadgeRequirementType } from '../api/badge-requirement-type'
 import { EnhancementCategory } from '../api/enhancement-category'
 import { Key } from './key'
 import { MarkdownString } from '../api/markdown-string'
 
-export class BadgePartial {
+export class BadgeRequirement {
   /**
    * Key.
    */
   readonly key: string
 
   /**
-   * Type of partial.
+   * Type of requirement.
    */
-  readonly type: BadgePartialType
+  readonly type: BadgeRequirementType
 
   /**
-   * Map the partial is located on.
+   * Map the requirement is located on.
    */
   readonly mapKey?: string
 
@@ -37,12 +37,12 @@ export class BadgePartial {
   readonly plaqueInscription?: string
 
   /**
-   * The number or letter the partial appears as on Vidiot Maps.
+   * The number or letter the plaque appears as on Vidiot Maps.
    */
   readonly vidiotMapKey?: string
 
   /**
-   * The badge required for this partial.
+   * The key of the badge for this requirement.
    */
   readonly badgeKey?: string
 
@@ -66,7 +66,7 @@ export class BadgePartial {
    */
   readonly notes?: MarkdownString
 
-  constructor(data: BadgePartialData) {
+  constructor(data: BadgeRequirementData) {
     this.key = new Key(data.key).value
     this.type = data.type
     this.mapKey = data.mapKey

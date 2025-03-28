@@ -76,8 +76,16 @@ export class CohContentDatabase {
     return result
   }
 
+  mapExists(key: string): boolean {
+    return !!this.#mapIndex[key]
+  }
+
   getBadge(key: string): Badge {
     return this.#badgeIndex.getBadge(key)
+  }
+
+  badgeExists(key: string): boolean {
+    return this.#badgeIndex.badgeExists(key)
   }
 
   /**

@@ -1,21 +1,21 @@
 import { EnhancementCategory } from './enhancement-category'
-import { BadgePartialType } from './badge-partial-type'
+import { BadgeRequirementType } from './badge-requirement-type'
 import { PlaqueType } from './plaque-type'
 import { MarkdownString } from './markdown-string'
 
-export interface BadgePartialData {
+export interface BadgeRequirementData {
   /**
    * Key.
    */
   readonly key: string
 
   /**
-   * Type of partial.
+   * Type of requirement.
    */
-  readonly type: BadgePartialType
+  readonly type: BadgeRequirementType
 
   /**
-   * Map the partial is located on.
+   * Map the requirement is located on.
    */
   readonly mapKey?: string
 
@@ -35,12 +35,12 @@ export interface BadgePartialData {
   readonly plaqueInscription?: string
 
   /**
-   * The number or letter the partial appears as on Vidiot Maps.
+   * The number or letter the plaque appears as on Vidiot Maps.
    */
   readonly vidiotMapKey?: string
 
   /**
-   * The badge required for this partial.
+   * The key of the badge for this requirement.
    */
   readonly badgeKey?: string
 

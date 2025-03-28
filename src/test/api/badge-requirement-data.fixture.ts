@@ -1,11 +1,11 @@
 import { defineFixture } from 'efate'
-import { BADGE_PARTIAL_TYPE, BadgePartialData, ENHANCEMENT_CATEGORY, PLAQUE_TYPE } from '../../main'
+import { BADGE_REQUIREMENT_TYPE, BadgeRequirementData, ENHANCEMENT_CATEGORY, PLAQUE_TYPE } from '../../main'
 
-export const badgePartialDataFixture = defineFixture<BadgePartialData>((t) => {
-  t.key.as(index => `badge-partial-${index}`)
-  t.type.pickFrom([...BADGE_PARTIAL_TYPE])
+export const badgeRequirementDataFixture = defineFixture<BadgeRequirementData>((t) => {
+  t.key.as(index => `badge-requirement-${index}`)
+  t.type.pickFrom([...BADGE_REQUIREMENT_TYPE])
   t.mapKey?.asString()
-  t.loc?.asArray()
+  t.loc?.as(index => [index, index, index])
   t.plaqueType?.pickFrom([...PLAQUE_TYPE])
   t.plaqueInscription?.asLoremIpsum()
   t.vidiotMapKey?.asString()

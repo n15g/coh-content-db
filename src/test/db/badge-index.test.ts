@@ -31,6 +31,18 @@ describe(BadgeIndex.name, () => {
     })
   })
 
+  describe('badgeExists', () => {
+    test(`should return true for a badge that exists`, () => {
+      const data = [new Badge(badgeDataFixture.create({ key: 'foo' }))]
+
+      expect(new BadgeIndex(data).badgeExists('foo')).toBeTruthy()
+    })
+
+    test(`should return false for a badge that does not exist`, () => {
+      expect(new BadgeIndex([]).badgeExists('foo')).toBeFalsy()
+    })
+  })
+
   describe('searchBadges', () => {
     test(`should return everything for an empty query`, () => {
       const data = [

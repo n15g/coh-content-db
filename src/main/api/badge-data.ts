@@ -1,4 +1,4 @@
-import { BadgePartialData } from './badge-partial-data'
+import { BadgeRequirementData } from './badge-requirement-data'
 import { Link } from './link'
 import { BadgeType } from './badge-type'
 import { AlternateData } from './alternate-data'
@@ -93,9 +93,16 @@ export interface BadgeData {
   readonly effect?: MarkdownString
 
   /**
-   * A list of requirements for badges that have partial fulfilment steps, such as visiting plaques for history badges, or collecting other badges for meta-badges like accolades.
+   * Represents the layered requirements for badges with multiple fulfillment steps,
+   * such as visiting plaques for history badges or collecting other badges.
+   *
+   * The outer array represents groups of requirements evaluated with OR logic —
+   * fulfilling any group satisfies the badge.
+   *
+   * Each inner array represents individual requirements evaluated with AND logic —
+   * all conditions in the group must be met.
    */
-  readonly partials?: BadgePartialData[]
+  readonly requirements?: BadgeRequirementData[][]
 
   /**
    * Some badges are not included in the badge total count... such as Flames of Prometheus, which can be removed by redeeming it for a Notice of the Well.

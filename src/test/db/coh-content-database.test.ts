@@ -123,6 +123,24 @@ describe(CohContentDatabase.name, () => {
     })
   })
 
+  describe('mapExists', () => {
+    test(`should return true for a map that exists`, () => {
+      const data = contentBundleFixture.create({
+        maps: [gameMapDataFixture.create({ key: 'foo' })],
+      })
+
+      expect(new CohContentDatabase(data).mapExists('foo')).toBeTruthy()
+    })
+
+    test(`should return false for a map that does not exist`, () => {
+      const data = contentBundleFixture.create({
+        maps: [],
+      })
+
+      expect(new CohContentDatabase(data).mapExists('foo')).toBeFalsy()
+    })
+  })
+
   describe('getBadge', () => {
     test(`should retrieve badge from the index`, () => {
       const data = contentBundleFixture.create({
@@ -138,6 +156,24 @@ describe(CohContentDatabase.name, () => {
       })
 
       expect(() => new CohContentDatabase(data).getBadge('foo')).toThrow('Unknown badge key [foo]')
+    })
+  })
+
+  describe('badgeExists', () => {
+    test(`should return true for a badge that exists`, () => {
+      const data = contentBundleFixture.create({
+        badges: [badgeDataFixture.create({ key: 'foo' })],
+      })
+
+      expect(new CohContentDatabase(data).badgeExists('foo')).toBeTruthy()
+    })
+
+    test(`should return false for a badge that does not exist`, () => {
+      const data = contentBundleFixture.create({
+        badges: [],
+      })
+
+      expect(new CohContentDatabase(data).badgeExists('foo')).toBeFalsy()
     })
   })
 

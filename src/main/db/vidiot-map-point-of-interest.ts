@@ -25,15 +25,15 @@ export class VidiotMapPointOfInterest {
   readonly badgeKey?: string
 
   /**
-   * If the POI is a partial for a badge, the partial key.
+   * If the POI is a requirement for a badge, the requirement key.
    */
-  readonly badgePartialKey?: string
+  readonly badgeRequirementKey?: string
 
   constructor(data: VidiotMapPointOfInterestData) {
     this.pos = data.pos
     this.notes = data.notes
     this.mapKey = data.mapKey
     this.badgeKey = data.badgeKey
-    this.badgePartialKey = data.badgePartialKey
+    this.badgeRequirementKey = data.badgeRequirementKey
   }
 }

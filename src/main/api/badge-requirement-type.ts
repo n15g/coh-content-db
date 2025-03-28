@@ -1,8 +1,8 @@
-export const BADGE_PARTIAL_TYPE = [
+export const BADGE_REQUIREMENT_TYPE = [
   'PLAQUE',
   'BADGE',
   'INVENTION',
   'INVENTION_PLUS_ONE', // Some invention badges require you to build x of two different invention levels, 'plus one of either level'.
 ] as const
 
-export type BadgePartialType = typeof BADGE_PARTIAL_TYPE[number]
+export type BadgeRequirementType = typeof BADGE_REQUIREMENT_TYPE[number]

@@ -1,6 +1,6 @@
 import { defineFixture } from 'efate'
 import { ALIGNMENT, BADGE_TYPE, BadgeData } from '../../main'
-import { badgePartialDataFixture } from './badge-partial-data.fixture'
+import { badgeRequirementDataFixture } from './badge-requirement-data.fixture'
 
 export const badgeDataFixture = defineFixture<BadgeData>((t) => {
   t.key.as(index => `badge-${index}`)
@@ -9,14 +9,16 @@ export const badgeDataFixture = defineFixture<BadgeData>((t) => {
   t.alignment.pickFrom([...ALIGNMENT])
   t.badgeText?.as(index => [{ value: `This is badge ${index}` }])
   t.acquisition?.asLoremIpsum()
-  t.icon?.asArray([{ value: 'https://nouri.org' }])
+  t.icon?.as(() => [{ value: 'https://nouri.org' }])
   t.notes?.asLoremIpsum()
-  t.links?.asArray([{ href: 'https://nouri.org' }])
+  t.links?.as(() => [{ href: 'https://nouri.org' }])
   t.mapKey?.asString()
-  t.loc?.asArray()
+  t.loc?.as(index => [index, index, index])
   t.vidiotMapKey?.asString()
-  t.setTitle?.asArray({ length: 2 })
+  t.setTitle?.as((index) => {
+    return { id: index }
+  })
   t.effect?.asString()
-  t.partials?.arrayOfFixture({ fixture: badgePartialDataFixture })
+  t.requirements?.as(() => [[badgeRequirementDataFixture]])
   t.ignoreInTotals?.asBoolean()
 })

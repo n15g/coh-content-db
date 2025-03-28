@@ -29,6 +29,10 @@ export class BadgeIndex {
     return result
   }
 
+  badgeExists(key: string): boolean {
+    return !!this.#badgeIndex[key]
+  }
+
   searchBadges(options?: BadgeSearchOptions): Paged<Badge> {
     const filtered = (options?.query || options?.filter)
       ? this.#badges.filter(badge => this.#satisfiesQueryPredicate(badge, options?.query) && this.#satisfiesFilterPredicate(badge, options?.filter))

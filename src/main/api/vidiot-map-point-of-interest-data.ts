@@ -24,7 +24,7 @@ export interface VidiotMapPointOfInterestData {
   readonly badgeKey?: string
 
   /**
-   * If the POI is a partial for a badge, the partial key.
+   * If the POI is a requirement for a badge, the requirement key.
    */
-  readonly badgePartialKey?: string
+  readonly badgeRequirementKey?: string
 }

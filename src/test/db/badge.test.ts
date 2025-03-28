@@ -1,6 +1,6 @@
 import { Badge } from '../../main'
 import { badgeDataFixture } from '../api/badge-data.fixture'
-import { badgePartialDataFixture } from '../api/badge-partial-data.fixture'
+import { badgeRequirementDataFixture } from '../api/badge-requirement-data.fixture'
 
 describe(Badge.name, () => {
   describe('Constructor', () => {
@@ -9,33 +9,46 @@ describe(Badge.name, () => {
     })
   })
 
-  describe('partials', () => {
-    test(`should throw an error on duplicate key`, () => {
+  describe('requirements', () => {
+    test(`should throw an error on duplicate key in same group`, () => {
       const data = badgeDataFixture.create({
-        partials: [
-          badgePartialDataFixture.create({ key: 'foo' }),
-          badgePartialDataFixture.create({ key: 'foo' }),
-        ],
+        key: 'badge',
+        requirements: [[
+          badgeRequirementDataFixture.create({ key: 'foo' }),
+          badgeRequirementDataFixture.create({ key: 'foo' }),
+        ]],
       })
-      expect(() => new Badge(data)).toThrow('Duplicate badge partial key [foo]')
+      expect(() => new Badge(data)).toThrow('Duplicate badge requirement key [badge:foo] in group [1]')
+    })
+
+    test(`should not throw an error on duplicate key in different group`, () => {
+      const data = badgeDataFixture.create({
+        key: 'badge',
+        requirements: [[
+          badgeRequirementDataFixture.create({ key: 'foo' }),
+        ], [
+          badgeRequirementDataFixture.create({ key: 'foo' }),
+        ]],
+      })
+      new Badge(data)
     })
   })
 
-  describe('getBadgePartial', () => {
-    test(`should retrieve partial from the index`, () => {
+  describe('getRequirement', () => {
+    test(`should retrieve requirement from the index`, () => {
       const data = badgeDataFixture.create({
-        partials: [badgePartialDataFixture.create({ key: 'foo' })],
+        requirements: [[badgeRequirementDataFixture.create({ key: 'foo' })]],
       })
 
-      expect(new Badge(data).getPartial('foo')).not.toBeUndefined()
+      expect(new Badge(data).getRequirement('foo')).not.toBeUndefined()
     })
 
-    test(`should throw error for unknown partial`, () => {
+    test(`should throw error for unknown requirement`, () => {
       const data = badgeDataFixture.create({
-        partials: [],
+        requirements: [],
       })
 
-      expect(() => new Badge(data).getPartial('foo')).toThrow('Unknown badge partial key [foo]')
+      expect(() => new Badge(data).getRequirement('foo')).toThrow('Unknown badge requirement key [foo]')
     })
   })
 })

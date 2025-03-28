@@ -1,14 +1,14 @@
 import { BadgeType } from '../api/badge-type'
 import { Link } from '../api/link'
 import { BadgeData } from '../api/badge-data'
-import { BadgePartial } from './badge-partial'
+import { BadgeRequirement } from './badge-requirement'
 import { Key } from './key'
 import { Alternates } from './alternates'
 import { Alignments } from './alignments'
 import { MarkdownString } from '../api/markdown-string'
 
 export class Badge {
-  readonly #partialsIndex: Record<string, BadgePartial> = {}
+  readonly #requirementsIndex: Record<string, BadgeRequirement> = {}
 
   /**
    * The database key for this badge.
@@ -94,43 +94,56 @@ export class Badge {
   readonly effect?: MarkdownString
 
   /**
-   * A list of requirements for badges that have partial fulfilment steps, such as visiting plaques for history badges, or collecting other badges for meta-badges like accolades.
+   * Represents the layered requirements for badges with multiple fulfillment steps,
+   * such as visiting plaques for history badges or collecting other badges.
+   *
+   * The outer array represents groups of requirements evaluated with OR logic —
+   * fulfilling any group satisfies the badge.
+   *
+   * Each inner array represents individual requirements evaluated with AND logic —
+   * all conditions in the group must be met.
    */
-  readonly partials?: BadgePartial[]
+  readonly requirements?: BadgeRequirement[][]
 
   /**
    * Some badges are not included in the badge total count... such as Flames of Prometheus, which can be removed by redeeming it for a Notice of the Well.
    */
   readonly ignoreInTotals: boolean
 
-  constructor(data: BadgeData) {
-    this.key = new Key(data.key).value
-    this.type = data.type
-    this.name = new Alternates(data.name)
-    this.alignment = new Alignments(data.alignment)
-    this.badgeText = new Alternates(data.badgeText ?? [])
-    this.acquisition = data.acquisition
-    this.icon = new Alternates(data.icon ?? [])
-    this.notes = data.notes
-    this.links = data.links
-    this.mapKey = data.mapKey
-    this.loc = data.loc
-    this.effect = data.effect
-    this.vidiotMapKey = data.vidiotMapKey
-    this.setTitle = data.setTitle
-    this.ignoreInTotals = data.ignoreInTotals ?? false
+  constructor(badgeData: BadgeData) {
+    this.key = new Key(badgeData.key).value
+    this.type = badgeData.type
+    this.name = new Alternates(badgeData.name)
+    this.alignment = new Alignments(badgeData.alignment)
+    this.badgeText = new Alternates(badgeData.badgeText ?? [])
+    this.acquisition = badgeData.acquisition
+    this.icon = new Alternates(badgeData.icon ?? [])
+    this.notes = badgeData.notes
+    this.links = badgeData.links
+    this.mapKey = badgeData.mapKey
+    this.loc = badgeData.loc
+    this.effect = badgeData.effect
+    this.vidiotMapKey = badgeData.vidiotMapKey
+    this.setTitle = badgeData.setTitle
+    this.ignoreInTotals = badgeData.ignoreInTotals ?? false
 
-    this.partials = data.partials?.map((data) => {
-      if (this.#partialsIndex[data.key] !== undefined) throw new Error(`Duplicate badge partial key [${data.key}]`)
-      const badge = new BadgePartial(data)
-      this.#partialsIndex[badge.key] = badge
-      return badge
+    this.requirements = badgeData.requirements?.map((inner, index) => {
+      const existingKeysInGroup = new Set<string>()
+      console.log(badgeData) // todo
+      return inner.map((requirementData) => {
+        if (existingKeysInGroup.has(requirementData.key)) throw new Error(`Duplicate badge requirement key [${badgeData.key}:${requirementData.key}] in group [${index + 1}]`)
+        existingKeysInGroup.add(requirementData.key)
+
+        const badge = new BadgeRequirement(requirementData)
+        this.#requirementsIndex[badge.key] = badge
+        return badge
+      })
     })
   }
 
-  getPartial(key: string): BadgePartial {
-    const result = this.#partialsIndex[key]
-    if (result === undefined) throw new Error(`Unknown badge partial key [${key}]`)
+  getRequirement(key: string): BadgeRequirement {
+    const result = this.#requirementsIndex[key]
+    if (result === undefined) throw new Error(`Unknown badge requirement key [${key}]`)
     return result
   }
 }

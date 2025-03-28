@@ -6,5 +6,5 @@ export const vidiotMapPointOfInterestFixture = defineFixture<VidiotMapPointOfInt
   t.notes?.asLoremIpsum()
   t.mapKey?.as(index => `map-${index}`)
   t.badgeKey?.as(index => `badge-${index}`)
-  t.badgePartialKey?.as(index => `partial-${index}`)
+  t.badgeRequirementKey?.as(index => `requirement-${index}`)
 })
