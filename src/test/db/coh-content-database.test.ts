@@ -3,6 +3,7 @@ import { contentBundleFixture } from '../api/content-bundle.fixture'
 import { archetypeDataFixture } from '../api/archetype-data.fixture'
 import { badgeDataFixture } from '../api/badge-data.fixture'
 import { zoneDataFixture } from '../api/zone-data.fixture'
+import { contactDataFixture } from '../api/contact-data.fixture'
 
 describe(CohContentDatabase.name, () => {
   test('should load a basic bundle', () => {
@@ -87,6 +88,25 @@ describe(CohContentDatabase.name, () => {
     })
   })
 
+  describe('contacts', () => {
+    test(`should throw an error on duplicate contact`, () => {
+      const data = contentBundleFixture.create({
+        contacts: [
+          contactDataFixture.create({ key: 'foo' }),
+          contactDataFixture.create({ key: 'foo' }),
+        ],
+      })
+      expect(() => new CohContentDatabase(data)).toThrow(`Duplicate contact key 'foo'`)
+    })
+
+    test(`should accept an undefined field`, () => {
+      const data = contentBundleFixture
+        .omit('contacts')
+        .create()
+      expect(() => new CohContentDatabase(data).contacts).toHaveLength(0)
+    })
+  })
+
   describe('getArchetype', () => {
     test(`should retrieve archetype from the index`, () => {
       const data = contentBundleFixture.create({
@@ -138,6 +158,42 @@ describe(CohContentDatabase.name, () => {
       })
 
       expect(new CohContentDatabase(data).zoneExists('foo')).toBeFalsy()
+    })
+  })
+
+  describe('getContact', () => {
+    test(`should retrieve contact from the index`, () => {
+      const data = contentBundleFixture.create({
+        contacts: [contactDataFixture.create({ key: 'foo' })],
+      })
+
+      expect(new CohContentDatabase(data).getContact('foo')).not.toBeUndefined()
+    })
+
+    test(`should throw error for unknown contact`, () => {
+      const data = contentBundleFixture.create({
+        contacts: [],
+      })
+
+      expect(() => new CohContentDatabase(data).getContact('foo')).toThrow(`Unknown contact key 'foo'`)
+    })
+  })
+
+  describe('contactExists', () => {
+    test(`should return true for a contact that exists`, () => {
+      const data = contentBundleFixture.create({
+        contacts: [contactDataFixture.create({ key: 'foo' })],
+      })
+
+      expect(new CohContentDatabase(data).contactExists('foo')).toBeTruthy()
+    })
+
+    test(`should return false for a contact that does not exist`, () => {
+      const data = contentBundleFixture.create({
+        contacts: [],
+      })
+
+      expect(new CohContentDatabase(data).contactExists('foo')).toBeFalsy()
     })
   })
 

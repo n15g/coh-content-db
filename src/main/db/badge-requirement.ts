@@ -4,6 +4,7 @@ import { BadgeRequirementType } from '../api/badge-requirement-type'
 import { EnhancementCategory } from '../api/enhancement-category'
 import { Key } from './key'
 import { MarkdownString } from '../api/markdown-string'
+import { Link } from '../api/link'
 
 export class BadgeRequirement {
   /**
@@ -52,9 +53,9 @@ export class BadgeRequirement {
   readonly arcName?: string
 
   /**
-   * Story arc contact name.
+   * {@link Contact} key for the story arc.
    */
-  readonly arcContactName?: string
+  readonly contactKey?: string
 
   /**
    * Level of the invention required.
@@ -76,6 +77,11 @@ export class BadgeRequirement {
    */
   readonly notes?: MarkdownString
 
+  /**
+   * List of external links. Wiki, forums, etc.
+   */
+  readonly links: Link[]
+
   constructor(data: BadgeRequirementData) {
     this.key = new Key(data.key).value
     this.type = data.type
@@ -86,10 +92,11 @@ export class BadgeRequirement {
     this.vidiotMapKey = data.vidiotMapKey
     this.badgeKey = data.badgeKey
     this.arcName = data.arcName
-    this.arcContactName = data.arcContactName
+    this.contactKey = data.contactKey
     this.inventionLevel = data.inventionLevel
     this.inventionTypes = data.inventionTypes
     this.inventionCount = data.inventionCount
     this.notes = data.notes
+    this.links = data.links ?? []
   }
 }

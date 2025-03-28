@@ -41,13 +41,13 @@ export const TEST_BADGE: BadgeData = {
 }
 ```
 
-Then, create a `ServerGroupData` instance and load your content into the appropriate field.
+Then, create a `ContentBundle` instance and load your content into the appropriate field.
 
 ```typescript
 import { ContentBundle } from './content-bundle'
 import { TEST_BADGE } from './test-badge'
 
-export const TEST_SERVER_GROUP: ContentBundle = {
+export const MY_CONTENT_BUNDLE: ContentBundle = {
     name: 'My Content Bundle',
     badges: [TEST_BADGE],
 }

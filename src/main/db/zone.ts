@@ -16,13 +16,13 @@ export class Zone {
   readonly name: string
 
   /**
-   * List of external links for this Zone. Wiki, forums, etc.
+   * List of external links. Wiki, forums, etc.
    */
-  readonly links?: Link[]
+  readonly links: Link[]
 
   constructor(data: ZoneData) {
     this.key = new Key(data.key).value
     this.name = data.name
-    this.links = data.links
+    this.links = data.links ?? []
   }
 }

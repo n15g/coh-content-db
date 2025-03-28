@@ -14,7 +14,7 @@ export interface ZoneData {
   readonly name: string
 
   /**
-   * List of external links for this Zone. Wiki, forums, etc.
+   * List of external links. Wiki, forums, etc.
    */
   readonly links?: Link[]
 }

@@ -6,10 +6,12 @@ import { BundleMetadata } from './bundle-metadata'
 import { BadgeIndex } from './badge-index'
 import { BadgeSearchOptions } from './badge-search-options'
 import { Paged } from './paged'
+import { Contact } from './contact'
 
 export class CohContentDatabase {
   readonly #archetypeIndex: Record<string, Archetype> = {}
   readonly #zoneIndex: Record<string, Zone> = {}
+  readonly #contactIndex: Record<string, Contact> = {}
   readonly #badgeIndex: BadgeIndex
 
   /**
@@ -33,6 +35,11 @@ export class CohContentDatabase {
    * List of game zones.
    */
   readonly zones: Zone[]
+
+  /**
+   * List of contacts.
+   */
+  readonly contacts: Contact[]
 
   /**
    * List of badges.
@@ -61,6 +68,13 @@ export class CohContentDatabase {
       return zone
     }) ?? []
 
+    this.contacts = bundle.contacts?.map((data) => {
+      if (this.#contactIndex[data.key] !== undefined) throw new Error(`Duplicate contact key '${data.key}'`)
+      const contact = new Contact(data)
+      this.#contactIndex[contact.key] = contact
+      return contact
+    }) ?? []
+
     this.badges = bundle.badges?.map(data => new Badge(data)) ?? []
     this.#badgeIndex = new BadgeIndex(this.badges, this.zones)
   }
@@ -77,8 +91,18 @@ export class CohContentDatabase {
     return result
   }
 
+  getContact(key: string): Contact {
+    const result = this.#contactIndex[key]
+    if (result === undefined) throw new Error(`Unknown contact key '${key}'`)
+    return result
+  }
+
   zoneExists(key: string): boolean {
     return !!this.#zoneIndex[key]
+  }
+
+  contactExists(key: string): boolean {
+    return !!this.#contactIndex[key]
   }
 
   getBadge(key: string): Badge {

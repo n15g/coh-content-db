@@ -10,8 +10,6 @@ export const badgeRequirementDataFixture = defineFixture<BadgeRequirementData>((
   t.plaqueInscription?.asLoremIpsum()
   t.vidiotMapKey?.asString()
   t.badgeKey?.as(index => `badge-${index}`)
-  t.arcName?.asString()
-  t.arcContactName?.asString()
   t.inventionLevel?.asNumber()
   t.inventionTypes?.pickFrom([...ENHANCEMENT_CATEGORY])
   t.inventionCount?.asNumber()

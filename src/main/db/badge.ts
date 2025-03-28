@@ -55,9 +55,9 @@ export class Badge {
   readonly notes?: MarkdownString
 
   /**
-   * List of external links for this Badge. Wiki, forums, etc.
+   * List of external links. Wiki, forums, etc.
    */
-  readonly links?: Link[]
+  readonly links: Link[]
 
   /**
    * For exploration badges, the key of the {@link Zone} that this badge is found on.
@@ -119,7 +119,7 @@ export class Badge {
     this.acquisition = badgeData.acquisition
     this.icon = new Alternates(badgeData.icon ?? [])
     this.notes = badgeData.notes
-    this.links = badgeData.links
+    this.links = badgeData.links ?? []
     this.zoneKey = badgeData.zoneKey
     this.loc = badgeData.loc
     this.effect = badgeData.effect

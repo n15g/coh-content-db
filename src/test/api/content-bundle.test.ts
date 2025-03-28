@@ -7,7 +7,7 @@ export const TEST_BUNDLE: ContentBundle = {
   badges: [TEST_BADGE],
 }
 
-describe('ServerGroupData', () => {
+describe('ContentBundle', () => {
   test('should be a usable interface', () => {
     expect(TEST_BUNDLE).not.toBeUndefined()
   })

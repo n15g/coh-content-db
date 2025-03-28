@@ -5,12 +5,12 @@ import { MarkdownString } from '../api/markdown-string'
 
 export class BundleMetadata {
   /**
-   * Name of the server group.
+   * Name of the content bundle.
    */
   readonly name: string
 
   /**
-   * Description of the server group.
+   * Description of the fork.
    */
   readonly description?: MarkdownString
 
@@ -20,7 +20,7 @@ export class BundleMetadata {
   readonly repository?: string
 
   /**
-   * List of external links for this Server Group. Wiki, forums, etc.
+   * List of external links. Wiki, forums, etc.
    */
   readonly links: Link[]
 

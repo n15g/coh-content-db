@@ -2,6 +2,7 @@ import { EnhancementCategory } from './enhancement-category'
 import { BadgeRequirementType } from './badge-requirement-type'
 import { PlaqueType } from './plaque-type'
 import { MarkdownString } from './markdown-string'
+import { Link } from './link'
 
 export interface BadgeRequirementData {
   /**
@@ -50,9 +51,9 @@ export interface BadgeRequirementData {
   readonly arcName?: string
 
   /**
-   * Story arc contact name.
+   * {@link Contact} key for the story arc.
    */
-  readonly arcContactName?: string
+  readonly contactKey?: string
 
   /**
    * Level of the invention required.
@@ -73,4 +74,9 @@ export interface BadgeRequirementData {
    * Any additional notes.
    */
   readonly notes?: MarkdownString
+
+  /**
+   * List of external links. Wiki, forums, etc.
+   */
+  readonly links?: Link[]
 }

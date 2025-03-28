@@ -15,6 +15,7 @@ export const CHANGELOG: Change[] = [
       + '* Zone and badge references now follow a standard Markdown link format with a `badge://` or `map://` protocol.\n'
       + '* Badge partials are now known as badge requirements and support both AND and OR groups of requirements.\n'
       + '* Removed the `VidiotMap` API as it was never used or fleshed out properly.\n'
+      + '* Added support for story arcs to badge requirements including a link to the contact.\n'
       + '* Standardized pluralization of some field names (name, icon).\n'
       + '* Combined `settitle` ids into a single tuple field.\n'
       + '* Change from GNU to The Unlicense.\n'

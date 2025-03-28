@@ -54,7 +54,7 @@ export interface BadgeData {
   readonly notes?: MarkdownString
 
   /**
-   * List of external links for this Badge. Wiki, forums, etc.
+   * List of external links. Wiki, forums, etc.
    */
   readonly links?: Link[]
 
