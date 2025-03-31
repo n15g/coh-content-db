@@ -48,9 +48,9 @@ export class BadgeRequirement {
   readonly badgeKey?: string
 
   /**
-   * Story arc name.
+   * Mission name.
    */
-  readonly arcName?: string
+  readonly missionName?: string
 
   /**
    * {@link Contact} key for the story arc.
@@ -91,7 +91,7 @@ export class BadgeRequirement {
     this.plaqueInscription = data.plaqueInscription
     this.vidiotMapKey = data.vidiotMapKey
     this.badgeKey = data.badgeKey
-    this.arcName = data.arcName
+    this.missionName = data.missionName
     this.contactKey = data.contactKey
     this.inventionLevel = data.inventionLevel
     this.inventionTypes = data.inventionTypes

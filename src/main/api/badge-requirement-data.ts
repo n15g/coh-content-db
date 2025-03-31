@@ -46,9 +46,9 @@ export interface BadgeRequirementData {
   readonly badgeKey?: string
 
   /**
-   * Story arc name.
+   * Mission name.
    */
-  readonly arcName?: string
+  readonly missionName?: string
 
   /**
    * {@link Contact} key for the story arc.

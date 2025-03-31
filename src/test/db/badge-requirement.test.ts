@@ -94,15 +94,15 @@ describe(BadgeRequirement.name, () => {
     })
   })
 
-  describe('arcName', () => {
+  describe('missionName', () => {
     test('should be set from the data', () => {
-      const requirement = new BadgeRequirement(badgeRequirementDataFixture.create({ arcName: 'foo' }))
-      expect(requirement.arcName).toEqual('foo')
+      const requirement = new BadgeRequirement(badgeRequirementDataFixture.create({ missionName: 'foo' }))
+      expect(requirement.missionName).toEqual('foo')
     })
 
     test('should be optional', () => {
-      const requirement = new BadgeRequirement(badgeRequirementDataFixture.omit('arcName').create())
-      expect(requirement.arcName).toBeUndefined()
+      const requirement = new BadgeRequirement(badgeRequirementDataFixture.omit('missionName').create())
+      expect(requirement.missionName).toBeUndefined()
     })
   })
 
