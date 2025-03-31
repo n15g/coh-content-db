@@ -34,7 +34,7 @@ export class Contact {
   /**
    * The level range this contact will offer missions for.
    */
-  readonly levelRange: [number, number?]
+  readonly levelRange?: [number, number?]
 
   /**
    * Freeform notes or tips about the contact.
