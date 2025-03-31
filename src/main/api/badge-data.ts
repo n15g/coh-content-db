@@ -37,7 +37,7 @@ export interface BadgeData {
   readonly badgeText?: AlternateData<string>[]
 
   /**
-   * Description of how to acquire the badge.
+   * Short description of how to acquire the badge. Detailed instructions should go in the notes field.
    */
   readonly acquisition?: MarkdownString
 

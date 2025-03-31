@@ -38,7 +38,7 @@ export class Badge {
   readonly badgeText: Alternates<string>
 
   /**
-   * Description of how to acquire the badge.
+   * Short description of how to acquire the badge. Detailed instructions will be in the notes field.
    */
   readonly acquisition?: MarkdownString
 

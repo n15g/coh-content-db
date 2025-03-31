@@ -371,6 +371,26 @@ describe(BadgeIndex.name, () => {
         const result = new BadgeIndex(data).searchBadges()
         expect(result.totalPages).toBe(1)
       })
+
+      test(`should return the last page if a page is requested past the max`, () => {
+        const data = [
+          new Badge(badgeDataFixture.create({ key: 'badge-1' })),
+          new Badge(badgeDataFixture.create({ key: 'badge-2' })),
+          new Badge(badgeDataFixture.create({ key: 'badge-3' })),
+          new Badge(badgeDataFixture.create({ key: 'badge-4' })),
+          new Badge(badgeDataFixture.create({ key: 'badge-5' })),
+        ]
+
+        const result = new BadgeIndex(data).searchBadges({ pageSize: 2, page: 10 })
+        const keys = result.items.map(x => x.key)
+        expect(keys).toStrictEqual(['badge-5'])
+        expect(result.page).toBe(3)
+      })
+
+      test(`should return the first page if a page is requested lower than 1`, () => {
+        const result = new BadgeIndex([]).searchBadges({ page: -10 })
+        expect(result.page).toBe(1)
+      })
     })
 
     describe('sort', () => {

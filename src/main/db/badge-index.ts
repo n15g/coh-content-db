@@ -38,16 +38,18 @@ export class BadgeIndex {
       ? this.#badges.filter(badge => this.#satisfiesQueryPredicate(badge, options?.query) && this.#satisfiesFilterPredicate(badge, options?.filter))
       : this.#badges
 
-    const paged = options?.pageSize ? filtered.slice(((options?.page ?? 1) - 1) * options.pageSize, (options?.page ?? 1) * options?.pageSize) : filtered
+    const totalPages = options?.pageSize ? Math.ceil(filtered.length / (options?.pageSize)) : 1
+    const page = Math.max(1, Math.min(totalPages, options?.page ?? 1))
+    const paged = options?.pageSize ? filtered.slice((page - 1) * options.pageSize, page * options?.pageSize) : filtered
 
     const sorted = this.#sort(paged, options?.sort)
 
     return {
       items: sorted,
-      page: options?.page ?? 1,
+      page: page,
       pageSize: options?.pageSize,
       totalItems: filtered.length,
-      totalPages: options?.pageSize ? Math.ceil(filtered.length / (options?.pageSize)) : 1,
+      totalPages: totalPages,
     }
   }
 
