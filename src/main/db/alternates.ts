@@ -1,9 +1,6 @@
 import { AlternateData } from '../api/alternate-data'
-import { Sex } from '../api/sex'
-import { Alignment } from '../api/alignment'
-
-const ALIGNMENT_SORT: Record<string, number> = { H: 2, V: 1, P: 0 }
-const SEX_SORT: Record<string, number> = { M: 1, F: 0 }
+import { compareSex, Sex } from '../api/sex'
+import { Alignment, compareAlignment } from '../api/alignment'
 
 export class Alternates<T> {
   readonly #sortedValues: AlternateData<T>[] = []
@@ -51,34 +48,12 @@ export class Alternates<T> {
     const bSpecificity = (b.alignment ? 2 : 0) + (b.sex ? 1 : 0)
     if (aSpecificity !== bSpecificity) return aSpecificity - bSpecificity // Order first by least-specific
 
-    const alignmentComparison = this.#compareAlignment(a.alignment, b.alignment) // Next by alignment
+    const alignmentComparison = compareAlignment(a.alignment, b.alignment) // Next by alignment
     if (alignmentComparison !== 0) return alignmentComparison
 
-    const sexComparison = this.#compareSex(a.sex, b.sex) // Last by sex
+    const sexComparison = compareSex(a.sex, b.sex) // Last by sex
     if (sexComparison !== 0) return sexComparison
 
     return String(a.value).localeCompare(String(b.value))
-  }
-
-  #compareAlignment(a?: Alignment, b?: Alignment): number {
-    if (a === b) return 0
-    if (a === undefined && b !== undefined) return -1
-    if (b === undefined && a !== undefined) return 1
-
-    const aSort = a === undefined ? -1 : ALIGNMENT_SORT[a] ?? -1 // Unknown values get -1 priority
-    const bSort = b === undefined ? -1 : ALIGNMENT_SORT[b] ?? -1
-
-    return bSort - aSort
-  }
-
-  #compareSex(a?: Sex, b?: Sex): number {
-    if (a === b) return 0
-    if (a === undefined && b !== undefined) return -1
-    if (b === undefined && a !== undefined) return 1
-
-    const aSort = SEX_SORT[a ?? -1] ?? -1 // Unknown values get -1 priority
-    const bSort = SEX_SORT[b ?? -1] ?? -1
-
-    return bSort - aSort
   }
 }
