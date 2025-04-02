@@ -5,9 +5,17 @@ import { Alignment, compareAlignment } from '../api/alignment'
 export class Alternates<T> {
   readonly #sortedValues: AlternateData<T>[] = []
 
-  constructor(values: AlternateData<T>[]) {
-    this.#sortedValues = values.sort()
-    this.#sortedValues.sort((a, b) => this.#compareAlternates(a, b))
+  /**
+   * Create an alternate set from either a list of categorized values, or a single value when there are no alternates.
+   * @param value List of alternates, or a single value.
+   */
+  constructor(value: AlternateData<T>[] | T) {
+    if (Array.isArray(value)) {
+      this.#sortedValues = value.sort()
+      this.#sortedValues.sort((a, b) => this.#compareAlternates(a, b))
+    } else {
+      this.#sortedValues = [{ value }]
+    }
   }
 
   getValue(alignment?: Alignment, sex?: Sex): T | undefined {

@@ -24,7 +24,7 @@ export interface BadgeData {
    *
    * If the value differs by sex or alignment, include an {@link AlternateData} for each variant.
    */
-  readonly name: AlternateData<string>[]
+  readonly name: AlternateData<string>[] | string
 
   /**
    * The character alignments that this badge is available to.
@@ -34,7 +34,7 @@ export interface BadgeData {
   /**
    * The badge text as it appears in-game. May vary by character sex or alignment.
    */
-  readonly badgeText?: AlternateData<MarkdownString>[]
+  readonly badgeText?: AlternateData<MarkdownString>[] | MarkdownString
 
   /**
    * Short description of how to acquire the badge. Detailed instructions should go in the notes field.
@@ -46,7 +46,7 @@ export interface BadgeData {
    *
    * If the value differs by sex or alignment, include an {@link AlternateData} for each variant.
    */
-  readonly icon?: AlternateData<string>[]
+  readonly icon?: AlternateData<string>[] | string
 
   /**
    * Freeform notes or tips about the badge.

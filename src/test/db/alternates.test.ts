@@ -11,6 +11,10 @@ describe(Alternates.name, () => {
         { alignment: 'P', sex: 'F', value: 'Praetorian Female' },
       ])
     })
+
+    test('should accept a single value', () => {
+      expect(new Alternates('foo').default?.value).toBe('foo')
+    })
   })
 
   describe('getValue', () => {
