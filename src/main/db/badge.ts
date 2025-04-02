@@ -35,7 +35,7 @@ export class Badge {
   /**
    * The badge text as it appears in-game. May vary by character sex or alignment.
    */
-  readonly badgeText: Alternates<string>
+  readonly badgeText: Alternates<MarkdownString>
 
   /**
    * Short description of how to acquire the badge. Detailed instructions will be in the notes field.
@@ -94,16 +94,9 @@ export class Badge {
   readonly effect?: MarkdownString
 
   /**
-   * Represents the layered requirements for badges with multiple fulfillment steps,
-   * such as visiting plaques for history badges or collecting other badges.
-   *
-   * The outer array represents groups of requirements evaluated with OR logic —
-   * fulfilling any group satisfies the badge.
-   *
-   * Each inner array represents individual requirements evaluated with AND logic —
-   * all conditions in the group must be met.
+   * Represents the requirements for badges with multiple fulfillment steps, such as visiting plaques for history badges, completing missions, or collecting other badges.
    */
-  readonly requirements?: BadgeRequirement[][]
+  readonly requirements?: BadgeRequirement[]
 
   /**
    * Some badges are not included in the badge total count... such as Flames of Prometheus, which can be removed by redeeming it for a Notice of the Well.
@@ -127,16 +120,11 @@ export class Badge {
     this.setTitle = badgeData.setTitle
     this.ignoreInTotals = badgeData.ignoreInTotals ?? false
 
-    this.requirements = badgeData.requirements?.map((groups, index) => {
-      const existingKeysInGroup = new Set<string>()
-      return groups.map((requirementData) => {
-        if (existingKeysInGroup.has(requirementData.key)) throw new Error(`Duplicate badge requirement key [${badgeData.key}:${requirementData.key}] in group [${index + 1}]`)
-        existingKeysInGroup.add(requirementData.key)
-
-        const badge = new BadgeRequirement(requirementData)
-        this.#requirementsIndex[badge.key] = badge
-        return badge
-      })
+    this.requirements = badgeData.requirements?.map((requirementData) => {
+      if (this.#requirementsIndex[requirementData.key]) throw new Error(`Duplicate badge requirement key [${badgeData.key}:${requirementData.key}]`)
+      const badge = new BadgeRequirement(requirementData)
+      this.#requirementsIndex[badge.key] = badge
+      return badge
     })
   }
 

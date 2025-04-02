@@ -34,7 +34,7 @@ export interface BadgeData {
   /**
    * The badge text as it appears in-game. May vary by character sex or alignment.
    */
-  readonly badgeText?: AlternateData<string>[]
+  readonly badgeText?: AlternateData<MarkdownString>[]
 
   /**
    * Short description of how to acquire the badge. Detailed instructions should go in the notes field.
@@ -93,16 +93,9 @@ export interface BadgeData {
   readonly effect?: MarkdownString
 
   /**
-   * Represents the layered requirements for badges with multiple fulfillment steps,
-   * such as visiting plaques for history badges or collecting other badges.
-   *
-   * The outer array represents groups of requirements evaluated with OR logic —
-   * fulfilling any group satisfies the badge.
-   *
-   * Each inner array represents individual requirements evaluated with AND logic —
-   * all conditions in the group must be met.
+   * Represents the requirements for badges with multiple fulfillment steps, such as visiting plaques for history badges, completing missions, or collecting other badges.
    */
-  readonly requirements?: BadgeRequirementData[][]
+  readonly requirements?: BadgeRequirementData[]
 
   /**
    * Some badges are not included in the badge total count... such as Flames of Prometheus, which can be removed by redeeming it for a Notice of the Well.

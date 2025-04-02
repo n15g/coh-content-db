@@ -19,6 +19,6 @@ export const badgeDataFixture = defineFixture<BadgeData>((t) => {
     return { id: index }
   })
   t.effect?.asString()
-  t.requirements?.as(() => [[badgeRequirementDataFixture]])
+  t.requirements?.as(() => [badgeRequirementDataFixture])
   t.ignoreInTotals?.asBoolean()
 })

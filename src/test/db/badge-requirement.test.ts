@@ -112,6 +112,11 @@ describe(BadgeRequirement.name, () => {
       expect(requirement.contactKey).toEqual('foo')
     })
 
+    test('should accept an array', () => {
+      const requirement = new BadgeRequirement(badgeRequirementDataFixture.create({ contactKey: ['foo', 'bar'] }))
+      expect(requirement.contactKey).toStrictEqual(['foo', 'bar'])
+    })
+
     test('should be optional', () => {
       const requirement = new BadgeRequirement(badgeRequirementDataFixture.omit('contactKey').create())
       expect(requirement.contactKey).toBeUndefined()

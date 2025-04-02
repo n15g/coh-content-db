@@ -13,7 +13,7 @@ export const CHANGELOG: Change[] = [
       + '* Removed the `serverGroup` property from entities to simplify the object tree given that only a single context can exist per db now.\n'
       + '* Added a simple indexing and search function for badge names, text and acquisition info.\n'
       + '* Zone and badge references now follow a standard Markdown link format with a `badge://` or `map://` protocol.\n'
-      + '* Badge partials are now known as badge requirements and support both AND and OR groups of requirements.\n'
+      + '* Badge partials are now known as badge requirements.\n'
       + '* Removed the `VidiotMap` API as it was never used or fleshed out properly.\n'
       + '* Added support for story arcs to badge requirements including a link to the contact.\n'
       + '* Standardized pluralization of some field names (name, icon).\n'

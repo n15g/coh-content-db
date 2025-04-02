@@ -51,9 +51,9 @@ export interface BadgeRequirementData {
   readonly missionName?: string
 
   /**
-   * {@link Contact} key for the story arc.
+   * {@link Contact} key for the requirement contact(s).
    */
-  readonly contactKey?: string
+  readonly contactKey?: string | string[]
 
   /**
    * Level of the invention required.

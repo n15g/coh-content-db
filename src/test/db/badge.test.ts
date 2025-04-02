@@ -172,34 +172,22 @@ describe(Badge.name, () => {
   })
 
   describe('requirements', () => {
-    test(`should throw an error on duplicate key in same group`, () => {
+    test(`should throw an error on duplicate key`, () => {
       const data = badgeDataFixture.create({
         key: 'badge',
-        requirements: [[
+        requirements: [
           badgeRequirementDataFixture.create({ key: 'foo' }),
           badgeRequirementDataFixture.create({ key: 'foo' }),
-        ]],
+        ],
       })
-      expect(() => new Badge(data)).toThrow('Duplicate badge requirement key [badge:foo] in group [1]')
-    })
-
-    test(`should not throw an error on duplicate key in different group`, () => {
-      const data = badgeDataFixture.create({
-        key: 'badge',
-        requirements: [[
-          badgeRequirementDataFixture.create({ key: 'foo' }),
-        ], [
-          badgeRequirementDataFixture.create({ key: 'foo' }),
-        ]],
-      })
-      new Badge(data)
+      expect(() => new Badge(data)).toThrow('Duplicate badge requirement key [badge:foo]')
     })
   })
 
   describe('getRequirement', () => {
     test(`should retrieve requirement from the index`, () => {
       const data = badgeDataFixture.create({
-        requirements: [[badgeRequirementDataFixture.create({ key: 'foo' })]],
+        requirements: [badgeRequirementDataFixture.create({ key: 'foo' })],
       })
 
       expect(new Badge(data).getRequirement('foo')).not.toBeUndefined()
