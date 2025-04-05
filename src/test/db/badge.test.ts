@@ -1,4 +1,4 @@
-import { Badge } from '../../main'
+import { Badge, compareByDefaultName, compareByZoneKey } from '../../main'
 import { badgeDataFixture } from '../api/badge-data.fixture'
 import { badgeRequirementDataFixture } from '../api/badge-requirement-data.fixture'
 
@@ -199,6 +199,62 @@ describe(Badge.name, () => {
       })
 
       expect(() => new Badge(data).getRequirement('foo')).toThrow('Unknown badge requirement key [foo]')
+    })
+  })
+
+  describe('compareByName', () => {
+    test(`should compare two badges by name`, () => {
+      const badgeA = new Badge(badgeDataFixture.create({ name: 'A' }))
+      const badgeB = new Badge(badgeDataFixture.create({ name: 'B' }))
+      expect(compareByDefaultName(badgeA, badgeB)).toBeLessThan(0)
+      expect([badgeB, badgeA].sort(compareByDefaultName)).toStrictEqual([badgeA, badgeB])
+    })
+
+    test(`should return 0 for equal names`, () => {
+      const badgeA = new Badge(badgeDataFixture.create({ name: 'A' }))
+      const badgeB = new Badge(badgeDataFixture.create({ name: 'A' }))
+      expect(compareByDefaultName(badgeA, badgeB)).toEqual(0)
+    })
+
+    test(`should compare two undefined values`, () => {
+      const badgeA = new Badge(badgeDataFixture.create({ name: [] }))
+      const badgeB = new Badge(badgeDataFixture.create({ name: [] }))
+      expect(compareByDefaultName(badgeA, badgeB)).toEqual(0)
+    })
+
+    test(`should sort undefined values last`, () => {
+      const badgeA = new Badge(badgeDataFixture.create({ name: 'A' }))
+      const badgeB = new Badge(badgeDataFixture.create({ name: [] }))
+      expect([badgeA, badgeB].sort(compareByDefaultName)).toStrictEqual([badgeA, badgeB])
+      expect([badgeB, badgeA].sort(compareByDefaultName)).toStrictEqual([badgeA, badgeB])
+    })
+  })
+
+  describe('compareByZoneKey', () => {
+    test(`should compare two badges by zoneKey`, () => {
+      const badgeA = new Badge(badgeDataFixture.create({ zoneKey: 'A' }))
+      const badgeB = new Badge(badgeDataFixture.create({ zoneKey: 'B' }))
+      expect(compareByZoneKey(badgeA, badgeB)).toBeLessThan(0)
+      expect([badgeB, badgeA].sort(compareByZoneKey)).toStrictEqual([badgeA, badgeB])
+    })
+
+    test(`should return 0 for equal zoneKeys`, () => {
+      const badgeA = new Badge(badgeDataFixture.create({ zoneKey: 'A' }))
+      const badgeB = new Badge(badgeDataFixture.create({ zoneKey: 'A' }))
+      expect(compareByZoneKey(badgeA, badgeB)).toEqual(0)
+    })
+
+    test(`should compare two undefined values`, () => {
+      const badgeA = new Badge(badgeDataFixture.omit('zoneKey').create())
+      const badgeB = new Badge(badgeDataFixture.omit('zoneKey').create())
+      expect(compareByZoneKey(badgeA, badgeB)).toEqual(0)
+    })
+
+    test(`should sort undefined values last`, () => {
+      const badgeA = new Badge(badgeDataFixture.create({ zoneKey: 'A' }))
+      const badgeB = new Badge(badgeDataFixture.omit('zoneKey').create())
+      expect([badgeA, badgeB].sort(compareByZoneKey)).toStrictEqual([badgeA, badgeB])
+      expect([badgeB, badgeA].sort(compareByZoneKey)).toStrictEqual([badgeA, badgeB])
     })
   })
 })

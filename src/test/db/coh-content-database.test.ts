@@ -15,7 +15,7 @@ describe(CohContentDatabase.name, () => {
       const data = contentBundleFixture
         .omit('servers')
         .create()
-      expect(() => new CohContentDatabase(data).archetypes).toHaveLength(0)
+      expect(new CohContentDatabase(data).servers).toHaveLength(0)
     })
 
     test(`should load values from bundle`, () => {
@@ -40,13 +40,13 @@ describe(CohContentDatabase.name, () => {
       const data = contentBundleFixture
         .omit('archetypes')
         .create()
-      expect(() => new CohContentDatabase(data).archetypes).toHaveLength(0)
+      expect(new CohContentDatabase(data).archetypes).toHaveLength(0)
     })
 
     test(`should load data from bundle`, () => {
       const data = contentBundleFixture
         .create({ archetypes: [archetypeDataFixture.create({ key: 'foo' })] })
-      expect(() => new CohContentDatabase(data).getArchetype('foo')).not.toBeUndefined()
+      expect(new CohContentDatabase(data).getArchetype('foo')).not.toBeUndefined()
     })
   })
 
@@ -65,7 +65,7 @@ describe(CohContentDatabase.name, () => {
       const data = contentBundleFixture
         .omit('badges')
         .create()
-      expect(() => new CohContentDatabase(data).badges).toHaveLength(0)
+      expect(new CohContentDatabase(data).badges).toHaveLength(0)
     })
   })
 
@@ -84,7 +84,7 @@ describe(CohContentDatabase.name, () => {
       const data = contentBundleFixture
         .omit('zones')
         .create()
-      expect(() => new CohContentDatabase(data).zones).toHaveLength(0)
+      expect(new CohContentDatabase(data).zones).toHaveLength(0)
     })
   })
 
@@ -103,7 +103,7 @@ describe(CohContentDatabase.name, () => {
       const data = contentBundleFixture
         .omit('contacts')
         .create()
-      expect(() => new CohContentDatabase(data).contacts).toHaveLength(0)
+      expect(new CohContentDatabase(data).contacts).toHaveLength(0)
     })
   })
 
@@ -123,6 +123,32 @@ describe(CohContentDatabase.name, () => {
 
       expect(() => new CohContentDatabase(data).getArchetype('foo')).toThrow(`Unknown archetype key 'foo'`)
     })
+
+    test(`should throw error for undefined key`, () => {
+      expect(() => new CohContentDatabase(contentBundleFixture.create()).getArchetype()).toThrow(`No key provided`)
+    })
+  })
+
+  describe('archetypeExists', () => {
+    test(`should return true for an archetype that exists`, () => {
+      const data = contentBundleFixture.create({
+        archetypes: [archetypeDataFixture.create({ key: 'foo' })],
+      })
+
+      expect(new CohContentDatabase(data).archetypeExists('foo')).toBeTruthy()
+    })
+
+    test(`should return false for an archetype that does not exist`, () => {
+      const data = contentBundleFixture.create({
+        archetypes: [],
+      })
+
+      expect(new CohContentDatabase(data).archetypeExists('foo')).toBeFalsy()
+    })
+
+    test(`should return false for an undefined key`, () => {
+      expect(new CohContentDatabase(contentBundleFixture.create()).archetypeExists()).toBeFalsy()
+    })
   })
 
   describe('getZone', () => {
@@ -140,6 +166,10 @@ describe(CohContentDatabase.name, () => {
       })
 
       expect(() => new CohContentDatabase(data).getZone('foo')).toThrow(`Unknown zone key 'foo'`)
+    })
+
+    test(`should throw error for undefined key`, () => {
+      expect(() => new CohContentDatabase(contentBundleFixture.create()).getZone()).toThrow(`No key provided`)
     })
   })
 
@@ -159,6 +189,10 @@ describe(CohContentDatabase.name, () => {
 
       expect(new CohContentDatabase(data).zoneExists('foo')).toBeFalsy()
     })
+
+    test(`should return false for an undefined key`, () => {
+      expect(new CohContentDatabase(contentBundleFixture.create()).zoneExists()).toBeFalsy()
+    })
   })
 
   describe('getContact', () => {
@@ -176,6 +210,10 @@ describe(CohContentDatabase.name, () => {
       })
 
       expect(() => new CohContentDatabase(data).getContact('foo')).toThrow(`Unknown contact key 'foo'`)
+    })
+
+    test(`should throw error for undefined key`, () => {
+      expect(() => new CohContentDatabase(contentBundleFixture.create()).getContact()).toThrow(`No key provided`)
     })
   })
 
@@ -195,6 +233,10 @@ describe(CohContentDatabase.name, () => {
 
       expect(new CohContentDatabase(data).contactExists('foo')).toBeFalsy()
     })
+
+    test(`should return false for an undefined key`, () => {
+      expect(new CohContentDatabase(contentBundleFixture.create()).contactExists()).toBeFalsy()
+    })
   })
 
   describe('getBadge', () => {
@@ -213,6 +255,10 @@ describe(CohContentDatabase.name, () => {
 
       expect(() => new CohContentDatabase(data).getBadge('foo')).toThrow('Unknown badge key [foo]')
     })
+
+    test(`should throw error for undefined key`, () => {
+      expect(() => new CohContentDatabase(contentBundleFixture.create()).getBadge()).toThrow(`No key provided`)
+    })
   })
 
   describe('badgeExists', () => {
@@ -230,6 +276,10 @@ describe(CohContentDatabase.name, () => {
       })
 
       expect(new CohContentDatabase(data).badgeExists('foo')).toBeFalsy()
+    })
+
+    test(`should return false for an undefined key`, () => {
+      expect(new CohContentDatabase(contentBundleFixture.create()).badgeExists()).toBeFalsy()
     })
   })
 

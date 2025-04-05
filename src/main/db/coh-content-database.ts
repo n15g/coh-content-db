@@ -76,40 +76,52 @@ export class CohContentDatabase {
     }) ?? []
 
     this.badges = bundle.badges?.map(data => new Badge(data)) ?? []
-    this.#badgeIndex = new BadgeIndex(this.badges, this.zones)
+    this.#badgeIndex = new BadgeIndex(this.badges)
   }
 
-  getArchetype(key: string): Archetype {
+  getArchetype(key?: string): Archetype {
+    if (!key) throw new Error('No key provided')
     const result = this.#archetypeIndex[key]
     if (result === undefined) throw new Error(`Unknown archetype key '${key}'`)
     return result
   }
 
-  getZone(key: string): Zone {
+  archetypeExists(key?: string): boolean {
+    if (!key) return false
+    return !!this.#archetypeIndex[key]
+  }
+
+  getZone(key?: string): Zone {
+    if (!key) throw new Error('No key provided')
     const result = this.#zoneIndex[key]
     if (result === undefined) throw new Error(`Unknown zone key '${key}'`)
     return result
   }
 
-  getContact(key: string): Contact {
+  zoneExists(key?: string): boolean {
+    if (!key) return false
+    return !!this.#zoneIndex[key]
+  }
+
+  getContact(key?: string): Contact {
+    if (!key) throw new Error('No key provided')
     const result = this.#contactIndex[key]
     if (result === undefined) throw new Error(`Unknown contact key '${key}'`)
     return result
   }
 
-  zoneExists(key: string): boolean {
-    return !!this.#zoneIndex[key]
-  }
-
-  contactExists(key: string): boolean {
+  contactExists(key?: string): boolean {
+    if (!key) return false
     return !!this.#contactIndex[key]
   }
 
-  getBadge(key: string): Badge {
+  getBadge(key?: string): Badge {
+    if (!key) throw new Error('No key provided')
     return this.#badgeIndex.getBadge(key)
   }
 
-  badgeExists(key: string): boolean {
+  badgeExists(key?: string): boolean {
+    if (!key) return false
     return this.#badgeIndex.badgeExists(key)
   }
 

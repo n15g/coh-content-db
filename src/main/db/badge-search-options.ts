@@ -35,7 +35,7 @@ export interface BadgeSearchOptions {
    * Badges are assumed to be in canonical order in the content bundle, and should match the in-game display order.
    */
   sort?: {
-    by?: 'CANONICAL' | 'BADGE_NAME' | 'ZONE_NAME'
+    by?: 'CANONICAL' | 'BADGE_NAME' | 'ZONE_KEY'
     dir?: 'ASC' | 'DESC'
   }
 

@@ -1,21 +1,12 @@
-import { Badge } from './badge'
+import { Badge, compareByDefaultName, compareByZoneKey } from './badge'
 import { BadgeSearchOptions } from './badge-search-options'
-import { Zone } from './zone'
 import { Paged } from './paged'
 
 export class BadgeIndex {
   readonly #badges: Badge[] = []
   readonly #badgeIndex: Record<string, Badge> = {}
 
-  readonly #zoneOrder: Record<string, number> = {}
-
-  constructor(badges: Badge[], zones?: Zone[]) {
-    this.#zoneOrder = Object.fromEntries(
-      zones
-        ?.sort((a, b) => a.name.localeCompare(b.name))
-        ?.map((x, index) => [x.key, index]) ?? [],
-    )
-
+  constructor(badges: Badge[]) {
     this.#badges = badges
     for (const badge of badges) {
       if (this.#badgeIndex[badge.key] !== undefined) throw new Error(`Duplicate badge key [${badge.key}]`)
@@ -73,21 +64,10 @@ export class BadgeIndex {
     if (!sort) return badges
     const ascending = sort.dir !== 'DESC'
 
-    if (!sort.by || sort.by === 'CANONICAL') return sort.dir === 'DESC' ? badges.reverse() : badges
+    if (sort.by === 'BADGE_NAME') return badges.sort((a, b) => ascending ? compareByDefaultName(a, b) : compareByDefaultName(b, a))
 
-    if (sort.by === 'BADGE_NAME') return ascending
-      ? badges.sort((a, b) => a.name.default?.value.localeCompare(b.name.default?.value ?? '') ?? 0)
-      : badges.sort((a, b) => b.name.default?.value.localeCompare(a.name.default?.value ?? '') ?? 0)
+    if (sort.by === 'ZONE_KEY') return badges.sort((a, b) => ascending ? compareByZoneKey(a, b) : compareByZoneKey(b, a))
 
-    return badges.sort((a, b) => {
-      const aIndex = this.#zoneOrder[a.zoneKey ?? '']
-      const bIndex = this.#zoneOrder[b.zoneKey ?? '']
-
-      if (aIndex === bIndex) return 0
-      if (aIndex === undefined) return ascending ? 1 : -1
-      if (bIndex === undefined) return ascending ? -1 : 1
-
-      return ascending ? aIndex - bIndex : bIndex - aIndex
-    })
+    return sort.dir === 'DESC' ? badges.reverse() : badges
   }
 }

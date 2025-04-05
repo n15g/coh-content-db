@@ -8,7 +8,7 @@ export const contentBundleFixture = defineFixture<ContentBundle>((t) => {
   t.name.as(index => `Bundle ${index}`)
   t.description?.asLoremIpsum()
   t.repository?.as(index => `https://nouri.org?id=${index}`)
-  t.servers?.asArray()
+  t.servers?.as(() => ['Torchbearer', 'Excelsior'])
   t.archetypes?.arrayOfFixture({ fixture: archetypeDataFixture })
   t.zones?.arrayOfFixture({ fixture: zoneDataFixture })
   t.badges?.arrayOfFixture({ fixture: badgeDataFixture })

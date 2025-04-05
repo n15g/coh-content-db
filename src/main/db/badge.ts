@@ -134,3 +134,21 @@ export class Badge {
     return result
   }
 }
+
+export function compareByDefaultName(a?: Badge, b?: Badge): number {
+  const aName = a?.name.default?.value
+  const bName = b?.name.default?.value
+  if (!aName && !bName) return 0
+  if (!aName) return 1
+  if (!bName) return -1
+  return aName.localeCompare(bName)
+}
+
+export function compareByZoneKey(a?: Badge, b?: Badge): number {
+  const aZone = a?.zoneKey
+  const bZone = b?.zoneKey
+  if (!aZone && !bZone) return 0
+  if (!aZone) return 1
+  if (!bZone) return -1
+  return aZone.localeCompare(bZone)
+}

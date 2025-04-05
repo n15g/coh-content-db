@@ -1,12 +1,5 @@
 import { badgeDataFixture } from '../api/badge-data.fixture'
-import { Badge, BadgeIndex, Zone } from '../../main'
-import { zoneDataFixture } from '../api/zone-data.fixture'
-
-const TEST_Zones = [
-  new Zone(zoneDataFixture.create({ key: 'atlas-park', name: 'Atlas Park' })),
-  new Zone(zoneDataFixture.create({ key: 'perez-park', name: 'Perez Park' })),
-  new Zone(zoneDataFixture.create({ key: 'abandoned-sewer-network', name: 'Abandoned Sewer Network' })),
-]
+import { Badge, BadgeIndex } from '../../main'
 
 describe(BadgeIndex.name, () => {
   describe('Constructor', () => {
@@ -402,7 +395,21 @@ describe(BadgeIndex.name, () => {
           new Badge(badgeDataFixture.create({ key: 'badge-4' })),
         ]
 
-        const result = new BadgeIndex(data, TEST_Zones).searchBadges()
+        const result = new BadgeIndex(data).searchBadges()
+
+        const keys = result.items.map(x => x.key)
+        expect(keys).toStrictEqual(['badge-1', 'badge-2', 'badge-3', 'badge-4'])
+      })
+
+      test(`should not modify sort if order is canonical`, () => {
+        const data = [
+          new Badge(badgeDataFixture.create({ key: 'badge-1' })),
+          new Badge(badgeDataFixture.create({ key: 'badge-2' })),
+          new Badge(badgeDataFixture.create({ key: 'badge-3' })),
+          new Badge(badgeDataFixture.create({ key: 'badge-4' })),
+        ]
+
+        const result = new BadgeIndex(data).searchBadges({ sort: { by: 'CANONICAL' } })
 
         const keys = result.items.map(x => x.key)
         expect(keys).toStrictEqual(['badge-1', 'badge-2', 'badge-3', 'badge-4'])
@@ -416,7 +423,7 @@ describe(BadgeIndex.name, () => {
           new Badge(badgeDataFixture.create({ key: 'badge-4' })),
         ]
 
-        const result = new BadgeIndex(data, TEST_Zones).searchBadges({ sort: { dir: 'DESC' } })
+        const result = new BadgeIndex(data).searchBadges({ sort: { dir: 'DESC' } })
 
         const keys = result.items.map(x => x.key)
         expect(keys).toStrictEqual(['badge-4', 'badge-3', 'badge-2', 'badge-1'])
@@ -429,7 +436,7 @@ describe(BadgeIndex.name, () => {
           new Badge(badgeDataFixture.create({ key: 'badge-3', name: [{ value: 'AAB' }] })),
         ]
 
-        const result = new BadgeIndex(data, TEST_Zones).searchBadges({ sort: { by: 'BADGE_NAME' } })
+        const result = new BadgeIndex(data).searchBadges({ sort: { by: 'BADGE_NAME' } })
 
         const keys = result.items.map(x => x.key)
         expect(keys).toStrictEqual(['badge-3', 'badge-1', 'badge-2'])
@@ -442,7 +449,7 @@ describe(BadgeIndex.name, () => {
           new Badge(badgeDataFixture.create({ key: 'badge-3', name: [{ value: 'AAB' }] })),
         ]
 
-        const result = new BadgeIndex(data, TEST_Zones).searchBadges({ sort: { by: 'BADGE_NAME', dir: 'DESC' } })
+        const result = new BadgeIndex(data).searchBadges({ sort: { by: 'BADGE_NAME', dir: 'DESC' } })
 
         const keys = result.items.map(x => x.key)
         expect(keys).toStrictEqual(['badge-2', 'badge-1', 'badge-3'])
@@ -455,7 +462,7 @@ describe(BadgeIndex.name, () => {
           new Badge(badgeDataFixture.create({ key: 'badge-3', name: [{ value: 'AAB' }] })),
         ]
 
-        const result = new BadgeIndex(data, TEST_Zones).searchBadges({ sort: { by: 'BADGE_NAME' } })
+        const result = new BadgeIndex(data).searchBadges({ sort: { by: 'BADGE_NAME' } })
 
         const keys = result.items.map(x => x.key)
         expect(keys).toStrictEqual(['badge-3', 'badge-1', 'badge-2'])
@@ -468,7 +475,7 @@ describe(BadgeIndex.name, () => {
           new Badge(badgeDataFixture.create({ key: 'badge-3', zoneKey: 'abandoned-sewer-network' })),
         ]
 
-        const result = new BadgeIndex(data, TEST_Zones).searchBadges({ sort: { by: 'ZONE_NAME' } })
+        const result = new BadgeIndex(data).searchBadges({ sort: { by: 'ZONE_KEY' } })
 
         const keys = result.items.map(x => x.key)
         expect(keys).toStrictEqual(['badge-3', 'badge-1', 'badge-2'])
@@ -481,7 +488,7 @@ describe(BadgeIndex.name, () => {
           new Badge(badgeDataFixture.create({ key: 'badge-3', zoneKey: 'abandoned-sewer-network' })),
         ]
 
-        const result = new BadgeIndex(data, TEST_Zones).searchBadges({ sort: { by: 'ZONE_NAME', dir: 'DESC' } })
+        const result = new BadgeIndex(data).searchBadges({ sort: { by: 'ZONE_KEY', dir: 'DESC' } })
 
         const keys = result.items.map(x => x.key)
         expect(keys).toStrictEqual(['badge-2', 'badge-1', 'badge-3'])
@@ -495,22 +502,22 @@ describe(BadgeIndex.name, () => {
           new Badge(badgeDataFixture.create({ key: 'badge-4', zoneKey: 'abandoned-sewer-network' })),
         ]
 
-        const result = new BadgeIndex(data, TEST_Zones).searchBadges({ sort: { by: 'ZONE_NAME' } })
+        const result = new BadgeIndex(data).searchBadges({ sort: { by: 'ZONE_KEY' } })
 
         const keys = result.items.map(x => x.key)
         expect(keys).toStrictEqual(['badge-4', 'badge-1', 'badge-3', 'badge-2'])
       })
 
-      test(`should sort unknown zone names to the end`, () => {
+      test(`should sort undefined zone names to the end`, () => {
         const data = [
           new Badge(badgeDataFixture.create({ key: 'badge-1', zoneKey: 'atlas-park' })),
-          new Badge(badgeDataFixture.create({ key: 'badge-2', zoneKey: 'unknown' })),
+          new Badge(badgeDataFixture.create({ key: 'badge-2', zoneKey: undefined })),
           new Badge(badgeDataFixture.create({ key: 'badge-3', zoneKey: 'perez-park' })),
-          new Badge(badgeDataFixture.create({ key: 'badge-4', zoneKey: 'unexpected' })),
+          new Badge(badgeDataFixture.create({ key: 'badge-4', zoneKey: undefined })),
           new Badge(badgeDataFixture.create({ key: 'badge-5', zoneKey: 'abandoned-sewer-network' })),
         ]
 
-        const result = new BadgeIndex(data, TEST_Zones).searchBadges({ sort: { by: 'ZONE_NAME' } })
+        const result = new BadgeIndex(data).searchBadges({ sort: { by: 'ZONE_KEY' } })
 
         const keys = result.items.map(x => x.key)
         expect(keys).toStrictEqual(['badge-5', 'badge-1', 'badge-3', 'badge-2', 'badge-4'])
