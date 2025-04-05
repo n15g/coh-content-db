@@ -116,38 +116,13 @@ describe(CohContentDatabase.name, () => {
       expect(new CohContentDatabase(data).getArchetype('foo')).not.toBeUndefined()
     })
 
-    test(`should throw error for unknown archetype`, () => {
-      const data = contentBundleFixture.create({
-        archetypes: [],
-      })
-
-      expect(() => new CohContentDatabase(data).getArchetype('foo')).toThrow(`Unknown archetype key 'foo'`)
+    test(`should return undefined for unknown archetype`, () => {
+      const data = contentBundleFixture.create({ archetypes: [] })
+      expect(new CohContentDatabase(data).getArchetype('foo')).toBeUndefined()
     })
 
-    test(`should throw error for undefined key`, () => {
-      expect(() => new CohContentDatabase(contentBundleFixture.create()).getArchetype()).toThrow(`No key provided`)
-    })
-  })
-
-  describe('archetypeExists', () => {
-    test(`should return true for an archetype that exists`, () => {
-      const data = contentBundleFixture.create({
-        archetypes: [archetypeDataFixture.create({ key: 'foo' })],
-      })
-
-      expect(new CohContentDatabase(data).archetypeExists('foo')).toBeTruthy()
-    })
-
-    test(`should return false for an archetype that does not exist`, () => {
-      const data = contentBundleFixture.create({
-        archetypes: [],
-      })
-
-      expect(new CohContentDatabase(data).archetypeExists('foo')).toBeFalsy()
-    })
-
-    test(`should return false for an undefined key`, () => {
-      expect(new CohContentDatabase(contentBundleFixture.create()).archetypeExists()).toBeFalsy()
+    test(`should return undefined for undefined key`, () => {
+      expect(new CohContentDatabase(contentBundleFixture.create({ archetypes: [] })).getArchetype()).toBeUndefined()
     })
   })
 
@@ -160,38 +135,13 @@ describe(CohContentDatabase.name, () => {
       expect(new CohContentDatabase(data).getZone('foo')).not.toBeUndefined()
     })
 
-    test(`should throw error for unknown zone`, () => {
-      const data = contentBundleFixture.create({
-        zones: [],
-      })
-
-      expect(() => new CohContentDatabase(data).getZone('foo')).toThrow(`Unknown zone key 'foo'`)
+    test(`should return undefined for unknown zone`, () => {
+      const data = contentBundleFixture.create({ zones: [] })
+      expect(new CohContentDatabase(data).getZone('foo')).toBeUndefined()
     })
 
-    test(`should throw error for undefined key`, () => {
-      expect(() => new CohContentDatabase(contentBundleFixture.create()).getZone()).toThrow(`No key provided`)
-    })
-  })
-
-  describe('zoneExists', () => {
-    test(`should return true for a zone that exists`, () => {
-      const data = contentBundleFixture.create({
-        zones: [zoneDataFixture.create({ key: 'foo' })],
-      })
-
-      expect(new CohContentDatabase(data).zoneExists('foo')).toBeTruthy()
-    })
-
-    test(`should return false for a zone that does not exist`, () => {
-      const data = contentBundleFixture.create({
-        zones: [],
-      })
-
-      expect(new CohContentDatabase(data).zoneExists('foo')).toBeFalsy()
-    })
-
-    test(`should return false for an undefined key`, () => {
-      expect(new CohContentDatabase(contentBundleFixture.create()).zoneExists()).toBeFalsy()
+    test(`should return undefined for undefined key`, () => {
+      expect(new CohContentDatabase(contentBundleFixture.create({ zones: [] })).getZone()).toBeUndefined()
     })
   })
 
@@ -204,38 +154,13 @@ describe(CohContentDatabase.name, () => {
       expect(new CohContentDatabase(data).getContact('foo')).not.toBeUndefined()
     })
 
-    test(`should throw error for unknown contact`, () => {
-      const data = contentBundleFixture.create({
-        contacts: [],
-      })
-
-      expect(() => new CohContentDatabase(data).getContact('foo')).toThrow(`Unknown contact key 'foo'`)
+    test(`should return undefined for unknown contact`, () => {
+      const data = contentBundleFixture.create({ contacts: [] })
+      expect(new CohContentDatabase(data).getContact('foo')).toBeUndefined()
     })
 
-    test(`should throw error for undefined key`, () => {
-      expect(() => new CohContentDatabase(contentBundleFixture.create()).getContact()).toThrow(`No key provided`)
-    })
-  })
-
-  describe('contactExists', () => {
-    test(`should return true for a contact that exists`, () => {
-      const data = contentBundleFixture.create({
-        contacts: [contactDataFixture.create({ key: 'foo' })],
-      })
-
-      expect(new CohContentDatabase(data).contactExists('foo')).toBeTruthy()
-    })
-
-    test(`should return false for a contact that does not exist`, () => {
-      const data = contentBundleFixture.create({
-        contacts: [],
-      })
-
-      expect(new CohContentDatabase(data).contactExists('foo')).toBeFalsy()
-    })
-
-    test(`should return false for an undefined key`, () => {
-      expect(new CohContentDatabase(contentBundleFixture.create()).contactExists()).toBeFalsy()
+    test(`should return undefined for undefined key`, () => {
+      expect(new CohContentDatabase(contentBundleFixture.create({ contacts: [] })).getContact()).toBeUndefined()
     })
   })
 
@@ -248,38 +173,13 @@ describe(CohContentDatabase.name, () => {
       expect(new CohContentDatabase(data).getBadge('foo')).not.toBeUndefined()
     })
 
-    test(`should throw error for unknown badge`, () => {
-      const data = contentBundleFixture.create({
-        badges: [],
-      })
-
-      expect(() => new CohContentDatabase(data).getBadge('foo')).toThrow('Unknown badge key [foo]')
+    test(`should return undefined for unknown badge`, () => {
+      const data = contentBundleFixture.create({ badges: [] })
+      expect(new CohContentDatabase(data).getBadge('foo')).toBeUndefined()
     })
 
-    test(`should throw error for undefined key`, () => {
-      expect(() => new CohContentDatabase(contentBundleFixture.create()).getBadge()).toThrow(`No key provided`)
-    })
-  })
-
-  describe('badgeExists', () => {
-    test(`should return true for a badge that exists`, () => {
-      const data = contentBundleFixture.create({
-        badges: [badgeDataFixture.create({ key: 'foo' })],
-      })
-
-      expect(new CohContentDatabase(data).badgeExists('foo')).toBeTruthy()
-    })
-
-    test(`should return false for a badge that does not exist`, () => {
-      const data = contentBundleFixture.create({
-        badges: [],
-      })
-
-      expect(new CohContentDatabase(data).badgeExists('foo')).toBeFalsy()
-    })
-
-    test(`should return false for an undefined key`, () => {
-      expect(new CohContentDatabase(contentBundleFixture.create()).badgeExists()).toBeFalsy()
+    test(`should return undefined for undefined key`, () => {
+      expect(new CohContentDatabase(contentBundleFixture.create({ badges: [] })).getBadge()).toBeUndefined()
     })
   })
 

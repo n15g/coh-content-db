@@ -14,14 +14,9 @@ export class BadgeIndex {
     }
   }
 
-  getBadge(key: string): Badge {
-    const result = this.#badgeIndex[key]
-    if (result === undefined) throw new Error(`Unknown badge key [${key}]`)
-    return result
-  }
-
-  badgeExists(key: string): boolean {
-    return !!this.#badgeIndex[key]
+  getBadge(key?: string): Badge | undefined {
+    if (!key) return undefined
+    return this.#badgeIndex[key]
   }
 
   searchBadges(options?: BadgeSearchOptions): Paged<Badge> {

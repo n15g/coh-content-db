@@ -19,20 +19,12 @@ describe(BadgeIndex.name, () => {
       expect(new BadgeIndex(data).getBadge('foo')).not.toBeUndefined()
     })
 
-    test(`should throw error for unknown badge`, () => {
-      expect(() => new BadgeIndex([]).getBadge('foo')).toThrow('Unknown badge key [foo]')
-    })
-  })
-
-  describe('badgeExists', () => {
-    test(`should return true for a badge that exists`, () => {
-      const data = [new Badge(badgeDataFixture.create({ key: 'foo' }))]
-
-      expect(new BadgeIndex(data).badgeExists('foo')).toBeTruthy()
+    test(`should return undefined for unknown badge`, () => {
+      expect(new BadgeIndex([]).getBadge('foo')).toBeUndefined()
     })
 
-    test(`should return false for a badge that does not exist`, () => {
-      expect(new BadgeIndex([]).badgeExists('foo')).toBeFalsy()
+    test(`should return undefined for undefined key`, () => {
+      expect(new BadgeIndex([]).getBadge()).toBeUndefined()
     })
   })
 
