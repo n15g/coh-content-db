@@ -114,7 +114,12 @@ describe(Badge.name, () => {
   describe('loc', () => {
     test('should be set from the data', () => {
       const badge = new Badge(badgeDataFixture.create({ loc: [1, 2, 3] }))
-      expect(badge.loc).toStrictEqual([1, 2, 3])
+      expect(badge.loc).toStrictEqual([[1, 2, 3]])
+    })
+
+    test('should accept an array', () => {
+      const badge = new Badge(badgeDataFixture.create({ loc: [[1, 2, 3], [4, 5, 6]] }))
+      expect(badge.loc).toStrictEqual([[1, 2, 3], [4, 5, 6]])
     })
 
     test('should be optional', () => {

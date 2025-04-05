@@ -76,3 +76,36 @@ export function zoneLink(target: string | Zone | ZoneData): string {
   const key = typeof target === 'string' ? target : target.key
   return `[${key}](${zoneUri(target)})`
 }
+
+/**
+ * For fields that accept either an array of values or a single value, coalesces the value to an array.
+ *
+ * Arrays are returned as-is.
+ * Single values are returned as a single-value array.
+ * Undefined values are returned as an empty array.
+ *
+ * @param value The value to coalesce.
+ */
+export function coalesceToArray<T>(value?: T | T[]): T[] | undefined {
+  if (!value) return undefined
+  return Array.isArray(value) ? value as T[] : [value]
+}
+
+/**
+ * For fields that accept either an array of values or a single value, coalesces the value to an array of arrays.
+ *
+ * Arrays of arrays are returned as-is.
+ * A single array is wrapped in an outer array.
+ * Undefined values return undefined.
+ *
+ * @param value The value to coalesce.
+ */
+export function coalesceToArrayOfArrays<T extends unknown[]>(value?: T | T[]): T[] | undefined {
+  if (!value) return undefined
+  // If the first element is an array, we assume it's already an array of arrays.
+  if (Array.isArray(value) && value.length > 0 && Array.isArray(value[0])) {
+    return value as T[]
+  }
+  // Otherwise, wrap the single array in an outer array
+  return [value as T]
+}

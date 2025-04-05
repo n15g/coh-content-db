@@ -3,6 +3,7 @@ import { BadgeRequirementType } from './badge-requirement-type'
 import { PlaqueType } from './plaque-type'
 import { MarkdownString } from './markdown-string'
 import { Link } from './link'
+import { Loc } from './loc'
 
 export interface BadgeRequirementData {
   /**
@@ -23,7 +24,7 @@ export interface BadgeRequirementData {
   /**
    * /loc coordinates.
    */
-  readonly loc?: number[]
+  readonly loc?: Loc
 
   /**
    * Is it a wall plaque or a physical monument?

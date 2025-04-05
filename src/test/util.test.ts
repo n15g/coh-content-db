@@ -1,4 +1,4 @@
-import { Badge, badgeLink, badgeUri, Contact, contactLink, contactUri, Zone, zoneLink, zoneUri } from '../main'
+import { Badge, badgeLink, badgeUri, coalesceToArray, coalesceToArrayOfArrays, Contact, contactLink, contactUri, Zone, zoneLink, zoneUri } from '../main'
 import { badgeDataFixture } from './api/badge-data.fixture'
 import { zoneDataFixture } from './api/zone-data.fixture'
 import { contactDataFixture } from './api/contact-data.fixture'
@@ -108,5 +108,37 @@ describe(zoneLink.name, () => {
   test('should accept a ZoneData object', () => {
     const zone = zoneDataFixture.create({ key: 'foo' })
     expect(zoneLink(zone)).toBe('[foo](zone://foo)')
+  })
+})
+
+describe(coalesceToArray.name, () => {
+  test('should return an array unmodified', () => {
+    expect(coalesceToArray(['a', 'b'])).toStrictEqual(['a', 'b'])
+    expect(coalesceToArray([1, 2])).toStrictEqual([1, 2])
+  })
+
+  test('should return a single value as a single-value array', () => {
+    expect(coalesceToArray('a')).toStrictEqual(['a'])
+    expect(coalesceToArray(1)).toStrictEqual([1])
+  })
+
+  test('should return undefined value as undefined', () => {
+    expect(coalesceToArray()).toBeUndefined()
+  })
+})
+
+describe(coalesceToArrayOfArrays.name, () => {
+  test('should return an array of arrays unmodified', () => {
+    expect(coalesceToArrayOfArrays([['a', 'b'], ['c', 'd']])).toStrictEqual([['a', 'b'], ['c', 'd']])
+    expect(coalesceToArrayOfArrays([[1, 2]])).toStrictEqual([[1, 2]])
+  })
+
+  test('should return an array as a single-value array of arrays', () => {
+    expect(coalesceToArrayOfArrays(['a', 'b', 'c'])).toStrictEqual([['a', 'b', 'c']])
+    expect(coalesceToArrayOfArrays([1, 2, 3])).toStrictEqual([[1, 2, 3]])
+  })
+
+  test('should return undefined value as undefined', () => {
+    expect(coalesceToArrayOfArrays()).toBeUndefined()
   })
 })

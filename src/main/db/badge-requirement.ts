@@ -5,6 +5,8 @@ import { EnhancementCategory } from '../api/enhancement-category'
 import { Key } from './key'
 import { MarkdownString } from '../api/markdown-string'
 import { Link } from '../api/link'
+import { Loc } from '../api/loc'
+import { coalesceToArray } from '../util'
 
 export class BadgeRequirement {
   /**
@@ -25,7 +27,7 @@ export class BadgeRequirement {
   /**
    * /loc coordinates.
    */
-  readonly loc?: number[]
+  readonly loc?: Loc
 
   /**
    * Is it a wall plaque or a physical monument?
@@ -55,7 +57,7 @@ export class BadgeRequirement {
   /**
    * {@link Contact} key for the requirement contact(s).
    */
-  readonly contactKey?: string | string[]
+  readonly contactKey?: string[]
 
   /**
    * Level of the invention required.
@@ -92,7 +94,7 @@ export class BadgeRequirement {
     this.vidiotMapKey = data.vidiotMapKey
     this.badgeKey = data.badgeKey
     this.missionName = data.missionName
-    this.contactKey = data.contactKey
+    this.contactKey = coalesceToArray(data.contactKey)
     this.inventionLevel = data.inventionLevel
     this.inventionTypes = data.inventionTypes
     this.inventionCount = data.inventionCount

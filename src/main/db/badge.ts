@@ -6,6 +6,8 @@ import { Key } from './key'
 import { Alternates } from './alternates'
 import { Alignments } from './alignments'
 import { MarkdownString } from '../api/markdown-string'
+import { Loc } from '../api/loc'
+import { coalesceToArrayOfArrays } from '../util'
 
 export class Badge {
   readonly #requirementsIndex: Record<string, BadgeRequirement> = {}
@@ -67,7 +69,7 @@ export class Badge {
   /**
    * For exploration badges, the `/loc` coordinates of the badge.
    */
-  readonly loc?: [number, number, number]
+  readonly loc?: Loc[]
 
   /**
    * For plaques that appear on a Vidiot Map, the number or letter the badge appears as.
@@ -114,7 +116,7 @@ export class Badge {
     this.notes = badgeData.notes
     this.links = badgeData.links ?? []
     this.zoneKey = badgeData.zoneKey
-    this.loc = badgeData.loc
+    this.loc = coalesceToArrayOfArrays(badgeData.loc)
     this.effect = badgeData.effect
     this.vidiotMapKey = badgeData.vidiotMapKey
     this.setTitle = badgeData.setTitle

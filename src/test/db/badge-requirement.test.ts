@@ -109,7 +109,7 @@ describe(BadgeRequirement.name, () => {
   describe('contactKey', () => {
     test('should be set from the data', () => {
       const requirement = new BadgeRequirement(badgeRequirementDataFixture.create({ contactKey: 'foo' }))
-      expect(requirement.contactKey).toEqual('foo')
+      expect(requirement.contactKey).toEqual(['foo'])
     })
 
     test('should accept an array', () => {

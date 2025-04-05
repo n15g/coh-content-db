@@ -4,6 +4,7 @@ import { BadgeType } from './badge-type'
 import { AlternateData } from './alternate-data'
 import { Alignment } from './alignment'
 import { MarkdownString } from './markdown-string'
+import { Loc } from './loc'
 
 export interface BadgeData {
 
@@ -66,7 +67,7 @@ export interface BadgeData {
   /**
    * For exploration badges, the `/loc` coordinates of the badge.
    */
-  readonly loc?: [number, number, number]
+  readonly loc?: Loc | Loc[]
 
   /**
    * For plaques that appear on a Vidiot Map, the number or letter the badge appears as.
