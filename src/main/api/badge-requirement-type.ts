@@ -1,4 +1,5 @@
 export const BADGE_REQUIREMENT_TYPE = [
+  'TASK',
   'PLAQUE',
   'BADGE',
   'INVENTION',
