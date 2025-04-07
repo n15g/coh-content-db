@@ -1,7 +1,8 @@
-import { Badge, badgeLink, badgeUri, coalesceToArray, coalesceToArrayOfArrays, Contact, contactLink, contactUri, Zone, zoneLink, zoneUri } from '../main'
+import { Badge, badgeLink, badgeUri, coalesceToArray, Contact, contactLink, contactUri, Mission, missionLink, missionUri, Zone, zoneLink, zoneUri } from '../main'
 import { badgeDataFixture } from './api/badge-data.fixture'
 import { zoneDataFixture } from './api/zone-data.fixture'
 import { contactDataFixture } from './api/contact-data.fixture'
+import { missionDataFixture } from './api/mission-data.fixture'
 
 describe(badgeUri.name, () => {
   test('should return the expected pattern', () => {
@@ -75,6 +76,42 @@ describe(contactLink.name, () => {
   })
 })
 
+describe(missionUri.name, () => {
+  test('should return the expected pattern', () => {
+    expect(missionUri('foo')).toBe('mission://foo')
+    expect(missionUri('bar')).toBe('mission://bar')
+    expect(missionUri('foo-bar')).toBe('mission://foo-bar')
+  })
+
+  test('should accept a Mission object', () => {
+    const mission = new Mission(missionDataFixture.create({ key: 'foo' }))
+    expect(missionUri(mission)).toBe('mission://foo')
+  })
+
+  test('should accept a MissionData object', () => {
+    const mission = missionDataFixture.create({ key: 'foo' })
+    expect(missionUri(mission)).toBe('mission://foo')
+  })
+})
+
+describe(missionLink.name, () => {
+  test('should return the expected pattern', () => {
+    expect(missionLink('foo')).toBe('[foo](mission://foo)')
+    expect(missionLink('bar')).toBe('[bar](mission://bar)')
+    expect(missionLink('foo-bar')).toBe('[foo-bar](mission://foo-bar)')
+  })
+
+  test('should accept a Mission object', () => {
+    const mission = new Mission(missionDataFixture.create({ key: 'foo' }))
+    expect(missionLink(mission)).toBe('[foo](mission://foo)')
+  })
+
+  test('should accept a MissionData object', () => {
+    const mission = missionDataFixture.create({ key: 'foo' })
+    expect(missionLink(mission)).toBe('[foo](mission://foo)')
+  })
+})
+
 describe(zoneUri.name, () => {
   test('should return the expected pattern', () => {
     expect(zoneUri('foo')).toBe('zone://foo')
@@ -124,21 +161,5 @@ describe(coalesceToArray.name, () => {
 
   test('should return undefined value as undefined', () => {
     expect(coalesceToArray()).toBeUndefined()
-  })
-})
-
-describe(coalesceToArrayOfArrays.name, () => {
-  test('should return an array of arrays unmodified', () => {
-    expect(coalesceToArrayOfArrays([['a', 'b'], ['c', 'd']])).toStrictEqual([['a', 'b'], ['c', 'd']])
-    expect(coalesceToArrayOfArrays([[1, 2]])).toStrictEqual([[1, 2]])
-  })
-
-  test('should return an array as a single-value array of arrays', () => {
-    expect(coalesceToArrayOfArrays(['a', 'b', 'c'])).toStrictEqual([['a', 'b', 'c']])
-    expect(coalesceToArrayOfArrays([1, 2, 3])).toStrictEqual([[1, 2, 3]])
-  })
-
-  test('should return undefined value as undefined', () => {
-    expect(coalesceToArrayOfArrays()).toBeUndefined()
   })
 })

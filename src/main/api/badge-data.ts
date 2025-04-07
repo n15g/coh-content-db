@@ -2,16 +2,15 @@ import { BadgeRequirementData } from './badge-requirement-data'
 import { Link } from './link'
 import { BadgeType } from './badge-type'
 import { AlternateData } from './alternate-data'
-import { Alignment } from './alignment'
 import { MarkdownString } from './markdown-string'
-import { Loc } from './loc'
+import { MoralityExtended } from './morality'
 
 export interface BadgeData {
 
   /**
    * Unique key used to reference this badge.
    *
-   * Keys can only contain lowercase letters, numbers and hyphens (`-`).
+   * Keys must be unique and can only contain lowercase letters, numbers and hyphens (`-`).
    */
   readonly key: string
 
@@ -25,12 +24,12 @@ export interface BadgeData {
    *
    * If the value differs by sex or alignment, include an {@link AlternateData} for each variant.
    */
-  readonly name: AlternateData<string>[] | string
+  readonly name: string | AlternateData<string>[]
 
   /**
-   * The character alignments that this badge is available to.
+   * The {@link MoralityExtended|moralities} that this badge is available to. If undefined then all moralities will be assumed.
    */
-  readonly alignment: Alignment[]
+  readonly morality?: MoralityExtended | MoralityExtended[]
 
   /**
    * The badge text as it appears in-game. May vary by character sex or alignment.
@@ -47,7 +46,7 @@ export interface BadgeData {
    *
    * If the value differs by sex or alignment, include an {@link AlternateData} for each variant.
    */
-  readonly icon?: AlternateData<string>[] | string
+  readonly icon?: string | AlternateData<string>[]
 
   /**
    * Freeform notes or tips about the badge.
@@ -60,33 +59,15 @@ export interface BadgeData {
   readonly links?: Link[]
 
   /**
-   * For exploration badges, the key of the {@link ZoneData|Zone} that this badge is found on.
-   */
-  readonly zoneKey?: string
-
-  /**
-   * For exploration badges, the `/loc` coordinates of the badge.
-   */
-  readonly loc?: Loc | Loc[]
-
-  /**
    * For plaques that appear on a Vidiot Map, the number or letter the badge appears as.
    */
   readonly vidiotMapKey?: string
 
   /**
-   * ID used with the in-game `/settitle` command to apply the badge.
+   * The id used with the in-game `/settitle` command to apply the badge.
+   * The first value is the id for primal characters and the (optional) second number is the id for praetorian characters.
    */
-  readonly setTitle?: {
-    /**
-     * `/settitle` id.
-     */
-    id?: number
-    /**
-     * `/settitle` id if different for praetorian characters.
-     */
-    praetorianId?: number
-  }
+  readonly setTitleId?: [number, number?]
 
   /**
    * A description of the effect the badge will have, such as a buff or granting a temporary power.

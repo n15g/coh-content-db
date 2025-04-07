@@ -4,9 +4,11 @@ import { ZoneData } from './api/zone-data'
 import { Zone } from './db/zone'
 import { Contact } from './db/contact'
 import { ContactData } from './api/contact-data'
+import { Mission } from './db/mission'
+import { MissionData } from './api/mission-data'
 
 /**
- * Returns the URI of the given badge that can be used in {@link MarkdownString} links.
+ * Returns the URI of the given badge that can be used in {@link MarkdownString} fields.
  *
  * URI format: `badge://<key>`
  *
@@ -30,7 +32,7 @@ export function badgeLink(target: string | Badge | BadgeData): string {
 }
 
 /**
- * Returns the URI of the given contact that can be used in {@link MarkdownString} links.
+ * Returns the URI of the given contact that can be used in {@link MarkdownString} fields.
  *
  * URI format: `contact://<key>`
  *
@@ -54,7 +56,31 @@ export function contactLink(target: string | Contact | ContactData): string {
 }
 
 /**
- * Returns the URI of the given zone that can be used in {@link MarkdownString} links.
+ * Returns the URI of the given mission that can be used in {@link MarkdownString} fields.
+ *
+ * URI format: `mission://<key>`
+ *
+ * @param target The {@link Mission} or mission key to target.
+ */
+export function missionUri(target: string | Mission | MissionData): string {
+  const key = typeof target === 'string' ? target : target.key
+  return `mission://${key}`
+}
+
+/**
+ * Returns a {@link MarkdownString} link to the given mission.
+ *
+ * Link format: `[<key>](mission://<key>)`
+ *
+ * @param target The {@link Mission} or mission key to target.
+ */
+export function missionLink(target: string | Mission | MissionData): string {
+  const key = typeof target === 'string' ? target : target.key
+  return `[${key}](${missionUri(target)})`
+}
+
+/**
+ * Returns the URI of the given zone that can be used in {@link MarkdownString} fields.
  *
  * URI format: `zone://<key>`
  *
@@ -89,23 +115,4 @@ export function zoneLink(target: string | Zone | ZoneData): string {
 export function coalesceToArray<T>(value?: T | T[]): T[] | undefined {
   if (!value) return undefined
   return Array.isArray(value) ? value as T[] : [value]
-}
-
-/**
- * For fields that accept either an array of values or a single value, coalesces the value to an array of arrays.
- *
- * Arrays of arrays are returned as-is.
- * A single array is wrapped in an outer array.
- * Undefined values return undefined.
- *
- * @param value The value to coalesce.
- */
-export function coalesceToArrayOfArrays<T extends unknown[]>(value?: T | T[]): T[] | undefined {
-  if (!value) return undefined
-  // If the first element is an array, we assume it's already an array of arrays.
-  if (Array.isArray(value) && value.length > 0 && Array.isArray(value[0])) {
-    return value as T[]
-  }
-  // Otherwise, wrap the single array in an outer array
-  return [value as T]
 }

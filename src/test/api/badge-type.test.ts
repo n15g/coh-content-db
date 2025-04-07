@@ -17,9 +17,9 @@ describe('BADGE_TYPE', () => {
 
   test('should contain all known basic badge types', () => {
     const expected = [
-      'EXPLORATION', 'HISTORY', 'ACCOMPLISHMENT', 'ACHIEVEMENT', 'ACCOLADE',
-      'GLADIATOR', 'VETERAN', 'PVP', 'INVENTION', 'DEFEAT',
-      'EVENT', 'OUROBOROS', 'CONSIGNMENT', 'DAY_JOB', 'AE',
+      'exploration', 'history', 'accomplishment', 'achievement', 'accolade',
+      'gladiator', 'veteran', 'pvp', 'invention', 'defeat',
+      'event', 'ouroboros', 'consignment', 'day-job', 'architect-entertainment',
     ]
     for (const category of expected) {
       expect(BADGE_TYPE).toContain(category)
@@ -29,7 +29,7 @@ describe('BADGE_TYPE', () => {
 
 describe('BadgeType', () => {
   test('should be a usable type', () => {
-    const field: BadgeType = 'EXPLORATION'
-    expect(field).toBe('EXPLORATION')
+    const field: BadgeType = 'exploration'
+    expect(field).toBe('exploration')
   })
 })

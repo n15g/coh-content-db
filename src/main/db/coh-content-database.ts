@@ -7,11 +7,13 @@ import { BadgeIndex } from './badge-index'
 import { BadgeSearchOptions } from './badge-search-options'
 import { Paged } from './paged'
 import { Contact } from './contact'
+import { Mission } from './mission'
 
 export class CohContentDatabase {
   readonly #archetypeIndex: Record<string, Archetype> = {}
   readonly #zoneIndex: Record<string, Zone> = {}
   readonly #contactIndex: Record<string, Contact> = {}
+  readonly #missionIndex: Record<string, Mission> = {}
   readonly #badgeIndex: BadgeIndex
 
   /**
@@ -40,6 +42,11 @@ export class CohContentDatabase {
    * List of contacts.
    */
   readonly contacts: Contact[]
+
+  /**
+   * List of missions.
+   */
+  readonly missions: Contact[]
 
   /**
    * List of badges.
@@ -75,6 +82,13 @@ export class CohContentDatabase {
       return contact
     }) ?? []
 
+    this.missions = bundle.missions?.map((data) => {
+      if (this.#missionIndex[data.key] !== undefined) throw new Error(`Duplicate mission key '${data.key}'`)
+      const mission = new Mission(data)
+      this.#missionIndex[mission.key] = mission
+      return mission
+    }) ?? []
+
     this.badges = bundle.badges?.map(data => new Badge(data)) ?? []
     this.#badgeIndex = new BadgeIndex(this.badges)
   }
@@ -92,6 +106,11 @@ export class CohContentDatabase {
   getContact(key?: string): Contact | undefined {
     if (!key) return undefined
     return this.#contactIndex[key]
+  }
+
+  getMission(key?: string): Mission | undefined {
+    if (!key) return undefined
+    return this.#missionIndex[key]
   }
 
   getBadge(key?: string): Badge | undefined {

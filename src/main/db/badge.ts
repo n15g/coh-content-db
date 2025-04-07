@@ -4,13 +4,13 @@ import { BadgeData } from '../api/badge-data'
 import { BadgeRequirement } from './badge-requirement'
 import { Key } from './key'
 import { Alternates } from './alternates'
-import { Alignments } from './alignments'
 import { MarkdownString } from '../api/markdown-string'
-import { Loc } from '../api/loc'
-import { coalesceToArrayOfArrays } from '../util'
+import { coalesceToArray } from '../util'
+import { MoralityList } from './morality-list'
 
 export class Badge {
   readonly #requirementsIndex: Record<string, BadgeRequirement> = {}
+  readonly #zoneKeys = new Set<string>()
 
   /**
    * The database key for this badge.
@@ -30,9 +30,9 @@ export class Badge {
   readonly name: Alternates<string>
 
   /**
-   * The character alignments that this badge is available to.
+   * The character moralities that this badge is available to.
    */
-  readonly alignment: Alignments
+  readonly morality: MoralityList
 
   /**
    * The badge text as it appears in-game. May vary by character sex or alignment.
@@ -62,33 +62,15 @@ export class Badge {
   readonly links: Link[]
 
   /**
-   * For exploration badges, the key of the {@link Zone} that this badge is found on.
-   */
-  readonly zoneKey?: string
-
-  /**
-   * For exploration badges, the `/loc` coordinates of the badge.
-   */
-  readonly loc?: Loc[]
-
-  /**
    * For plaques that appear on a Vidiot Map, the number or letter the badge appears as.
    */
   readonly vidiotMapKey?: string
 
   /**
-   * ID used with the in-game `/settitle` command to apply the badge.
+   * The id used with the in-game `/settitle` command to apply the badge.
+   * The first value is the id for primal characters and the (optional) second number is the id for praetorian characters.
    */
-  readonly setTitle?: {
-    /**
-     * `/settitle` id.
-     */
-    id?: number
-    /**
-     * `/settitle` id if different for praetorian characters.
-     */
-    praetorianId?: number
-  }
+  readonly setTitleId?: [number, number?]
 
   /**
    * A description of the effect the badge will have, such as a buff or granting a temporary power.
@@ -109,24 +91,23 @@ export class Badge {
     this.key = new Key(badgeData.key).value
     this.type = badgeData.type
     this.name = new Alternates(badgeData.name)
-    this.alignment = new Alignments(badgeData.alignment)
+    this.morality = new MoralityList(coalesceToArray(badgeData.morality))
     this.badgeText = new Alternates(badgeData.badgeText ?? [])
     this.acquisition = badgeData.acquisition
     this.icon = new Alternates(badgeData.icon ?? [])
     this.notes = badgeData.notes
     this.links = badgeData.links ?? []
-    this.zoneKey = badgeData.zoneKey
-    this.loc = coalesceToArrayOfArrays(badgeData.loc)
     this.effect = badgeData.effect
     this.vidiotMapKey = badgeData.vidiotMapKey
-    this.setTitle = badgeData.setTitle
+    this.setTitleId = badgeData.setTitleId
     this.ignoreInTotals = badgeData.ignoreInTotals ?? false
 
     this.requirements = badgeData.requirements?.map((requirementData) => {
       if (this.#requirementsIndex[requirementData.key]) throw new Error(`Duplicate badge requirement key [${badgeData.key}:${requirementData.key}]`)
-      const badge = new BadgeRequirement(requirementData)
-      this.#requirementsIndex[badge.key] = badge
-      return badge
+      const requirement = new BadgeRequirement(requirementData)
+      this.#requirementsIndex[requirement.key] = requirement
+      if (requirement.location?.zoneKey) this.#zoneKeys.add(requirement.location?.zoneKey)
+      return requirement
     })
   }
 
@@ -134,6 +115,20 @@ export class Badge {
     const result = this.#requirementsIndex[key]
     if (result === undefined) throw new Error(`Unknown badge requirement key [${key}]`)
     return result
+  }
+
+  /**
+   * Return a list of all the zone keys referenced by this badge.
+   */
+  get zoneKeys(): string[] {
+    return [...this.#zoneKeys]
+  }
+
+  /**
+   * The zone key if this badge relates to a single zone.
+   */
+  get zoneKey(): string | undefined {
+    return this.#zoneKeys.size === 1 ? this.#zoneKeys.values().next().value : undefined
   }
 }
 

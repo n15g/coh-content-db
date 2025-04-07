@@ -1,17 +1,17 @@
 import { defineFixture } from 'efate'
-import { BADGE_REQUIREMENT_TYPE, BadgeRequirementData, ENHANCEMENT_CATEGORY, PLAQUE_TYPE } from '../../main'
+import { BADGE_REQUIREMENT_TYPE, BadgeRequirementData, ENHANCEMENT_CATEGORY } from '../../main'
+import { locationDataFixture } from './location-data.fixture'
 
 export const badgeRequirementDataFixture = defineFixture<BadgeRequirementData>((t) => {
   t.key.as(index => `badge-requirement-${index}`)
   t.type.pickFrom([...BADGE_REQUIREMENT_TYPE])
-  t.zoneKey?.asString()
-  t.loc?.as(index => [index, index, index])
-  t.plaqueType?.pickFrom([...PLAQUE_TYPE])
-  t.plaqueInscription?.asLoremIpsum()
-  t.vidiotMapKey?.asString()
+  t.location?.fromFixture(locationDataFixture)
   t.badgeKey?.as(index => `badge-${index}`)
+  t.missionKey?.as(index => `mission-${index}`)
+  t.monumentText?.asLoremIpsum()
   t.inventionLevel?.asNumber()
   t.inventionTypes?.pickFrom([...ENHANCEMENT_CATEGORY])
-  t.inventionCount?.asNumber()
+  t.count?.asNumber()
   t.notes?.asLoremIpsum()
+  t.links?.as(() => [{ title: 'foo', href: 'https://nouri.org' }])
 })

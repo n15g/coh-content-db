@@ -1,5 +1,6 @@
 import { badgeDataFixture } from '../api/badge-data.fixture'
 import { Badge, BadgeIndex } from '../../main'
+import { badgeRequirementDataFixture } from '../api/badge-requirement-data.fixture'
 
 describe(BadgeIndex.name, () => {
   describe('Constructor', () => {
@@ -113,10 +114,10 @@ describe(BadgeIndex.name, () => {
 
       test(`should match on setTitle`, () => {
         const data = [
-          new Badge(badgeDataFixture.create({ key: 'match-1', setTitle: { id: 123 } })),
-          new Badge(badgeDataFixture.create({ key: 'match-2', setTitle: { id: 456, praetorianId: 123 } })),
-          new Badge(badgeDataFixture.create({ key: 'miss-1', setTitle: { id: 456 } })),
-          new Badge(badgeDataFixture.create({ key: 'miss-2', setTitle: undefined })),
+          new Badge(badgeDataFixture.create({ key: 'match-1', setTitleId: [123] })),
+          new Badge(badgeDataFixture.create({ key: 'match-2', setTitleId: [456, 123] })),
+          new Badge(badgeDataFixture.create({ key: 'miss-1', setTitleId: [456] })),
+          new Badge(badgeDataFixture.create({ key: 'miss-2', setTitleId: undefined })),
         ]
 
         const result = new BadgeIndex(data).searchBadges({ query: { str: '123', on: { setTitle: true } } })
@@ -182,45 +183,50 @@ describe(BadgeIndex.name, () => {
 
       test(`should filter on badge type`, () => {
         const data = [
-          new Badge(badgeDataFixture.create({ key: 'badge-1', type: 'EXPLORATION' })),
-          new Badge(badgeDataFixture.create({ key: 'badge-2', type: 'EXPLORATION' })),
-          new Badge(badgeDataFixture.create({ key: 'badge-3', type: 'HISTORY' })),
-          new Badge(badgeDataFixture.create({ key: 'badge-4', type: 'HISTORY' })),
-          new Badge(badgeDataFixture.create({ key: 'badge-5', type: 'ACCOLADE' })),
-          new Badge(badgeDataFixture.create({ key: 'badge-6', type: 'ACCOLADE' })),
+          new Badge(badgeDataFixture.create({ key: 'badge-1', type: 'exploration' })),
+          new Badge(badgeDataFixture.create({ key: 'badge-2', type: 'exploration' })),
+          new Badge(badgeDataFixture.create({ key: 'badge-3', type: 'history' })),
+          new Badge(badgeDataFixture.create({ key: 'badge-4', type: 'history' })),
+          new Badge(badgeDataFixture.create({ key: 'badge-5', type: 'accolade' })),
+          new Badge(badgeDataFixture.create({ key: 'badge-6', type: 'accolade' })),
         ]
 
-        const result = new BadgeIndex(data).searchBadges({ filter: { type: 'HISTORY' } })
+        const result = new BadgeIndex(data).searchBadges({ filter: { type: 'history' } })
         const keys = result.items.map(x => x.key)
         expect(keys).toStrictEqual(['badge-3', 'badge-4'])
       })
 
-      test(`should filter on badge type`, () => {
+      test(`should filter on badge zone`, () => {
         const data = [
-          new Badge(badgeDataFixture.create({ key: 'badge-1', zoneKey: 'atlas-park' })),
-          new Badge(badgeDataFixture.create({ key: 'badge-2', zoneKey: 'perez-park' })),
-          new Badge(badgeDataFixture.create({ key: 'badge-3', zoneKey: 'abandoned-sewer-network' })),
-          new Badge(badgeDataFixture.create({ key: 'badge-4', zoneKey: 'atlas-park' })),
-          new Badge(badgeDataFixture.create({ key: 'badge-5', zoneKey: 'perez-park' })),
-          new Badge(badgeDataFixture.create({ key: 'badge-6', zoneKey: undefined })),
+          new Badge(badgeDataFixture.create({ key: 'badge-1', requirements: [{ location: { zoneKey: 'atlas-park' } }] })),
+          new Badge(badgeDataFixture.create({ key: 'badge-2', requirements: [{ location: { zoneKey: 'perez-park' } }] })),
+          new Badge(badgeDataFixture.create({ key: 'badge-3', requirements: [{ location: { zoneKey: 'abandoned-sewer-network' } }] })),
+          new Badge(badgeDataFixture.create({ key: 'badge-4', requirements: [{ location: { zoneKey: 'atlas-park' } }] })),
+          new Badge(badgeDataFixture.create({
+            key: 'badge-5', requirements: [
+              badgeRequirementDataFixture.create({ location: { zoneKey: 'atlas-park' } }),
+              badgeRequirementDataFixture.create({ location: { zoneKey: 'perez-park' } }),
+            ],
+          })),
+          new Badge(badgeDataFixture.create({ key: 'badge-6', requirements: [{ location: undefined }] })),
         ]
 
         const result = new BadgeIndex(data).searchBadges({ filter: { zoneKey: 'perez-park' } })
         const keys = result.items.map(x => x.key)
-        expect(keys).toStrictEqual(['badge-2', 'badge-5'])
+        expect(keys).toStrictEqual(['badge-2'])
       })
 
-      test(`should filter on badge type`, () => {
+      test(`should filter on alignment`, () => {
         const data = [
-          new Badge(badgeDataFixture.create({ key: 'badge-1', alignment: ['H'] })),
-          new Badge(badgeDataFixture.create({ key: 'badge-2', alignment: ['V'] })),
-          new Badge(badgeDataFixture.create({ key: 'badge-3', alignment: ['P'] })),
-          new Badge(badgeDataFixture.create({ key: 'badge-4', alignment: ['H', 'V'] })),
-          new Badge(badgeDataFixture.create({ key: 'badge-5', alignment: ['V', 'P'] })),
-          new Badge(badgeDataFixture.create({ key: 'badge-6', alignment: ['H', 'V', 'P'] })),
+          new Badge(badgeDataFixture.create({ key: 'badge-1', morality: ['hero'] })),
+          new Badge(badgeDataFixture.create({ key: 'badge-2', morality: ['villain'] })),
+          new Badge(badgeDataFixture.create({ key: 'badge-3', morality: ['loyalist'] })),
+          new Badge(badgeDataFixture.create({ key: 'badge-4', morality: ['hero', 'villain'] })),
+          new Badge(badgeDataFixture.create({ key: 'badge-5', morality: ['villain', 'loyalist'] })),
+          new Badge(badgeDataFixture.create({ key: 'badge-6', morality: ['hero', 'villain', 'loyalist'] })),
         ]
 
-        const result = new BadgeIndex(data).searchBadges({ filter: { alignment: 'H' } })
+        const result = new BadgeIndex(data).searchBadges({ filter: { morality: 'hero' } })
         const keys = result.items.map(x => x.key)
         expect(keys).toStrictEqual(['badge-1', 'badge-4', 'badge-6'])
       })
@@ -401,7 +407,7 @@ describe(BadgeIndex.name, () => {
           new Badge(badgeDataFixture.create({ key: 'badge-4' })),
         ]
 
-        const result = new BadgeIndex(data).searchBadges({ sort: { by: 'CANONICAL' } })
+        const result = new BadgeIndex(data).searchBadges({ sort: { by: 'canonical' } })
 
         const keys = result.items.map(x => x.key)
         expect(keys).toStrictEqual(['badge-1', 'badge-2', 'badge-3', 'badge-4'])
@@ -415,7 +421,7 @@ describe(BadgeIndex.name, () => {
           new Badge(badgeDataFixture.create({ key: 'badge-4' })),
         ]
 
-        const result = new BadgeIndex(data).searchBadges({ sort: { dir: 'DESC' } })
+        const result = new BadgeIndex(data).searchBadges({ sort: { dir: 'desc' } })
 
         const keys = result.items.map(x => x.key)
         expect(keys).toStrictEqual(['badge-4', 'badge-3', 'badge-2', 'badge-1'])
@@ -428,7 +434,7 @@ describe(BadgeIndex.name, () => {
           new Badge(badgeDataFixture.create({ key: 'badge-3', name: [{ value: 'AAB' }] })),
         ]
 
-        const result = new BadgeIndex(data).searchBadges({ sort: { by: 'BADGE_NAME' } })
+        const result = new BadgeIndex(data).searchBadges({ sort: { by: 'badge-name' } })
 
         const keys = result.items.map(x => x.key)
         expect(keys).toStrictEqual(['badge-3', 'badge-1', 'badge-2'])
@@ -441,7 +447,7 @@ describe(BadgeIndex.name, () => {
           new Badge(badgeDataFixture.create({ key: 'badge-3', name: [{ value: 'AAB' }] })),
         ]
 
-        const result = new BadgeIndex(data).searchBadges({ sort: { by: 'BADGE_NAME', dir: 'DESC' } })
+        const result = new BadgeIndex(data).searchBadges({ sort: { by: 'badge-name', dir: 'desc' } })
 
         const keys = result.items.map(x => x.key)
         expect(keys).toStrictEqual(['badge-2', 'badge-1', 'badge-3'])
@@ -454,7 +460,7 @@ describe(BadgeIndex.name, () => {
           new Badge(badgeDataFixture.create({ key: 'badge-3', name: [{ value: 'AAB' }] })),
         ]
 
-        const result = new BadgeIndex(data).searchBadges({ sort: { by: 'BADGE_NAME' } })
+        const result = new BadgeIndex(data).searchBadges({ sort: { by: 'badge-name' } })
 
         const keys = result.items.map(x => x.key)
         expect(keys).toStrictEqual(['badge-3', 'badge-1', 'badge-2'])
@@ -462,12 +468,12 @@ describe(BadgeIndex.name, () => {
 
       test(`should sort by zone name`, () => {
         const data = [
-          new Badge(badgeDataFixture.create({ key: 'badge-1', zoneKey: 'atlas-park' })),
-          new Badge(badgeDataFixture.create({ key: 'badge-2', zoneKey: 'perez-park' })),
-          new Badge(badgeDataFixture.create({ key: 'badge-3', zoneKey: 'abandoned-sewer-network' })),
+          new Badge(badgeDataFixture.create({ key: 'badge-1', requirements: [{ location: { zoneKey: 'atlas-park' } }] })),
+          new Badge(badgeDataFixture.create({ key: 'badge-2', requirements: [{ location: { zoneKey: 'perez-park' } }] })),
+          new Badge(badgeDataFixture.create({ key: 'badge-3', requirements: [{ location: { zoneKey: 'abandoned-sewer-network' } }] })),
         ]
 
-        const result = new BadgeIndex(data).searchBadges({ sort: { by: 'ZONE_KEY' } })
+        const result = new BadgeIndex(data).searchBadges({ sort: { by: 'zone-key' } })
 
         const keys = result.items.map(x => x.key)
         expect(keys).toStrictEqual(['badge-3', 'badge-1', 'badge-2'])
@@ -475,12 +481,12 @@ describe(BadgeIndex.name, () => {
 
       test(`should sort by zone name descending`, () => {
         const data = [
-          new Badge(badgeDataFixture.create({ key: 'badge-1', zoneKey: 'atlas-park' })),
-          new Badge(badgeDataFixture.create({ key: 'badge-2', zoneKey: 'perez-park' })),
-          new Badge(badgeDataFixture.create({ key: 'badge-3', zoneKey: 'abandoned-sewer-network' })),
+          new Badge(badgeDataFixture.create({ key: 'badge-1', requirements: [{ location: { zoneKey: 'atlas-park' } }] })),
+          new Badge(badgeDataFixture.create({ key: 'badge-2', requirements: [{ location: { zoneKey: 'perez-park' } }] })),
+          new Badge(badgeDataFixture.create({ key: 'badge-3', requirements: [{ location: { zoneKey: 'abandoned-sewer-network' } }] })),
         ]
 
-        const result = new BadgeIndex(data).searchBadges({ sort: { by: 'ZONE_KEY', dir: 'DESC' } })
+        const result = new BadgeIndex(data).searchBadges({ sort: { by: 'zone-key', dir: 'desc' } })
 
         const keys = result.items.map(x => x.key)
         expect(keys).toStrictEqual(['badge-2', 'badge-1', 'badge-3'])
@@ -488,28 +494,33 @@ describe(BadgeIndex.name, () => {
 
       test(`should maintain canonical as secondary sort when sorting by zone name`, () => {
         const data = [
-          new Badge(badgeDataFixture.create({ key: 'badge-1', zoneKey: 'atlas-park' })),
-          new Badge(badgeDataFixture.create({ key: 'badge-2', zoneKey: 'perez-park' })),
-          new Badge(badgeDataFixture.create({ key: 'badge-3', zoneKey: 'atlas-park' })),
-          new Badge(badgeDataFixture.create({ key: 'badge-4', zoneKey: 'abandoned-sewer-network' })),
+          new Badge(badgeDataFixture.create({ key: 'badge-1', requirements: [{ location: { zoneKey: 'atlas-park' } }] })),
+          new Badge(badgeDataFixture.create({ key: 'badge-2', requirements: [{ location: { zoneKey: 'perez-park' } }] })),
+          new Badge(badgeDataFixture.create({ key: 'badge-3', requirements: [{ location: { zoneKey: 'atlas-park' } }] })),
+          new Badge(badgeDataFixture.create({ key: 'badge-4', requirements: [{ location: { zoneKey: 'abandoned-sewer-network' } }] })),
         ]
 
-        const result = new BadgeIndex(data).searchBadges({ sort: { by: 'ZONE_KEY' } })
+        const result = new BadgeIndex(data).searchBadges({ sort: { by: 'zone-key' } })
 
         const keys = result.items.map(x => x.key)
         expect(keys).toStrictEqual(['badge-4', 'badge-1', 'badge-3', 'badge-2'])
       })
 
-      test(`should sort undefined zone names to the end`, () => {
+      test(`should sort undefined or multiple zone names to the end`, () => {
         const data = [
-          new Badge(badgeDataFixture.create({ key: 'badge-1', zoneKey: 'atlas-park' })),
-          new Badge(badgeDataFixture.create({ key: 'badge-2', zoneKey: undefined })),
-          new Badge(badgeDataFixture.create({ key: 'badge-3', zoneKey: 'perez-park' })),
-          new Badge(badgeDataFixture.create({ key: 'badge-4', zoneKey: undefined })),
-          new Badge(badgeDataFixture.create({ key: 'badge-5', zoneKey: 'abandoned-sewer-network' })),
+          new Badge(badgeDataFixture.create({ key: 'badge-1', requirements: [{ location: { zoneKey: 'atlas-park' } }] })),
+          new Badge(badgeDataFixture.create({ key: 'badge-2', requirements: [{ location: undefined }] })),
+          new Badge(badgeDataFixture.create({ key: 'badge-3', requirements: [{ location: { zoneKey: 'perez-park' } }] })),
+          new Badge(badgeDataFixture.create({
+            key: 'badge-4', requirements: [
+              badgeRequirementDataFixture.create({ location: { zoneKey: 'atlas-park' } }),
+              badgeRequirementDataFixture.create({ location: { zoneKey: 'perez-park' } }),
+            ],
+          })),
+          new Badge(badgeDataFixture.create({ key: 'badge-5', requirements: [{ location: { zoneKey: 'abandoned-sewer-network' } }] })),
         ]
 
-        const result = new BadgeIndex(data).searchBadges({ sort: { by: 'ZONE_KEY' } })
+        const result = new BadgeIndex(data).searchBadges({ sort: { by: 'zone-key' } })
 
         const keys = result.items.map(x => x.key)
         expect(keys).toStrictEqual(['badge-5', 'badge-1', 'badge-3', 'badge-2', 'badge-4'])

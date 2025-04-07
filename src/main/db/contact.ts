@@ -7,7 +7,7 @@ export class Contact {
   /**
    * Unique key used to reference this contact.
    *
-   * Keys can only contain lowercase letters, numbers and hyphens (`-`).
+   * Keys must be unique and can only contain lowercase letters, numbers and hyphens (`-`).
    */
   readonly key: string
 

@@ -9,5 +9,5 @@ export const contactDataFixture = defineFixture<ContactData>((t) => {
   t.loc?.as(index => [index, index, index])
   t.levelRange?.as(index => [index, index])
   t.notes?.asLoremIpsum()
-  t.links?.as(() => [{ href: 'https://nouri.org' }])
+  t.links?.as(() => [{ title: 'foo', href: 'https://nouri.org' }])
 })

@@ -46,23 +46,23 @@ export class BadgeIndex {
       || (query?.on?.acquisition && badge.acquisition?.toLowerCase().includes(queryString))
       || (query?.on?.effect && badge.effect?.toLowerCase().includes(queryString))
       || (query?.on?.notes && badge.notes?.toLowerCase().includes(queryString))
-      || (query?.on?.setTitle && (badge.setTitle?.id?.toString().includes(queryString) || badge.setTitle?.praetorianId?.toString().includes(queryString))))
+      || (query?.on?.setTitle && (badge.setTitleId?.some(x => x?.toString().includes(queryString)))))
   }
 
   #satisfiesFilterPredicate(badge: Badge, filter?: BadgeSearchOptions['filter']): boolean {
     return (!filter?.type || badge.type === filter.type)
       && (!filter?.zoneKey || badge.zoneKey === filter.zoneKey)
-      && (!filter?.alignment || badge.alignment.items.includes(filter.alignment))
+      && (!filter?.morality || badge.morality.has(filter.morality))
   }
 
   #sort(badges: Badge[], sort?: BadgeSearchOptions['sort']): Badge[] {
     if (!sort) return badges
-    const ascending = sort.dir !== 'DESC'
+    const ascending = sort.dir !== 'desc'
 
-    if (sort.by === 'BADGE_NAME') return badges.sort((a, b) => ascending ? compareByDefaultName(a, b) : compareByDefaultName(b, a))
+    if (sort.by === 'badge-name') return badges.sort((a, b) => ascending ? compareByDefaultName(a, b) : compareByDefaultName(b, a))
 
-    if (sort.by === 'ZONE_KEY') return badges.sort((a, b) => ascending ? compareByZoneKey(a, b) : compareByZoneKey(b, a))
+    if (sort.by === 'zone-key') return badges.sort((a, b) => ascending ? compareByZoneKey(a, b) : compareByZoneKey(b, a))
 
-    return sort.dir === 'DESC' ? badges.reverse() : badges
+    return sort.dir === 'desc' ? badges.reverse() : badges
   }
 }

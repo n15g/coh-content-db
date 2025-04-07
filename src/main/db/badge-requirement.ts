@@ -1,81 +1,61 @@
 import { BadgeRequirementData } from '../api/badge-requirement-data'
-import { PlaqueType } from '../api/plaque-type'
 import { BadgeRequirementType } from '../api/badge-requirement-type'
 import { EnhancementCategory } from '../api/enhancement-category'
 import { Key } from './key'
 import { MarkdownString } from '../api/markdown-string'
 import { Link } from '../api/link'
-import { Loc } from '../api/loc'
-import { coalesceToArray } from '../util'
+import { Location } from './location'
 
 export class BadgeRequirement {
   /**
-   * Key.
+   * Unique key used to reference this badge requirement.
+   *
+   * Keys must be unique and can only contain lowercase letters, numbers and hyphens (`-`).
    */
   readonly key: string
 
   /**
-   * Type of requirement.
+   * The requirement type.
    */
   readonly type: BadgeRequirementType
 
   /**
-   * Zone the requirement is located in.
+   * If the requirement involves a location, where it is.
    */
-  readonly zoneKey?: string
+  readonly location?: Location
 
   /**
-   * /loc coordinates.
-   */
-  readonly loc?: Loc
-
-  /**
-   * Is it a wall plaque or a physical monument?
-   */
-  readonly plaqueType?: PlaqueType
-
-  /**
-   * Plaque inscription.
-   */
-  readonly plaqueInscription?: string
-
-  /**
-   * The number or letter the plaque appears as on Vidiot Maps.
-   */
-  readonly vidiotMapKey?: string
-
-  /**
-   * The key of the badge for this requirement.
+   * If the requirement involves a badge, the badge key.
    */
   readonly badgeKey?: string
 
   /**
-   * Mission name.
+   * If the requirement involves a mission, the mission key.
    */
-  readonly missionName?: string
+  readonly missionKey?: string
 
   /**
-   * {@link Contact} key for the requirement contact(s).
+   * If the requirement involves a plaque or pedestal, the text that is displayed thereon.
    */
-  readonly contactKey?: string[]
+  readonly monumentText?: string
 
   /**
-   * Level of the invention required.
+   * If the requirement involves crafting an invention, the Level of the invention required.
    */
   readonly inventionLevel?: number
 
   /**
-   * The types of enhancements required to be crafted.
+   * If the requirement involves crafting an invention, the types of enhancements that will qualify.
    */
   readonly inventionTypes?: EnhancementCategory[]
 
   /**
-   * Number of invention crafts required.
+   * Number of times the task needs to be repeated.
    */
-  readonly inventionCount?: number
+  readonly count?: number
 
   /**
-   * Any additional notes.
+   * Additional information about the requirement.
    */
   readonly notes?: MarkdownString
 
@@ -87,17 +67,13 @@ export class BadgeRequirement {
   constructor(data: BadgeRequirementData) {
     this.key = new Key(data.key).value
     this.type = data.type
-    this.zoneKey = data.zoneKey
-    this.loc = data.loc
-    this.plaqueType = data.plaqueType
-    this.plaqueInscription = data.plaqueInscription
-    this.vidiotMapKey = data.vidiotMapKey
+    this.location = data.location
     this.badgeKey = data.badgeKey
-    this.missionName = data.missionName
-    this.contactKey = coalesceToArray(data.contactKey)
+    this.missionKey = data.missionKey
+    this.monumentText = data.monumentText
     this.inventionLevel = data.inventionLevel
     this.inventionTypes = data.inventionTypes
-    this.inventionCount = data.inventionCount
+    this.count = data.count
     this.notes = data.notes
     this.links = data.links ?? []
   }

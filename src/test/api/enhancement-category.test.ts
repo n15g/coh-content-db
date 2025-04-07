@@ -17,9 +17,9 @@ describe('ENHANCEMENT_CATEGORY', () => {
 
   test('should contain all known default enhancement categories', () => {
     const expected = [
-      'DEFENSE_DEBUFF', 'TO_HIT_DEBUFF', 'TAUNT', 'CONFUSE', 'HEALING', 'DEFENSE_BUFF', 'RESIST_DAMAGE', 'INTANGIBILITY', 'SLEEP', 'SLOW', 'HOLD', 'STUN', 'IMMOBILIZE',
-      'FEAR', 'ENDURANCE_MODIFICATION', 'ENDURANCE_REDUCTION', 'RECHARGE_REDUCTION', 'INTERRUPT_DURATION', 'ACCURACY', 'TO_HIT_BUFF', 'DAMAGE', 'KNOCKBACK', 'RUN_SPEED',
-      'JUMP', 'FLY_SPEED', 'RANGE',
+      'defense-debuff', 'to-hit-debuff', 'taunt', 'confuse', 'healing', 'defense-buff', 'resist-damage', 'intangibility', 'sleep', 'slow', 'hold', 'stun', 'immobilize',
+      'fear', 'endurance-modification', 'endurance-reduction', 'recharge-reduction', 'interrupt-duration', 'accuracy', 'to-hit-buff', 'damage', 'knockback', 'run-speed',
+      'jump', 'fly-speed', 'range',
     ]
     for (const category of expected) {
       expect(ENHANCEMENT_CATEGORY).toContain(category)
@@ -29,7 +29,7 @@ describe('ENHANCEMENT_CATEGORY', () => {
 
 describe('EnhancementCategory', () => {
   test('should be a usable type', () => {
-    const field: EnhancementCategory = 'RUN_SPEED'
-    expect(field).toBe('RUN_SPEED')
+    const field: EnhancementCategory = 'run-speed'
+    expect(field).toBe('run-speed')
   })
 })

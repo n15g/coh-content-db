@@ -5,6 +5,7 @@ import { Change } from './change'
 import { Link } from './link'
 import { MarkdownString } from './markdown-string'
 import { ContactData } from './contact-data'
+import { MissionData } from './mission-data'
 
 /**
  * A content bundle holds the data that makes up one forked instance of the game since the original sunset, such as Homecoming (https://forums.homecomingservers.com/).
@@ -50,6 +51,11 @@ export interface ContentBundle {
    * List of contacts available in this fork.
    */
   readonly contacts?: ContactData[]
+
+  /**
+   * List of missions available in this fork.
+   */
+  readonly missions?: MissionData[]
 
   /**
    * List of badges available on this fork.

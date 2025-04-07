@@ -17,68 +17,20 @@ describe(BadgeRequirement.name, () => {
 
   describe('type', () => {
     test('should be set from the data', () => {
-      const requirement = new BadgeRequirement(badgeRequirementDataFixture.create({ type: 'BADGE' }))
-      expect(requirement.type).toEqual('BADGE')
+      const requirement = new BadgeRequirement(badgeRequirementDataFixture.create({ type: 'badge' }))
+      expect(requirement.type).toEqual('badge')
     })
   })
 
-  describe('zoneKey', () => {
+  describe('location', () => {
     test('should be set from the data', () => {
-      const requirement = new BadgeRequirement(badgeRequirementDataFixture.create({ zoneKey: 'zone123' }))
-      expect(requirement.zoneKey).toEqual('zone123')
+      const requirement = new BadgeRequirement(badgeRequirementDataFixture.create({ location: { zoneKey: 'foo', coords: [1, 2, 3] } }))
+      expect(requirement.location).toStrictEqual({ zoneKey: 'foo', coords: [1, 2, 3] })
     })
 
     test('should be optional', () => {
-      const requirement = new BadgeRequirement(badgeRequirementDataFixture.omit('zoneKey').create())
-      expect(requirement.zoneKey).toBeUndefined()
-    })
-  })
-
-  describe('loc', () => {
-    test('should be set from the data', () => {
-      const requirement = new BadgeRequirement(badgeRequirementDataFixture.create({ loc: [1, 2, 3] }))
-      expect(requirement.loc).toStrictEqual([1, 2, 3])
-    })
-
-    test('should be optional', () => {
-      const requirement = new BadgeRequirement(badgeRequirementDataFixture.omit('loc').create())
-      expect(requirement.loc).toBeUndefined()
-    })
-  })
-
-  describe('plaqueType', () => {
-    test('should be set from the data', () => {
-      const requirement = new BadgeRequirement(badgeRequirementDataFixture.create({ plaqueType: 'MONUMENT' }))
-      expect(requirement.plaqueType).toEqual('MONUMENT')
-    })
-
-    test('should be optional', () => {
-      const requirement = new BadgeRequirement(badgeRequirementDataFixture.omit('plaqueType').create())
-      expect(requirement.plaqueType).toBeUndefined()
-    })
-  })
-
-  describe('plaqueInscription', () => {
-    test('should be set from the data', () => {
-      const requirement = new BadgeRequirement(badgeRequirementDataFixture.create({ plaqueInscription: 'foo' }))
-      expect(requirement.plaqueInscription).toEqual('foo')
-    })
-
-    test('should be optional', () => {
-      const requirement = new BadgeRequirement(badgeRequirementDataFixture.omit('plaqueInscription').create())
-      expect(requirement.plaqueInscription).toBeUndefined()
-    })
-  })
-
-  describe('vidiotMapKey', () => {
-    test('should be set from the data', () => {
-      const requirement = new BadgeRequirement(badgeRequirementDataFixture.create({ vidiotMapKey: 'A1' }))
-      expect(requirement.vidiotMapKey).toEqual('A1')
-    })
-
-    test('should be optional', () => {
-      const requirement = new BadgeRequirement(badgeRequirementDataFixture.omit('vidiotMapKey').create())
-      expect(requirement.vidiotMapKey).toBeUndefined()
+      const requirement = new BadgeRequirement(badgeRequirementDataFixture.omit('location').create())
+      expect(requirement.location).toBeUndefined()
     })
   })
 
@@ -94,32 +46,27 @@ describe(BadgeRequirement.name, () => {
     })
   })
 
-  describe('missionName', () => {
+  describe('missionKey', () => {
     test('should be set from the data', () => {
-      const requirement = new BadgeRequirement(badgeRequirementDataFixture.create({ missionName: 'foo' }))
-      expect(requirement.missionName).toEqual('foo')
+      const requirement = new BadgeRequirement(badgeRequirementDataFixture.create({ missionKey: 'foo' }))
+      expect(requirement.missionKey).toEqual('foo')
     })
 
     test('should be optional', () => {
-      const requirement = new BadgeRequirement(badgeRequirementDataFixture.omit('missionName').create())
-      expect(requirement.missionName).toBeUndefined()
+      const requirement = new BadgeRequirement(badgeRequirementDataFixture.omit('missionKey').create())
+      expect(requirement.missionKey).toBeUndefined()
     })
   })
 
-  describe('contactKey', () => {
+  describe('monumentText', () => {
     test('should be set from the data', () => {
-      const requirement = new BadgeRequirement(badgeRequirementDataFixture.create({ contactKey: 'foo' }))
-      expect(requirement.contactKey).toEqual(['foo'])
-    })
-
-    test('should accept an array', () => {
-      const requirement = new BadgeRequirement(badgeRequirementDataFixture.create({ contactKey: ['foo', 'bar'] }))
-      expect(requirement.contactKey).toStrictEqual(['foo', 'bar'])
+      const requirement = new BadgeRequirement(badgeRequirementDataFixture.create({ monumentText: 'foo' }))
+      expect(requirement.monumentText).toEqual('foo')
     })
 
     test('should be optional', () => {
-      const requirement = new BadgeRequirement(badgeRequirementDataFixture.omit('contactKey').create())
-      expect(requirement.contactKey).toBeUndefined()
+      const requirement = new BadgeRequirement(badgeRequirementDataFixture.omit('monumentText').create())
+      expect(requirement.monumentText).toBeUndefined()
     })
   })
 
@@ -137,8 +84,8 @@ describe(BadgeRequirement.name, () => {
 
   describe('inventionTypes', () => {
     test('should be set from the data', () => {
-      const requirement = new BadgeRequirement(badgeRequirementDataFixture.create({ inventionTypes: ['ACCURACY', 'CONFUSE'] }))
-      expect(requirement.inventionTypes).toStrictEqual(['ACCURACY', 'CONFUSE'])
+      const requirement = new BadgeRequirement(badgeRequirementDataFixture.create({ inventionTypes: ['accuracy', 'confuse'] }))
+      expect(requirement.inventionTypes).toStrictEqual(['accuracy', 'confuse'])
     })
 
     test('should be optional', () => {
@@ -147,15 +94,15 @@ describe(BadgeRequirement.name, () => {
     })
   })
 
-  describe('inventionCount', () => {
+  describe('count', () => {
     test('should be set from the data', () => {
-      const requirement = new BadgeRequirement(badgeRequirementDataFixture.create({ inventionCount: 5 }))
-      expect(requirement.inventionCount).toEqual(5)
+      const requirement = new BadgeRequirement(badgeRequirementDataFixture.create({ count: 5 }))
+      expect(requirement.count).toEqual(5)
     })
 
     test('should be optional', () => {
-      const requirement = new BadgeRequirement(badgeRequirementDataFixture.omit('inventionCount').create())
-      expect(requirement.inventionCount).toBeUndefined()
+      const requirement = new BadgeRequirement(badgeRequirementDataFixture.omit('count').create())
+      expect(requirement.count).toBeUndefined()
     })
   })
 

@@ -1,5 +1,14 @@
-export const ALIGNMENT = ['H', 'V', 'P'] as const
+export const ALIGNMENT = ['hero', 'villain', 'praetorian'] as const
 export type Alignment = typeof ALIGNMENT[number]
+export type AlignmentExtended = Alignment
+  /**
+   * The alignments available for Primal Earth characters - Hero and Villain.
+   */
+  | 'primal'
+  /**
+   * All the alignments.
+   */
+  | 'all'
 
 const ALIGNMENT_ORDER = Object.fromEntries(ALIGNMENT.map((x, index) => [x, index]))
 

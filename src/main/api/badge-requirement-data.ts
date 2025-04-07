@@ -1,78 +1,59 @@
 import { EnhancementCategory } from './enhancement-category'
 import { BadgeRequirementType } from './badge-requirement-type'
-import { PlaqueType } from './plaque-type'
 import { MarkdownString } from './markdown-string'
 import { Link } from './link'
-import { Loc } from './loc'
+import { LocationData } from './location-data'
 
 export interface BadgeRequirementData {
   /**
-   * Key.
+   * Unique key used to reference this badge requirement.
+   *
+   * Keys must be unique and can only contain lowercase letters, numbers and hyphens (`-`).
    */
   readonly key: string
 
   /**
-   * Type of requirement.
+   * The requirement type.
    */
   readonly type: BadgeRequirementType
 
   /**
-   * Zone the requirement is located in.
+   * If the requirement involves a location, where it is.
    */
-  readonly zoneKey?: string
+  readonly location?: LocationData
 
   /**
-   * /loc coordinates.
-   */
-  readonly loc?: Loc
-
-  /**
-   * Is it a wall plaque or a physical monument?
-   */
-  readonly plaqueType?: PlaqueType
-
-  /**
-   * Plaque inscription.
-   */
-  readonly plaqueInscription?: string
-
-  /**
-   * The number or letter the plaque appears as on Vidiot Maps.
-   */
-  readonly vidiotMapKey?: string
-
-  /**
-   * The key of the badge for this requirement.
+   * If the requirement involves a badge, the badge key.
    */
   readonly badgeKey?: string
 
   /**
-   * Mission name.
+   * If the requirement involves a mission, the mission key.
    */
-  readonly missionName?: string
+  readonly missionKey?: string
 
   /**
-   * {@link Contact} key for the requirement contact(s).
+   * If the requirement involves a plaque or pedestal, the text that is displayed thereon.
    */
-  readonly contactKey?: string | string[]
+  readonly monumentText?: string
 
   /**
-   * Level of the invention required.
+   * If the requirement involves crafting an invention, the Level of the invention required.
    */
   readonly inventionLevel?: number
 
   /**
-   * The types of enhancements required to be crafted.
+   * If the requirement involves crafting an invention, the types of enhancements that will qualify.
    */
   readonly inventionTypes?: EnhancementCategory[]
 
   /**
-   * Number of invention crafts required.
+   * Number of times the task needs to be repeated.
    */
-  readonly inventionCount?: number
+  readonly count?: number
 
   /**
-   * Any additional notes.
+   * Additional information about the requirement.
    */
   readonly notes?: MarkdownString
 

@@ -18,8 +18,8 @@ describe(Badge.name, () => {
 
   describe('type', () => {
     test('should be set from the data', () => {
-      const badge = new Badge(badgeDataFixture.create({ type: 'ACHIEVEMENT' }))
-      expect(badge.type).toEqual('ACHIEVEMENT')
+      const badge = new Badge(badgeDataFixture.create({ type: 'achievement' }))
+      expect(badge.type).toEqual('achievement')
     })
   })
 
@@ -30,12 +30,22 @@ describe(Badge.name, () => {
     })
   })
 
-  describe('alignment', () => {
+  describe('morality', () => {
     test('should be set from the data', () => {
-      const badge = new Badge(badgeDataFixture.create({ alignment: ['H', 'V'] }))
-      expect(badge.alignment.hero).toBeTruthy()
-      expect(badge.alignment.villain).toBeTruthy()
-      expect(badge.alignment.praetorian).toBeFalsy()
+      const badge = new Badge(badgeDataFixture.create({ morality: ['hero', 'villain'] }))
+      expect(badge.morality.hero).toBeTruthy()
+      expect(badge.morality.villain).toBeTruthy()
+    })
+
+    test('should accept a single string', () => {
+      const badge = new Badge(badgeDataFixture.create({ morality: 'hero' }))
+      expect(badge.morality.hero).toBeTruthy()
+      expect(badge.morality.villain).toBeFalsy()
+    })
+
+    test('should be optional, defaulting to all', () => {
+      const badge = new Badge(badgeDataFixture.omit('morality').create())
+      expect(badge.morality.all).toBeTruthy()
     })
   })
 
@@ -99,35 +109,6 @@ describe(Badge.name, () => {
     })
   })
 
-  describe('zoneKey', () => {
-    test('should be set from the data', () => {
-      const badge = new Badge(badgeDataFixture.create({ zoneKey: 'foo' }))
-      expect(badge.zoneKey).toEqual('foo')
-    })
-
-    test('should be optional', () => {
-      const badge = new Badge(badgeDataFixture.omit('zoneKey').create())
-      expect(badge.zoneKey).toBeUndefined()
-    })
-  })
-
-  describe('loc', () => {
-    test('should be set from the data', () => {
-      const badge = new Badge(badgeDataFixture.create({ loc: [1, 2, 3] }))
-      expect(badge.loc).toStrictEqual([[1, 2, 3]])
-    })
-
-    test('should accept an array', () => {
-      const badge = new Badge(badgeDataFixture.create({ loc: [[1, 2, 3], [4, 5, 6]] }))
-      expect(badge.loc).toStrictEqual([[1, 2, 3], [4, 5, 6]])
-    })
-
-    test('should be optional', () => {
-      const badge = new Badge(badgeDataFixture.omit('loc').create())
-      expect(badge.loc).toBeUndefined()
-    })
-  })
-
   describe('effect', () => {
     test('should be set from the data', () => {
       const badge = new Badge(badgeDataFixture.create({ effect: 'foo' }))
@@ -154,13 +135,18 @@ describe(Badge.name, () => {
 
   describe('setTitle', () => {
     test('should be set from the data', () => {
-      const badge = new Badge(badgeDataFixture.create({ setTitle: { id: 123, praetorianId: 456 } }))
-      expect(badge.setTitle).toStrictEqual({ id: 123, praetorianId: 456 })
+      const badge = new Badge(badgeDataFixture.create({ setTitleId: [123, 456] }))
+      expect(badge.setTitleId).toStrictEqual([123, 456])
+    })
+
+    test('should treat the praetorian id as optional', () => {
+      const badge = new Badge(badgeDataFixture.create({ setTitleId: [123] }))
+      expect(badge.setTitleId).toStrictEqual([123])
     })
 
     test('should be optional', () => {
-      const badge = new Badge(badgeDataFixture.omit('setTitle').create())
-      expect(badge.setTitle).toBeUndefined()
+      const badge = new Badge(badgeDataFixture.omit('setTitleId').create())
+      expect(badge.setTitleId).toBeUndefined()
     })
   })
 
@@ -207,7 +193,72 @@ describe(Badge.name, () => {
     })
   })
 
-  describe('compareByName', () => {
+  describe('zoneKeys', () => {
+    test(`should return the list of keys`, () => {
+      const badge = new Badge(badgeDataFixture.create({
+        requirements: [
+          badgeRequirementDataFixture.create({ location: { zoneKey: 'a' } }),
+          badgeRequirementDataFixture.create({ location: { zoneKey: 'c' } }),
+          badgeRequirementDataFixture.create({ location: { zoneKey: 'b' } }),
+          badgeRequirementDataFixture.create({ location: { zoneKey: 'c' } }),
+        ],
+      }))
+      expect(badge.zoneKeys).toStrictEqual(['a', 'c', 'b'])
+    })
+
+    test(`should return undefined if there no zones`, () => {
+      const badge = new Badge(badgeDataFixture.create({
+        requirements: [
+          badgeRequirementDataFixture.omit('location').create(),
+        ],
+      }))
+      expect(badge.zoneKey).toBeUndefined()
+    })
+
+    test(`should ignore requirements with no location`, () => {
+      const badge = new Badge(badgeDataFixture.create({
+        requirements: [
+          badgeRequirementDataFixture.create({ location: { zoneKey: 'a' } }),
+          badgeRequirementDataFixture.create({ location: { zoneKey: 'c' } }),
+          badgeRequirementDataFixture.omit('location').create(),
+          badgeRequirementDataFixture.create({ location: { zoneKey: 'c' } }),
+        ],
+      }))
+      expect(badge.zoneKeys).toStrictEqual(['a', 'c'])
+    })
+  })
+
+  describe('zoneKey', () => {
+    test(`should return the key for a single zone`, () => {
+      const badge = new Badge(badgeDataFixture.create({
+        requirements: [
+          badgeRequirementDataFixture.create({ location: { zoneKey: 'a' } }),
+        ],
+      }))
+      expect(badge.zoneKey).toBe('a')
+    })
+
+    test(`should return undefined if there no zones`, () => {
+      const badge = new Badge(badgeDataFixture.create({
+        requirements: [
+          badgeRequirementDataFixture.omit('location').create(),
+        ],
+      }))
+      expect(badge.zoneKey).toBeUndefined()
+    })
+
+    test(`should return undefined if there are multiple zones`, () => {
+      const badge = new Badge(badgeDataFixture.create({
+        requirements: [
+          badgeRequirementDataFixture.create({ location: { zoneKey: 'a' } }),
+          badgeRequirementDataFixture.create({ location: { zoneKey: 'c' } }),
+        ],
+      }))
+      expect(badge.zoneKey).toBeUndefined()
+    })
+  })
+
+  describe(compareByDefaultName.name, () => {
     test(`should compare two badges by name`, () => {
       const badgeA = new Badge(badgeDataFixture.create({ name: 'A' }))
       const badgeB = new Badge(badgeDataFixture.create({ name: 'B' }))
@@ -235,29 +286,62 @@ describe(Badge.name, () => {
     })
   })
 
-  describe('compareByZoneKey', () => {
+  describe(compareByZoneKey.name, () => {
     test(`should compare two badges by zoneKey`, () => {
-      const badgeA = new Badge(badgeDataFixture.create({ zoneKey: 'A' }))
-      const badgeB = new Badge(badgeDataFixture.create({ zoneKey: 'B' }))
+      const badgeA = new Badge(badgeDataFixture.create({
+        requirements: [
+          badgeRequirementDataFixture.create({ location: { zoneKey: 'a' } }),
+        ],
+      }))
+      const badgeB = new Badge(badgeDataFixture.create({
+        requirements: [
+          badgeRequirementDataFixture.create({ location: { zoneKey: 'b' } }),
+        ],
+      }))
       expect(compareByZoneKey(badgeA, badgeB)).toBeLessThan(0)
       expect([badgeB, badgeA].sort(compareByZoneKey)).toStrictEqual([badgeA, badgeB])
     })
 
     test(`should return 0 for equal zoneKeys`, () => {
-      const badgeA = new Badge(badgeDataFixture.create({ zoneKey: 'A' }))
-      const badgeB = new Badge(badgeDataFixture.create({ zoneKey: 'A' }))
+      const badgeA = new Badge(badgeDataFixture.create({
+        requirements: [
+          badgeRequirementDataFixture.create({ location: { zoneKey: 'a' } }),
+        ],
+      }))
+      const badgeB = new Badge(badgeDataFixture.create({
+        requirements: [
+          badgeRequirementDataFixture.create({ location: { zoneKey: 'a' } }),
+        ],
+      }))
       expect(compareByZoneKey(badgeA, badgeB)).toEqual(0)
     })
 
-    test(`should compare two undefined values`, () => {
-      const badgeA = new Badge(badgeDataFixture.omit('zoneKey').create())
-      const badgeB = new Badge(badgeDataFixture.omit('zoneKey').create())
+    test(`should equate two undefined values`, () => {
+      const badgeA = new Badge(badgeDataFixture.create({
+        requirements: [
+          badgeRequirementDataFixture.omit('location').create(),
+        ],
+      }))
+      const badgeB = new Badge(badgeDataFixture.create({
+        requirements: [
+          badgeRequirementDataFixture.omit('location').create(),
+        ],
+      }))
       expect(compareByZoneKey(badgeA, badgeB)).toEqual(0)
     })
 
-    test(`should sort undefined values last`, () => {
-      const badgeA = new Badge(badgeDataFixture.create({ zoneKey: 'A' }))
-      const badgeB = new Badge(badgeDataFixture.omit('zoneKey').create())
+    test(`should sort badges with multiple values last`, () => {
+      const badgeA = new Badge(badgeDataFixture.create({
+        requirements: [
+          badgeRequirementDataFixture.create({ location: { zoneKey: 'a' } }),
+        ],
+      }))
+      const badgeB = new Badge(badgeDataFixture.create({
+        requirements: [
+          badgeRequirementDataFixture.create({ location: { zoneKey: 'b' } }),
+          badgeRequirementDataFixture.create({ location: { zoneKey: 'c' } }),
+        ],
+      }))
       expect([badgeA, badgeB].sort(compareByZoneKey)).toStrictEqual([badgeA, badgeB])
       expect([badgeB, badgeA].sort(compareByZoneKey)).toStrictEqual([badgeA, badgeB])
     })

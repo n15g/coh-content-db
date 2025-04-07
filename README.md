@@ -35,9 +35,9 @@ import { BadgeData } from 'coh-content-db'
 
 export const TEST_BADGE: BadgeData = {
     key: 'test-badge',
-    type: 'ACHIEVEMENT',
-    name: [{ value: 'Test Badge' }, { alignment: 'P', value: 'My Badge for Praetorians' }],
-    alignment: ['H', 'V', 'P'],
+    type: 'achievement',
+    name: [{ value: 'Test Badge' }, { alignment: 'praetorian', value: 'My Badge for Praetorians' }],
+    alignment: ['hero', 'praetorian'],
 }
 ```
 

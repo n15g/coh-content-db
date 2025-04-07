@@ -4,6 +4,7 @@ import { archetypeDataFixture } from '../api/archetype-data.fixture'
 import { badgeDataFixture } from '../api/badge-data.fixture'
 import { zoneDataFixture } from '../api/zone-data.fixture'
 import { contactDataFixture } from '../api/contact-data.fixture'
+import { missionDataFixture } from '../api/mission-data.fixture'
 
 describe(CohContentDatabase.name, () => {
   test('should load a basic bundle', () => {
@@ -107,6 +108,25 @@ describe(CohContentDatabase.name, () => {
     })
   })
 
+  describe('missions', () => {
+    test(`should throw an error on duplicate mission`, () => {
+      const data = contentBundleFixture.create({
+        missions: [
+          missionDataFixture.create({ key: 'foo' }),
+          missionDataFixture.create({ key: 'foo' }),
+        ],
+      })
+      expect(() => new CohContentDatabase(data)).toThrow(`Duplicate mission key 'foo'`)
+    })
+
+    test(`should accept an undefined field`, () => {
+      const data = contentBundleFixture
+        .omit('missions')
+        .create()
+      expect(new CohContentDatabase(data).missions).toHaveLength(0)
+    })
+  })
+
   describe('getArchetype', () => {
     test(`should retrieve archetype from the index`, () => {
       const data = contentBundleFixture.create({
@@ -161,6 +181,25 @@ describe(CohContentDatabase.name, () => {
 
     test(`should return undefined for undefined key`, () => {
       expect(new CohContentDatabase(contentBundleFixture.create({ contacts: [] })).getContact()).toBeUndefined()
+    })
+  })
+
+  describe('getMission', () => {
+    test(`should retrieve mission from the index`, () => {
+      const data = contentBundleFixture.create({
+        missions: [missionDataFixture.create({ key: 'foo' })],
+      })
+
+      expect(new CohContentDatabase(data).getMission('foo')).not.toBeUndefined()
+    })
+
+    test(`should return undefined for unknown mission`, () => {
+      const data = contentBundleFixture.create({ missions: [] })
+      expect(new CohContentDatabase(data).getMission('foo')).toBeUndefined()
+    })
+
+    test(`should return undefined for undefined key`, () => {
+      expect(new CohContentDatabase(contentBundleFixture.create({ missions: [] })).getMission()).toBeUndefined()
     })
   })
 
