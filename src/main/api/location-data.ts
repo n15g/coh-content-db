@@ -1,5 +1,5 @@
 export interface LocationData {
-  readonly zoneKey: string
+  readonly zoneKey?: string
   readonly coords?: Coords
 }
 

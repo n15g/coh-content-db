@@ -1,7 +1,7 @@
 import { Coords, LocationData } from '../api/location-data'
 
 export class Location {
-  readonly zoneKey: string
+  readonly zoneKey?: string
   readonly coords?: Coords
 
   constructor(data: LocationData) {
