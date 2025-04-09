@@ -15,17 +15,17 @@ describe(Mission.name, () => {
     })
   })
 
-  describe('type', () => {
-    test(`should be set from the data`, () => {
-      const mission = new Mission(missionDataFixture.create({ type: 'story-arc' }))
-      expect(mission.type).toEqual('story-arc')
-    })
-  })
-
   describe('name', () => {
     test(`should be set from the data`, () => {
       const mission = new Mission(missionDataFixture.create({ name: 'Foo' }))
       expect(mission.name).toEqual('Foo')
+    })
+  })
+
+  describe('type', () => {
+    test(`should be set from the data`, () => {
+      const mission = new Mission(missionDataFixture.create({ type: 'story-arc' }))
+      expect(mission.type).toEqual('story-arc')
     })
   })
 

@@ -12,16 +12,16 @@ export interface MissionData {
   readonly key: string
 
   /**
-   * The type of mission... Story arc, task force, trial, etc.
-   */
-  readonly type: MissionType
-
-  /**
    * The name of the mission as it appears from the contact.
    *
    * The name may be different when viewed in Ouroboros as a Flashback.
    */
   readonly name: string
+
+  /**
+   * The type of mission... Story arc, task force, trial, etc.
+   */
+  readonly type: MissionType
 
   /**
    * The character moralities that may accept the mission.
