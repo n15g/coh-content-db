@@ -25,7 +25,20 @@ describe(BadgeRequirement.name, () => {
   describe('location', () => {
     test('should be set from the data', () => {
       const requirement = new BadgeRequirement(badgeRequirementDataFixture.create({ location: { zoneKey: 'foo', coords: [1, 2, 3] } }))
-      expect(requirement.location).toStrictEqual({ zoneKey: 'foo', coords: [1, 2, 3] })
+      expect(requirement.location).toStrictEqual([{ zoneKey: 'foo', coords: [1, 2, 3] }])
+    })
+
+    test('should accept an array', () => {
+      const requirement = new BadgeRequirement(badgeRequirementDataFixture.create({
+        location: [
+          { zoneKey: 'foo', coords: [1, 2, 3] },
+          { zoneKey: 'bar', coords: [4, 5, 6] },
+        ],
+      }))
+      expect(requirement.location).toStrictEqual([
+        { zoneKey: 'foo', coords: [1, 2, 3] },
+        { zoneKey: 'bar', coords: [4, 5, 6] },
+      ])
     })
 
     test('should be optional', () => {

@@ -20,7 +20,7 @@ export interface BadgeRequirementData {
   /**
    * If the requirement involves a location, where it is.
    */
-  readonly location?: LocationData
+  readonly location?: LocationData | LocationData[]
 
   /**
    * If the requirement involves a badge, the badge key.

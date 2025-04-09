@@ -5,6 +5,7 @@ import { Key } from './key'
 import { MarkdownString } from '../api/markdown-string'
 import { Link } from '../api/link'
 import { Location } from './location'
+import { coalesceToArray } from '../util'
 
 export class BadgeRequirement {
   /**
@@ -22,7 +23,7 @@ export class BadgeRequirement {
   /**
    * If the requirement involves a location, where it is.
    */
-  readonly location?: Location
+  readonly location?: Location[]
 
   /**
    * If the requirement involves a badge, the badge key.
@@ -72,7 +73,7 @@ export class BadgeRequirement {
   constructor(data: BadgeRequirementData) {
     this.key = new Key(data.key).value
     this.type = data.type
-    this.location = data.location
+    this.location = coalesceToArray(data.location)
     this.badgeKey = data.badgeKey
     this.missionKey = data.missionKey
     this.vidiotMapKey = data.vidiotMapKey

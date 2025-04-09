@@ -108,7 +108,7 @@ export function zoneLink(target: string | Zone | ZoneData): string {
  *
  * Arrays are returned as-is.
  * Single values are returned as a single-value array.
- * Undefined values are returned as an empty array.
+ * Undefined values are returned as undefined.
  *
  * @param value The value to coalesce.
  */

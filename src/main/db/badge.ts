@@ -100,7 +100,10 @@ export class Badge {
       if (this.#requirementsIndex[requirementData.key]) throw new Error(`Duplicate badge requirement key [${badgeData.key}:${requirementData.key}]`)
       const requirement = new BadgeRequirement(requirementData)
       this.#requirementsIndex[requirement.key] = requirement
-      if (requirement.location?.zoneKey) this.#zoneKeys.add(requirement.location?.zoneKey)
+      if (requirement.location?.length === 1) {
+        const zoneKey = requirement.location[0]?.zoneKey
+        if (zoneKey) this.#zoneKeys.add(zoneKey)
+      }
       return requirement
     })
   }
