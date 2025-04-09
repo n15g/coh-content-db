@@ -121,18 +121,6 @@ describe(Badge.name, () => {
     })
   })
 
-  describe('vidiotMapKey', () => {
-    test('should be set from the data', () => {
-      const badge = new Badge(badgeDataFixture.create({ vidiotMapKey: 'foo' }))
-      expect(badge.vidiotMapKey).toEqual('foo')
-    })
-
-    test('should be optional', () => {
-      const badge = new Badge(badgeDataFixture.omit('vidiotMapKey').create())
-      expect(badge.vidiotMapKey).toBeUndefined()
-    })
-  })
-
   describe('setTitle', () => {
     test('should be set from the data', () => {
       const badge = new Badge(badgeDataFixture.create({ setTitleId: [123, 456] }))

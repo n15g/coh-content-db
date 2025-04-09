@@ -59,11 +59,6 @@ export interface BadgeData {
   readonly links?: Link[]
 
   /**
-   * For plaques that appear on a Vidiot Map, the number or letter the badge appears as.
-   */
-  readonly vidiotMapKey?: string
-
-  /**
    * The id used with the in-game `/settitle` command to apply the badge.
    * The first value is the id for primal characters and the (optional) second number is the id for praetorian characters.
    */

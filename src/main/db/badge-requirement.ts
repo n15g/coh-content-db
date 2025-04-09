@@ -35,6 +35,11 @@ export class BadgeRequirement {
   readonly missionKey?: string
 
   /**
+   * If this requirement appears as an icon on a Vidiot Map, the number or letter of the icon.
+   */
+  readonly vidiotMapKey?: string
+
+  /**
    * If the requirement involves a plaque or pedestal, the text that is displayed thereon.
    */
   readonly monumentText?: string
@@ -70,6 +75,7 @@ export class BadgeRequirement {
     this.location = data.location
     this.badgeKey = data.badgeKey
     this.missionKey = data.missionKey
+    this.vidiotMapKey = data.vidiotMapKey
     this.monumentText = data.monumentText
     this.inventionLevel = data.inventionLevel
     this.inventionTypes = data.inventionTypes
