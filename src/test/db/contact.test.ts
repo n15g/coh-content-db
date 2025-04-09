@@ -36,25 +36,13 @@ describe(Contact.name, () => {
 
   describe('zoneKey', () => {
     test(`should be set from the data`, () => {
-      const contact = new Contact(contactDataFixture.create({ zoneKey: 'foo' }))
-      expect(contact.zoneKey).toEqual('foo')
+      const contact = new Contact(contactDataFixture.create({ location: { zoneKey: 'atlas-park', coords: [1, -2, 3.5] } }))
+      expect(contact.location).toEqual({ zoneKey: 'atlas-park', coords: [1, -2, 3.5] })
     })
 
     test(`should be optional`, () => {
-      const contact = new Contact(contactDataFixture.omit('zoneKey').create())
-      expect(contact.zoneKey).toBeUndefined()
-    })
-  })
-
-  describe('loc', () => {
-    test(`should be set from the data`, () => {
-      const contact = new Contact(contactDataFixture.create({ loc: [1, 2, 3] }))
-      expect(contact.loc).toStrictEqual([1, 2, 3])
-    })
-
-    test(`should be optional`, () => {
-      const contact = new Contact(contactDataFixture.omit('loc').create())
-      expect(contact.loc).toBeUndefined()
+      const contact = new Contact(contactDataFixture.omit('location').create())
+      expect(contact.location).toBeUndefined()
     })
   })
 

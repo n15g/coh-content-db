@@ -2,6 +2,7 @@ import { Link } from '../api/link'
 import { Key } from './key'
 import { MarkdownString } from '../api/markdown-string'
 import { ContactData } from '../api/contact-data'
+import { Location } from './location'
 
 export class Contact {
   /**
@@ -22,14 +23,9 @@ export class Contact {
   readonly title?: string
 
   /**
-   * The zone this character is located in.
+   * The location of this contact.
    */
-  readonly zoneKey?: string
-
-  /**
-   * The `/loc` coordinates of the contact.
-   */
-  readonly loc?: [number, number, number]
+  readonly location?: Location
 
   /**
    * The level range this contact will offer missions for.
@@ -50,8 +46,7 @@ export class Contact {
     this.key = new Key(contactData.key).value
     this.name = contactData.name
     this.title = contactData.title
-    this.zoneKey = contactData.zoneKey
-    this.loc = contactData.loc
+    this.location = contactData.location
     this.levelRange = contactData.levelRange
     this.notes = contactData.notes
     this.links = contactData.links ?? []

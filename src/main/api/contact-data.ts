@@ -1,5 +1,6 @@
 import { Link } from './link'
 import { MarkdownString } from './markdown-string'
+import { LocationData } from './location-data'
 
 export interface ContactData {
   /**
@@ -20,14 +21,9 @@ export interface ContactData {
   readonly title?: string
 
   /**
-   * The zone this character is located in.
+   * The location of this contact.
    */
-  readonly zoneKey?: string
-
-  /**
-   * The `/loc` coordinates of the contact.
-   */
-  readonly loc?: [number, number, number]
+  readonly location?: LocationData
 
   /**
    * The level range this contact will offer missions for.
