@@ -16,13 +16,9 @@ export const BADGE_REQUIREMENT_TYPE = [
    */
   'location',
   /**
-   * Click on a wall plaque.
+   * Click on a monument.
    */
-  'plaque',
-  /**
-   * Click on a pedestal.
-   */
-  'pedestal',
+  'monument',
   /**
    * Complete a mission.
    */

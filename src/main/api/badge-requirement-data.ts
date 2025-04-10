@@ -33,12 +33,7 @@ export interface BadgeRequirementData {
   readonly missionKey?: string
 
   /**
-   * If this requirement appears as an icon on a Vidiot Map, the number or letter of the icon.
-   */
-  readonly vidiotMapKey?: string
-
-  /**
-   * If the requirement involves a plaque or pedestal, the text that is displayed thereon.
+   * If the requirement involves a monument, the text that is displayed thereon.
    */
   readonly monumentText?: string
 

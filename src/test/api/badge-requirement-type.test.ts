@@ -16,7 +16,7 @@ describe('BADGE_REQUIREMENT_TYPE', () => {
   })
 
   test('should contain all known badge requirement types', () => {
-    const expected = ['plaque', 'badge', 'invention', 'invention-plus-one']
+    const expected = ['badge', 'invention', 'invention-plus-one', 'location', 'monument', 'mission', 'task']
     for (const category of expected) {
       expect(BADGE_REQUIREMENT_TYPE).toContain(category)
     }
@@ -25,7 +25,7 @@ describe('BADGE_REQUIREMENT_TYPE', () => {
 
 describe('BadgeRequirementType', () => {
   test('should be a usable type', () => {
-    const field: BadgeRequirementType = 'plaque'
-    expect(field).toBe('plaque')
+    const field: BadgeRequirementType = 'monument'
+    expect(field).toBe('monument')
   })
 })

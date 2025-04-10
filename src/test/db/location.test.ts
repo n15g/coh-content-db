@@ -24,4 +24,28 @@ describe(Location.name, () => {
       expect(location.coords).toBeUndefined()
     })
   })
+
+  describe('icon', () => {
+    test(`should be set from the data`, () => {
+      const location = new Location({ icon: 'plaque' })
+      expect(location.icon).toBe('plaque')
+    })
+
+    test(`should be optional`, () => {
+      const location = new Location({})
+      expect(location.icon).toBeUndefined()
+    })
+  })
+
+  describe('iconText', () => {
+    test(`should be set from the data`, () => {
+      const location = new Location({ iconText: '1' })
+      expect(location.iconText).toBe('1')
+    })
+
+    test(`should be optional`, () => {
+      const location = new Location({})
+      expect(location.iconText).toBeUndefined()
+    })
+  })
 })

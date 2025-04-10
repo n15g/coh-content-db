@@ -71,18 +71,6 @@ describe(BadgeRequirement.name, () => {
     })
   })
 
-  describe('vidiotMapKey', () => {
-    test('should be set from the data', () => {
-      const requirement = new BadgeRequirement(badgeRequirementDataFixture.create({ vidiotMapKey: 'foo' }))
-      expect(requirement.vidiotMapKey).toEqual('foo')
-    })
-
-    test('should be optional', () => {
-      const requirement = new BadgeRequirement(badgeRequirementDataFixture.omit('vidiotMapKey').create())
-      expect(requirement.vidiotMapKey).toBeUndefined()
-    })
-  })
-
   describe('monumentText', () => {
     test('should be set from the data', () => {
       const requirement = new BadgeRequirement(badgeRequirementDataFixture.create({ monumentText: 'foo' }))

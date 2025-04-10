@@ -70,7 +70,7 @@ export interface BadgeData {
   readonly effect?: MarkdownString
 
   /**
-   * Represents the requirements for badges with multiple fulfillment steps, such as visiting plaques for history badges, completing missions, or collecting other badges.
+   * Represents the requirements for badges with multiple fulfillment steps, such as visiting monuments for history badges, completing missions, or collecting other badges.
    */
   readonly requirements?: BadgeRequirementData[]
 
