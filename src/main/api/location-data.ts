@@ -25,4 +25,4 @@ export interface LocationData {
  */
 export type Coords = [number, number, number]
 
-export type LocationIcon = 'badge' | 'plaque' | 'pedestal'
+export type LocationIcon = 'badge' | 'plaque' | 'pedestal' | 'object'
