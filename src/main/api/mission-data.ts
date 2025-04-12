@@ -77,11 +77,6 @@ export interface MissionFlashbackData {
   readonly morality?: MoralityExtended | MoralityExtended[]
 
   /**
-   * The contact for the mission during the Flashback.
-   */
-  readonly contactKey?: string
-
-  /**
    * Freeform notes or tips about the Flashback version of the mission.
    */
   readonly notes?: MarkdownString

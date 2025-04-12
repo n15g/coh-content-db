@@ -77,11 +77,6 @@ export class Mission {
     readonly morality?: MoralityList
 
     /**
-     * The contact for the mission during the Flashback.
-     */
-    readonly contactKey?: string
-
-    /**
      * Freeform notes or tips about the Flashback version of the mission.
      */
     readonly notes?: MarkdownString
@@ -107,7 +102,6 @@ function createFlashback(data: MissionData): Mission['flashback'] {
     levelRange: data.flashback.levelRange ?? data.levelRange,
     name: data.flashback.name ?? data.name,
     morality: new MoralityList(coalesceToArray(data.flashback.morality ?? data.morality)),
-    contactKey: data.flashback.contactKey,
     notes: data.flashback.notes,
   }
 }

@@ -156,18 +156,6 @@ describe(Mission.name, () => {
       })
     })
 
-    describe('contactKey', () => {
-      test(`should be set from the data`, () => {
-        const mission = new Mission(missionDataFixture.create({ flashback: { contactKey: 'foo' } }))
-        expect(mission.flashback?.contactKey).toStrictEqual('foo')
-      })
-
-      test(`should be optional`, () => {
-        const mission = new Mission(missionDataFixture.create({ flashback: missionFlashbackDataFixture.omit('contactKey').create() }))
-        expect(mission.flashback?.contactKey).toBeUndefined()
-      })
-    })
-
     describe('notes', () => {
       test(`should be set from the data`, () => {
         const mission = new Mission(missionDataFixture.create({ flashback: { notes: 'foo' } }))
