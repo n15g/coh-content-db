@@ -1,6 +1,7 @@
 import { Link } from './link'
 import { MarkdownString } from './markdown-string'
 import { LocationData } from './location-data'
+import { MoralityExtended } from './morality'
 
 export interface ContactData {
   /**
@@ -19,6 +20,11 @@ export interface ContactData {
    * The contact's title.
    */
   readonly title?: string
+
+  /**
+   * The character moralities that this contact will interact with.
+   */
+  readonly morality?: MoralityExtended | MoralityExtended[]
 
   /**
    * The location of this contact.

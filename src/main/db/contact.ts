@@ -3,6 +3,8 @@ import { Key } from './key'
 import { MarkdownString } from '../api/markdown-string'
 import { ContactData } from '../api/contact-data'
 import { Location } from './location'
+import { MoralityList } from './morality-list'
+import { coalesceToArray } from '../util'
 
 export class Contact {
   /**
@@ -21,6 +23,11 @@ export class Contact {
    * The contact's title.
    */
   readonly title?: string
+
+  /**
+   * The character moralities that this contact will interact with.
+   */
+  readonly morality?: MoralityList
 
   /**
    * The location of this contact.
@@ -42,13 +49,14 @@ export class Contact {
    */
   readonly links: Link[]
 
-  constructor(contactData: ContactData) {
-    this.key = new Key(contactData.key).value
-    this.name = contactData.name
-    this.title = contactData.title
-    this.location = contactData.location
-    this.levelRange = contactData.levelRange
-    this.notes = contactData.notes
-    this.links = contactData.links ?? []
+  constructor(data: ContactData) {
+    this.key = new Key(data.key).value
+    this.name = data.name
+    this.title = data.title
+    this.morality = new MoralityList(coalesceToArray(data.morality))
+    this.location = data.location
+    this.levelRange = data.levelRange
+    this.notes = data.notes
+    this.links = data.links ?? []
   }
 }

@@ -34,6 +34,19 @@ describe(Contact.name, () => {
     })
   })
 
+  describe('morality', () => {
+    test(`should be set from the data`, () => {
+      const contact = new Contact(contactDataFixture.create({ morality: ['hero'] }))
+      expect(contact.morality?.hero).toBeTruthy()
+      expect(contact.morality?.vigilante).toBeFalsy()
+    })
+
+    test(`should be optional`, () => {
+      const contact = new Contact(contactDataFixture.omit('morality').create())
+      expect(contact.morality?.all).toBeTruthy()
+    })
+  })
+
   describe('zoneKey', () => {
     test(`should be set from the data`, () => {
       const contact = new Contact(contactDataFixture.create({ location: { zoneKey: 'atlas-park', coords: [1, -2, 3.5] } }))
