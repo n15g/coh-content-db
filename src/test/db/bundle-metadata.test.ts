@@ -64,4 +64,21 @@ describe(BundleMetadata.name, () => {
       expect(bundle.changelog).toHaveLength(0)
     })
   })
+
+  describe('version', () => {
+    test(`should be read from the latest changelog entry`, () => {
+      const bundle = new BundleMetadata(contentBundleFixture.create({
+        changelog: [
+          { version: 'foo', date: new Date('2025-03-12'), description: 'Foo' },
+          { version: 'latest', date: new Date('2025-04-12'), description: 'Bar' },
+        ],
+      }))
+      expect(bundle.version).toBe('latest')
+    })
+
+    test(`should be undefined if there is no changelog`, () => {
+      const bundle = new BundleMetadata(contentBundleFixture.omit('changelog').create())
+      expect(bundle.version).toBeUndefined()
+    })
+  })
 })

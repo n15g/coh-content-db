@@ -7,231 +7,316 @@ import { contactDataFixture } from '../api/contact-data.fixture'
 import { missionDataFixture } from '../api/mission-data.fixture'
 
 describe(CohContentDatabase.name, () => {
-  test('should load a basic bundle', () => {
-    new CohContentDatabase(contentBundleFixture.create())
+  describe('load', () => {
+    test('should load a basic bundle', () => {
+      const database = new CohContentDatabase()
+      database.load(contentBundleFixture.create())
+    })
+
+    test('should reset the database if load is called again', () => {
+      const database = new CohContentDatabase()
+      database.load(contentBundleFixture.create({
+        name: 'Metadata',
+        servers: ['Test'],
+        archetypes: [archetypeDataFixture.create()],
+        zones: [zoneDataFixture.create()],
+        contacts: [contactDataFixture.create()],
+        missions: [missionDataFixture.create()],
+        badges: [badgeDataFixture.create()],
+      }))
+
+      expect(database.metadata?.name).toEqual('Metadata')
+      expect(database.servers).toHaveLength(1)
+      expect(database.archetypes).toHaveLength(1)
+      expect(database.zones).toHaveLength(1)
+      expect(database.contacts).toHaveLength(1)
+      expect(database.missions).toHaveLength(1)
+      expect(database.badges).toHaveLength(1)
+
+      database.load(contentBundleFixture.create({ name: 'Reset' }))
+      expect(database.metadata?.name).toEqual('Reset')
+      expect(database.servers).toHaveLength(0)
+      expect(database.archetypes).toHaveLength(0)
+      expect(database.zones).toHaveLength(0)
+      expect(database.contacts).toHaveLength(0)
+      expect(database.missions).toHaveLength(0)
+      expect(database.badges).toHaveLength(0)
+    })
+  })
+
+  describe('metadata', () => {
+    test(`should hby undefined if not initialized`, () => {
+      const database = new CohContentDatabase()
+      expect(database.metadata).toBeUndefined()
+    })
+
+    test(`should load values from bundle`, () => {
+      const database = new CohContentDatabase()
+      database.load(contentBundleFixture
+        .create({ name: 'Metadata' }))
+
+      expect(database.metadata?.name).toBe('Metadata')
+    })
   })
 
   describe('servers', () => {
     test(`should accept an undefined field`, () => {
-      const data = contentBundleFixture
+      const database = new CohContentDatabase()
+      database.load(contentBundleFixture
         .omit('servers')
-        .create()
-      expect(new CohContentDatabase(data).servers).toHaveLength(0)
+        .create())
+
+      expect(database.servers).toHaveLength(0)
+    })
+
+    test(`should be empty if uninitialized`, () => {
+      const database = new CohContentDatabase()
+      expect(database.servers).toHaveLength(0)
     })
 
     test(`should load values from bundle`, () => {
-      const data = contentBundleFixture
-        .create({ servers: ['Foo', 'Bar'] })
-      expect(new CohContentDatabase(data).servers).toStrictEqual(['Foo', 'Bar'])
+      const database = new CohContentDatabase()
+      database.load(contentBundleFixture
+        .create({ servers: ['Foo', 'Bar'] }))
+
+      expect(database.servers).toStrictEqual(['Foo', 'Bar'])
     })
   })
 
   describe('archetypes', () => {
     test(`should throw an error on duplicate key`, () => {
-      const data = contentBundleFixture.create({
+      const database = new CohContentDatabase()
+      expect(() => database.load(contentBundleFixture.create({
         archetypes: [
           archetypeDataFixture.create({ key: 'foo' }),
           archetypeDataFixture.create({ key: 'foo' }),
         ],
-      })
-      expect(() => new CohContentDatabase(data)).toThrow(`Duplicate archetype key 'foo'`)
+      }))).toThrow(`Duplicate key [foo]`)
     })
 
     test(`should accept an undefined field`, () => {
-      const data = contentBundleFixture
+      const database = new CohContentDatabase()
+      database.load(contentBundleFixture
         .omit('archetypes')
-        .create()
-      expect(new CohContentDatabase(data).archetypes).toHaveLength(0)
+        .create())
+      expect(database.archetypes).toHaveLength(0)
     })
 
     test(`should load data from bundle`, () => {
-      const data = contentBundleFixture
-        .create({ archetypes: [archetypeDataFixture.create({ key: 'foo' })] })
-      expect(new CohContentDatabase(data).getArchetype('foo')).not.toBeUndefined()
+      const database = new CohContentDatabase()
+      database.load(contentBundleFixture
+        .create({ archetypes: [archetypeDataFixture.create({ key: 'foo' })] }))
+      expect(database.getArchetype('foo')).not.toBeUndefined()
     })
   })
 
   describe('badges', () => {
     test(`should throw an error on duplicate key`, () => {
-      const data = contentBundleFixture.create({
+      const database = new CohContentDatabase()
+      expect(() => database.load(contentBundleFixture.create({
         badges: [
           badgeDataFixture.create({ key: 'foo' }),
           badgeDataFixture.create({ key: 'foo' }),
         ],
-      })
-      expect(() => new CohContentDatabase(data)).toThrow('Duplicate badge key [foo]')
+      }))).toThrow('Duplicate key [foo]')
     })
 
     test(`should accept an undefined field`, () => {
-      const data = contentBundleFixture
+      const database = new CohContentDatabase()
+      database.load(contentBundleFixture
         .omit('badges')
-        .create()
-      expect(new CohContentDatabase(data).badges).toHaveLength(0)
+        .create())
+      expect(database.badges).toHaveLength(0)
     })
   })
 
   describe('zones', () => {
     test(`should throw an error on duplicate zone`, () => {
-      const data = contentBundleFixture.create({
+      const database = new CohContentDatabase()
+      expect(() => database.load(contentBundleFixture.create({
         zones: [
           zoneDataFixture.create({ key: 'foo' }),
           zoneDataFixture.create({ key: 'foo' }),
         ],
-      })
-      expect(() => new CohContentDatabase(data)).toThrow(`Duplicate zone key 'foo'`)
+      }))).toThrow(`Duplicate key [foo]`)
     })
 
     test(`should accept an undefined field`, () => {
-      const data = contentBundleFixture
+      const database = new CohContentDatabase()
+      database.load(contentBundleFixture
         .omit('zones')
-        .create()
-      expect(new CohContentDatabase(data).zones).toHaveLength(0)
+        .create())
+      expect(database.zones).toHaveLength(0)
     })
   })
 
   describe('contacts', () => {
     test(`should throw an error on duplicate contact`, () => {
-      const data = contentBundleFixture.create({
+      const database = new CohContentDatabase()
+      expect(() => database.load(contentBundleFixture.create({
         contacts: [
           contactDataFixture.create({ key: 'foo' }),
           contactDataFixture.create({ key: 'foo' }),
         ],
-      })
-      expect(() => new CohContentDatabase(data)).toThrow(`Duplicate contact key 'foo'`)
+      }))).toThrow(`Duplicate key [foo]`)
     })
 
     test(`should accept an undefined field`, () => {
-      const data = contentBundleFixture
+      const database = new CohContentDatabase()
+      database.load(contentBundleFixture
         .omit('contacts')
-        .create()
-      expect(new CohContentDatabase(data).contacts).toHaveLength(0)
+        .create())
+      expect(database.contacts).toHaveLength(0)
     })
   })
 
   describe('missions', () => {
     test(`should throw an error on duplicate mission`, () => {
-      const data = contentBundleFixture.create({
+      const database = new CohContentDatabase()
+      expect(() => database.load(contentBundleFixture.create({
         missions: [
           missionDataFixture.create({ key: 'foo' }),
           missionDataFixture.create({ key: 'foo' }),
         ],
-      })
-      expect(() => new CohContentDatabase(data)).toThrow(`Duplicate mission key 'foo'`)
+      }))).toThrow(`Duplicate key [foo]`)
     })
 
     test(`should accept an undefined field`, () => {
-      const data = contentBundleFixture
+      const database = new CohContentDatabase()
+      database.load(contentBundleFixture
         .omit('missions')
-        .create()
-      expect(new CohContentDatabase(data).missions).toHaveLength(0)
+        .create())
+      expect(database.missions).toHaveLength(0)
     })
   })
 
   describe('getArchetype', () => {
     test(`should retrieve archetype from the index`, () => {
-      const data = contentBundleFixture.create({
+      const database = new CohContentDatabase()
+      database.load(contentBundleFixture.create({
         archetypes: [archetypeDataFixture.create({ key: 'foo' })],
-      })
-
-      expect(new CohContentDatabase(data).getArchetype('foo')).not.toBeUndefined()
+      }))
+      expect(database.getArchetype('foo')).not.toBeUndefined()
     })
 
     test(`should return undefined for unknown archetype`, () => {
-      const data = contentBundleFixture.create({ archetypes: [] })
-      expect(new CohContentDatabase(data).getArchetype('foo')).toBeUndefined()
+      const database = new CohContentDatabase()
+      database.load(contentBundleFixture.create({ archetypes: [] }))
+      expect(database.getArchetype('foo')).toBeUndefined()
     })
 
     test(`should return undefined for undefined key`, () => {
-      expect(new CohContentDatabase(contentBundleFixture.create({ archetypes: [] })).getArchetype()).toBeUndefined()
+      const database = new CohContentDatabase()
+      database.load(contentBundleFixture.create({ archetypes: [] }))
+      const key = undefined
+      expect(database.getArchetype(key)).toBeUndefined()
     })
   })
 
   describe('getZone', () => {
     test(`should retrieve zone from the index`, () => {
-      const data = contentBundleFixture.create({
+      const database = new CohContentDatabase()
+      database.load(contentBundleFixture.create({
         zones: [zoneDataFixture.create({ key: 'foo' })],
-      })
+      }))
 
-      expect(new CohContentDatabase(data).getZone('foo')).not.toBeUndefined()
+      expect(database.getZone('foo')).not.toBeUndefined()
     })
 
     test(`should return undefined for unknown zone`, () => {
-      const data = contentBundleFixture.create({ zones: [] })
-      expect(new CohContentDatabase(data).getZone('foo')).toBeUndefined()
+      const database = new CohContentDatabase()
+      database.load(contentBundleFixture.create({ zones: [] }))
+      expect(database.getZone('foo')).toBeUndefined()
     })
 
     test(`should return undefined for undefined key`, () => {
-      expect(new CohContentDatabase(contentBundleFixture.create({ zones: [] })).getZone()).toBeUndefined()
+      const database = new CohContentDatabase()
+      database.load(contentBundleFixture.create({ zones: [] }))
+      const key = undefined
+      expect(database.getZone(key)).toBeUndefined()
     })
   })
 
   describe('getContact', () => {
     test(`should retrieve contact from the index`, () => {
-      const data = contentBundleFixture.create({
+      const database = new CohContentDatabase()
+      database.load(contentBundleFixture.create({
         contacts: [contactDataFixture.create({ key: 'foo' })],
-      })
-
-      expect(new CohContentDatabase(data).getContact('foo')).not.toBeUndefined()
+      }))
+      expect(database.getContact('foo')).not.toBeUndefined()
     })
 
     test(`should return undefined for unknown contact`, () => {
-      const data = contentBundleFixture.create({ contacts: [] })
-      expect(new CohContentDatabase(data).getContact('foo')).toBeUndefined()
+      const database = new CohContentDatabase()
+      database.load(contentBundleFixture.create({ contacts: [] }))
+      expect(database.getContact('foo')).toBeUndefined()
     })
 
     test(`should return undefined for undefined key`, () => {
-      expect(new CohContentDatabase(contentBundleFixture.create({ contacts: [] })).getContact()).toBeUndefined()
+      const database = new CohContentDatabase()
+      database.load(contentBundleFixture.create({ contacts: [] }))
+      const key = undefined
+      expect(database.getContact(key)).toBeUndefined()
     })
   })
 
   describe('getMission', () => {
     test(`should retrieve mission from the index`, () => {
-      const data = contentBundleFixture.create({
+      const database = new CohContentDatabase()
+      database.load(contentBundleFixture.create({
         missions: [missionDataFixture.create({ key: 'foo' })],
-      })
-
-      expect(new CohContentDatabase(data).getMission('foo')).not.toBeUndefined()
+      }))
+      expect(database.getMission('foo')).not.toBeUndefined()
     })
 
     test(`should return undefined for unknown mission`, () => {
-      const data = contentBundleFixture.create({ missions: [] })
-      expect(new CohContentDatabase(data).getMission('foo')).toBeUndefined()
+      const database = new CohContentDatabase()
+      database.load(contentBundleFixture.create({ missions: [] }))
+      expect(database.getMission('foo')).toBeUndefined()
     })
 
     test(`should return undefined for undefined key`, () => {
-      expect(new CohContentDatabase(contentBundleFixture.create({ missions: [] })).getMission()).toBeUndefined()
+      const database = new CohContentDatabase()
+      database.load(contentBundleFixture.create({ missions: [] }))
+      const key = undefined
+      expect(database.getMission(key)).toBeUndefined()
     })
   })
 
   describe('getBadge', () => {
     test(`should retrieve badge from the index`, () => {
-      const data = contentBundleFixture.create({
+      const database = new CohContentDatabase()
+      database.load(contentBundleFixture.create({
         badges: [badgeDataFixture.create({ key: 'foo' })],
-      })
-
-      expect(new CohContentDatabase(data).getBadge('foo')).not.toBeUndefined()
+      }))
+      expect(database.getBadge('foo')).not.toBeUndefined()
     })
 
     test(`should return undefined for unknown badge`, () => {
-      const data = contentBundleFixture.create({ badges: [] })
-      expect(new CohContentDatabase(data).getBadge('foo')).toBeUndefined()
+      const database = new CohContentDatabase()
+      database.load(contentBundleFixture.create({ badges: [] }))
+      expect(database.getBadge('foo')).toBeUndefined()
     })
 
     test(`should return undefined for undefined key`, () => {
-      expect(new CohContentDatabase(contentBundleFixture.create({ badges: [] })).getBadge()).toBeUndefined()
+      const database = new CohContentDatabase()
+      database.load(contentBundleFixture.create({ badges: [] }))
+      const key = undefined
+      expect(database.getBadge(key)).toBeUndefined()
     })
   })
 
   describe('searchBadges', () => {
     test(`should search the badge list`, () => {
-      const data = contentBundleFixture.create({
+      const database = new CohContentDatabase()
+      database.load(contentBundleFixture.create({
         badges: [
           badgeDataFixture.create({ key: 'foo', name: [{ value: 'Foo' }] }),
           badgeDataFixture.create({ key: 'bar', name: [{ value: 'Bar' }] }),
         ],
-      })
+      }))
 
-      const result = new CohContentDatabase(data).searchBadges({ query: { str: 'oo' } })
+      const result = database.searchBadges({ query: { str: 'oo' } })
       expect(result.totalItems).toBe(1)
       expect(result.items.map(x => x.key)).toStrictEqual(['foo'])
     })

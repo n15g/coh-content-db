@@ -1,28 +1,17 @@
 import { Badge, compareByDefaultName, compareByZoneKey } from './badge'
 import { BadgeSearchOptions } from './badge-search-options'
 import { Paged } from './paged'
+import { AbstractIndex } from './abstract-index'
 
-export class BadgeIndex {
-  readonly #badges: Badge[] = []
-  readonly #badgeIndex: Record<string, Badge> = {}
-
-  constructor(badges: Badge[]) {
-    this.#badges = badges
-    for (const badge of badges) {
-      if (this.#badgeIndex[badge.key] !== undefined) throw new Error(`Duplicate badge key [${badge.key}]`)
-      this.#badgeIndex[badge.key] = badge
-    }
+export class BadgeIndex extends AbstractIndex<Badge> {
+  constructor() {
+    super('key')
   }
 
-  getBadge(key?: string): Badge | undefined {
-    if (!key) return undefined
-    return this.#badgeIndex[key]
-  }
-
-  searchBadges(options?: BadgeSearchOptions): Paged<Badge> {
+  search(options?: BadgeSearchOptions): Paged<Badge> {
     const filtered = (options?.query || options?.filter)
-      ? this.#badges.filter(badge => this.#satisfiesQueryPredicate(badge, options?.query) && this.#satisfiesFilterPredicate(badge, options?.filter))
-      : this.#badges
+      ? this._values.filter(badge => this.#satisfiesQueryPredicate(badge, options?.query) && this.#satisfiesFilterPredicate(badge, options?.filter))
+      : this._values
 
     const totalPages = options?.pageSize ? Math.ceil(filtered.length / (options?.pageSize)) : 1
     const page = Math.max(1, Math.min(totalPages, options?.page ?? 1))

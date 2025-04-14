@@ -8,113 +8,122 @@ import { BadgeSearchOptions } from './badge-search-options'
 import { Paged } from './paged'
 import { Contact } from './contact'
 import { Mission } from './mission'
+import { AbstractIndex } from './abstract-index'
 
 export class CohContentDatabase {
-  readonly #archetypeIndex: Record<string, Archetype> = {}
-  readonly #zoneIndex: Record<string, Zone> = {}
-  readonly #contactIndex: Record<string, Contact> = {}
-  readonly #missionIndex: Record<string, Mission> = {}
-  readonly #badgeIndex: BadgeIndex
+  #archetypeIndex = new AbstractIndex<Archetype>('key')
+  #zoneIndex = new AbstractIndex<Zone>('key')
+  #contactIndex = new AbstractIndex<Contact>('key')
+  #missionIndex = new AbstractIndex<Mission>('key')
+  #badgeIndex = new BadgeIndex()
+
+  #metadata?: BundleMetadata
+  #servers?: string[]
+
+  /**
+   * Load the given content bundle, resetting the db if a bundle is already loaded.
+   * @param bundle The bundle to load.
+   */
+  load(bundle: ContentBundle): void {
+    this.#metadata = new BundleMetadata(bundle)
+    this.#servers = bundle.servers ?? []
+
+    this.#archetypeIndex.load(bundle.archetypes?.map(x => new Archetype(x)))
+    this.#zoneIndex.load(bundle.zones?.map(x => new Zone(x)))
+    this.#contactIndex.load(bundle.contacts?.map(x => new Contact(x)))
+    this.#missionIndex.load(bundle.missions?.map(x => new Mission(x)))
+    this.#badgeIndex.load(bundle.badges?.map(x => new Badge(x)))
+  }
 
   /**
    * Metadata about the content bundle.
    */
-  readonly metadata: BundleMetadata
+  get metadata(): BundleMetadata | undefined {
+    return this.#metadata
+  }
 
   /**
    * List of the game server names.
    *
    * Torchbearer, Excelsior, etc.
    */
-  readonly servers: string[]
+  get servers(): string[] {
+    return this.#servers ?? []
+  }
 
   /**
    * List of archetypes.
    */
-  readonly archetypes: Archetype[]
+  get archetypes(): Archetype[] {
+    return this.#archetypeIndex.values
+  }
+
+  /**
+   * Get archetype by key.
+   * @param key The key.
+   */
+  getArchetype(key: string | undefined): Archetype | undefined {
+    return this.#archetypeIndex.get(key)
+  }
 
   /**
    * List of game zones.
    */
-  readonly zones: Zone[]
+  get zones(): Zone[] {
+    return this.#zoneIndex.values
+  }
+
+  /**
+   * Get zone by key.
+   * @param key The key.
+   */
+  getZone(key: string | undefined): Zone | undefined {
+    return this.#zoneIndex.get(key)
+  }
 
   /**
    * List of contacts.
    */
-  readonly contacts: Contact[]
+  get contacts(): Contact[] {
+    return this.#contactIndex.values
+  }
+
+  /**
+   * Get contact by key.
+   * @param key The key.
+   */
+  getContact(key: string | undefined): Contact | undefined {
+    return this.#contactIndex.get(key)
+  }
 
   /**
    * List of missions.
    */
-  readonly missions: Contact[]
+  get missions(): Mission[] {
+    return this.#missionIndex.values
+  }
+
+  /**
+   * Get mission by key.
+   * @param key The key.
+   */
+  getMission(key: string | undefined): Mission | undefined {
+    return this.#missionIndex.get(key)
+  }
 
   /**
    * List of badges.
    */
-  readonly badges: Badge[]
+  get badges(): Badge[] {
+    return this.#badgeIndex.values
+  }
 
   /**
-   * Initialize the database with a content bundle.
-   * @param bundle The data to load.
+   * Get badge by key.
+   * @param key The key.
    */
-  constructor(bundle: ContentBundle) {
-    this.metadata = new BundleMetadata(bundle)
-    this.servers = bundle.servers ?? []
-
-    this.archetypes = bundle.archetypes?.map((data) => {
-      if (this.#archetypeIndex[data.key] !== undefined) throw new Error(`Duplicate archetype key '${data.key}'`)
-      const archetype = new Archetype(data)
-      this.#archetypeIndex[archetype.key] = archetype
-      return archetype
-    }) ?? []
-
-    this.zones = bundle.zones?.map((data) => {
-      if (this.#zoneIndex[data.key] !== undefined) throw new Error(`Duplicate zone key '${data.key}'`)
-      const zone = new Zone(data)
-      this.#zoneIndex[zone.key] = zone
-      return zone
-    }) ?? []
-
-    this.contacts = bundle.contacts?.map((data) => {
-      if (this.#contactIndex[data.key] !== undefined) throw new Error(`Duplicate contact key '${data.key}'`)
-      const contact = new Contact(data)
-      this.#contactIndex[contact.key] = contact
-      return contact
-    }) ?? []
-
-    this.missions = bundle.missions?.map((data) => {
-      if (this.#missionIndex[data.key] !== undefined) throw new Error(`Duplicate mission key '${data.key}'`)
-      const mission = new Mission(data)
-      this.#missionIndex[mission.key] = mission
-      return mission
-    }) ?? []
-
-    this.badges = bundle.badges?.map(data => new Badge(data)) ?? []
-    this.#badgeIndex = new BadgeIndex(this.badges)
-  }
-
-  getArchetype(key?: string): Archetype | undefined {
-    if (!key) return undefined
-    return this.#archetypeIndex[key]
-  }
-
-  getZone(key?: string): Zone | undefined {
-    if (!key) return undefined
-    return this.#zoneIndex[key]
-  }
-
-  getContact(key?: string): Contact | undefined {
-    if (!key) return undefined
-    return this.#contactIndex[key]
-  }
-
-  getMission(key?: string): Mission | undefined {
-    if (!key) return undefined
-    return this.#missionIndex[key]
-  }
-
-  getBadge(key?: string): Badge | undefined {
-    return this.#badgeIndex.getBadge(key)
+  getBadge(key: string | undefined): Badge | undefined {
+    return this.#badgeIndex.get(key)
   }
 
   /**
@@ -124,6 +133,6 @@ export class CohContentDatabase {
    * @param options {@link BadgeSearchOptions}
    */
   searchBadges(options?: BadgeSearchOptions): Paged<Badge> {
-    return this.#badgeIndex.searchBadges(options)
+    return this.#badgeIndex.search(options)
   }
 }

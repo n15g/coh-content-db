@@ -22,12 +22,17 @@ export class BundleMetadata {
   /**
    * List of external links. Wiki, forums, etc.
    */
-  readonly links: Link[]
+  readonly links?: Link[]
 
   /**
    * Change log for this data package.
    */
-  readonly changelog: Change[]
+  readonly changelog?: Change[]
+
+  /**
+   * The current version of the data package.
+   */
+  readonly version?: string
 
   constructor(bundle: ContentBundle) {
     this.name = bundle.name
@@ -35,5 +40,6 @@ export class BundleMetadata {
     this.repository = bundle.repository
     this.links = bundle.links ?? []
     this.changelog = bundle.changelog ?? []
+    this.version = this.changelog?.at(-1)?.version
   }
 }
