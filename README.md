@@ -83,10 +83,10 @@ Create a new database instance, then load a content bundle, such as [coh-content
 
 ```typescript
 import { CohContentDatabase } from 'coh-content-db'
-import { Homecoming } from 'coh-content-db-homecoming'
+import { HOMECOMING } from 'coh-content-db-homecoming'
 
-const db = new CohContentDatabase()
-db.loadBundle(new Homecoming())
+const database = new CohContentDatabase()
+database.load(HOMECOMING)
 ```
 
 #### Access the content
