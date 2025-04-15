@@ -1,8 +1,8 @@
-import { ContentBundle } from '../api/content-bundle'
+import { BundleData } from '../api/bundle-data'
 import { Archetype } from './archetype'
 import { Zone } from './zone'
 import { Badge } from './badge'
-import { BundleMetadata } from './bundle-metadata'
+import { BundleHeader } from './bundle-header'
 import { BadgeIndex } from './badge-index'
 import { BadgeSearchOptions } from './badge-search-options'
 import { Paged } from './paged'
@@ -17,15 +17,15 @@ export class CohContentDatabase {
   #missionIndex = new AbstractIndex<Mission>('key')
   #badgeIndex = new BadgeIndex()
 
-  #metadata?: BundleMetadata
+  #header?: BundleHeader
   #servers?: string[]
 
   /**
    * Load the given content bundle, resetting the db if a bundle is already loaded.
    * @param bundle The bundle to load.
    */
-  load(bundle: ContentBundle): void {
-    this.#metadata = new BundleMetadata(bundle)
+  load(bundle: BundleData): void {
+    this.#header = new BundleHeader(bundle.header)
     this.#servers = bundle.servers ?? []
 
     this.#archetypeIndex.load(bundle.archetypes?.map(x => new Archetype(x)))
@@ -36,10 +36,10 @@ export class CohContentDatabase {
   }
 
   /**
-   * Metadata about the content bundle.
+   * Header information about the content bundle.
    */
-  get metadata(): BundleMetadata | undefined {
-    return this.#metadata
+  get header(): BundleHeader | undefined {
+    return this.#header
   }
 
   /**

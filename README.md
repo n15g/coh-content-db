@@ -8,6 +8,10 @@
 
 City of Heroes Content Database
 
+# Change Log
+
+[CHANGELOG.md](CHANGELOG.md)
+
 # Installation
 
 ```
@@ -41,14 +45,14 @@ export const TEST_BADGE: BadgeData = {
 }
 ```
 
-Then, create a `ContentBundle` instance and load your content into the appropriate field.
+Then, create a `BundleData` instance and load your content into the appropriate field.
 
 ```typescript
-import { ContentBundle } from './content-bundle'
+import { BundleData } from 'coh-content-db'
 import { TEST_BADGE } from './test-badge'
 
-export const MY_CONTENT_BUNDLE: ContentBundle = {
-    name: 'My Content Bundle',
+export const MY_CONTENT_BUNDLE: BundleData = {
+    header: { name: 'My Content Bundle' },
     badges: [TEST_BADGE],
 }
 ```
@@ -86,7 +90,20 @@ import { CohContentDatabase } from 'coh-content-db'
 import { HOMECOMING } from 'coh-content-db-homecoming'
 
 const database = new CohContentDatabase()
+
 database.load(HOMECOMING)
+```
+
+or from a JSON object:
+
+```typescript
+import { BundleData, CohContentDatabase } from 'coh-content-db'
+
+const database = new CohContentDatabase()
+
+const response = await fetch('https://n15g.github.io/coh-content-db-homecoming/bundle.json')
+const bundle = await response.json() as BundleData
+database.load(bundle)
 ```
 
 #### Access the content
