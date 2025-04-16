@@ -83,15 +83,13 @@ const link = `This is a link to the ${badgeLink('ghoulish')} badge.`
 
 ## As a DB consumer
 
-Create a new database instance, then load a content bundle, such as [coh-content-db-homecoming](https://github.com/n15g/coh-content-db-homecoming):
+Create a new database instance from a content bundle, such as [coh-content-db-homecoming](https://github.com/n15g/coh-content-db-homecoming):
 
 ```typescript
 import { CohContentDatabase } from 'coh-content-db'
 import { HOMECOMING } from 'coh-content-db-homecoming'
 
-const database = new CohContentDatabase()
-
-database.load(HOMECOMING)
+const database = new CohContentDatabase(HOMECOMING)
 ```
 
 or from a JSON object:
@@ -99,11 +97,10 @@ or from a JSON object:
 ```typescript
 import { BundleData, CohContentDatabase } from 'coh-content-db'
 
-const database = new CohContentDatabase()
-
 const response = await fetch('https://n15g.github.io/coh-content-db-homecoming/bundle.json')
 const bundle = await response.json() as BundleData
-database.load(bundle)
+
+const database = new CohContentDatabase(bundle)
 ```
 
 #### Access the content

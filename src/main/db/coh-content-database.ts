@@ -3,42 +3,42 @@ import { Archetype } from './archetype'
 import { Zone } from './zone'
 import { Badge } from './badge'
 import { BundleHeader } from './bundle-header'
-import { BadgeIndex } from './badge-index'
 import { BadgeSearchOptions } from './badge-search-options'
 import { Paged } from './paged'
 import { Contact } from './contact'
 import { Mission } from './mission'
 import { AbstractIndex } from './abstract-index'
+import { BadgeIndex } from './badge-index'
 
 export class CohContentDatabase {
-  #archetypeIndex = new AbstractIndex<Archetype>('key')
-  #zoneIndex = new AbstractIndex<Zone>('key')
-  #contactIndex = new AbstractIndex<Contact>('key')
-  #missionIndex = new AbstractIndex<Mission>('key')
-  #badgeIndex = new BadgeIndex()
+  readonly #archetypeIndex
+  readonly #zoneIndex
+  readonly #contactIndex
+  readonly #missionIndex
+  readonly #badgeIndex
 
-  #header?: BundleHeader
-  #servers?: string[]
+  readonly #header: BundleHeader
+  readonly #servers: string[]
 
   /**
-   * Load the given content bundle, resetting the db if a bundle is already loaded.
+   * Create a db instance from the given content bundle.
    * @param bundle The bundle to load.
    */
-  load(bundle: BundleData): void {
+  constructor(bundle: BundleData) {
     this.#header = new BundleHeader(bundle.header)
     this.#servers = bundle.servers ?? []
 
-    this.#archetypeIndex.load(bundle.archetypes?.map(x => new Archetype(x)))
-    this.#zoneIndex.load(bundle.zones?.map(x => new Zone(x)))
-    this.#contactIndex.load(bundle.contacts?.map(x => new Contact(x)))
-    this.#missionIndex.load(bundle.missions?.map(x => new Mission(x)))
-    this.#badgeIndex.load(bundle.badges?.map(x => new Badge(x)))
+    this.#archetypeIndex = new AbstractIndex<Archetype>('key', bundle.archetypes?.map(x => new Archetype(x)))
+    this.#zoneIndex = new AbstractIndex<Zone>('key', bundle.zones?.map(x => new Zone(x)))
+    this.#contactIndex = new AbstractIndex<Contact>('key', bundle.contacts?.map(x => new Contact(x)))
+    this.#missionIndex = new AbstractIndex<Mission>('key', bundle.missions?.map(x => new Mission(x)))
+    this.#badgeIndex = new BadgeIndex(bundle.badges?.map(x => new Badge(x)))
   }
 
   /**
    * Header information about the content bundle.
    */
-  get header(): BundleHeader | undefined {
+  get header(): BundleHeader {
     return this.#header
   }
 
@@ -48,7 +48,7 @@ export class CohContentDatabase {
    * Torchbearer, Excelsior, etc.
    */
   get servers(): string[] {
-    return this.#servers ?? []
+    return this.#servers
   }
 
   /**

@@ -4,8 +4,8 @@ import { Paged } from './paged'
 import { AbstractIndex } from './abstract-index'
 
 export class BadgeIndex extends AbstractIndex<Badge> {
-  constructor() {
-    super('key')
+  constructor(values: Badge[] | undefined) {
+    super('key', values)
   }
 
   search(options?: BadgeSearchOptions): Paged<Badge> {

@@ -1,12 +1,22 @@
 type KeysOfType<T, V> = { [P in keyof T]: T[P] extends V ? P : never }[keyof T]
 
 export class AbstractIndex<T> {
-  readonly #keyField: KeysOfType<T, string>
   protected _values: T[] = []
   protected _hashTable: Record<string, T> = {}
 
-  constructor(keyField: KeysOfType<T, string>) {
-    this.#keyField = keyField
+  /**
+   * Create a new index.
+   * @param keyField The field of the values that will act as the key.
+   * @param values Values to index.
+   */
+  constructor(keyField: KeysOfType<T, string>, values: T[] | undefined) {
+    this._values = values ?? []
+    this._hashTable = {}
+    for (const value of this.values) {
+      const key = value[keyField] as string
+      if (this._hashTable[key] !== undefined) throw new Error(`Duplicate key [${key}]`)
+      this._hashTable[key] = value
+    }
   }
 
   /**
@@ -14,20 +24,6 @@ export class AbstractIndex<T> {
    */
   get values(): T[] {
     return this._values
-  }
-
-  /**
-   * Load the given list of values into the index, replacing any existing data.
-   * @param values List of values.
-   */
-  load(values: T[] | undefined): void {
-    this._values = values ?? []
-    this._hashTable = {}
-    for (const value of this.values) {
-      const key = value[this.#keyField] as string
-      if (this._hashTable[key] !== undefined) throw new Error(`Duplicate key [${key}]`)
-      this._hashTable[key] = value
-    }
   }
 
   /**
