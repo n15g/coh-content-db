@@ -10,14 +10,7 @@ export interface BadgeSearchOptions {
    */
   query?: {
     str?: string
-    on?: {
-      name?: boolean
-      badgeText?: boolean
-      acquisition?: boolean
-      notes?: boolean
-      effect?: boolean
-      setTitle?: boolean
-    }
+    on?: ('name' | 'badge-text' | 'acquisition' | 'notes' | 'effect' | 'set-title-id')[]
   }
 
   /**

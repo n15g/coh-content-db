@@ -30,12 +30,14 @@ export class BadgeIndex extends AbstractIndex<Badge> {
 
   #satisfiesQueryPredicate(badge: Badge, query?: BadgeSearchOptions['query']): boolean {
     const queryString = query?.str?.toLowerCase() ?? ''
-    return !!(((query?.on?.name ?? true) && badge.name.canonical.some(x => x.value.toLowerCase().includes(queryString)))
-      || (query?.on?.badgeText && badge.badgeText.canonical.some(x => x.value.toLowerCase().includes(queryString)))
-      || (query?.on?.acquisition && badge.acquisition?.toLowerCase().includes(queryString))
-      || (query?.on?.effect && badge.effect?.toLowerCase().includes(queryString))
-      || (query?.on?.notes && badge.notes?.toLowerCase().includes(queryString))
-      || (query?.on?.setTitle && (badge.setTitleId?.some(x => x?.toString().includes(queryString)))))
+    const fields = query?.on ? new Set(query?.on) : new Set(['name']) // Default to name if not provided
+
+    return !!((fields.has('name') && badge.name.canonical.some(x => x.value.toLowerCase().includes(queryString)))
+      || (fields.has('badge-text') && badge.badgeText.canonical.some(x => x.value.toLowerCase().includes(queryString)))
+      || (fields.has('acquisition') && badge.acquisition?.toLowerCase().includes(queryString))
+      || (fields.has('effect') && badge.effect?.toLowerCase().includes(queryString))
+      || (fields.has('notes') && badge.notes?.toLowerCase().includes(queryString))
+      || (fields.has('set-title-id') && (badge.setTitleId?.some(x => x?.toString().includes(queryString)))))
   }
 
   #satisfiesFilterPredicate(badge: Badge, filter?: BadgeSearchOptions['filter']): boolean {
