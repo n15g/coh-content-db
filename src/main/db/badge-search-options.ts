@@ -10,7 +10,7 @@ export interface BadgeSearchOptions {
    */
   query?: {
     str?: string
-    on?: ('name' | 'badge-text' | 'acquisition' | 'notes' | 'effect' | 'set-title-id')[]
+    fields?: ('name' | 'badge-text' | 'acquisition' | 'notes' | 'effect' | 'set-title-id')[]
   }
 
   /**

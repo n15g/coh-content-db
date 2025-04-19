@@ -274,7 +274,7 @@ describe(CohContentDatabase.name, () => {
         }),
       )
 
-      const result = database.searchBadges({ query: { str: 'oo', on: ['name'] } })
+      const result = database.searchBadges({ query: { str: 'oo', fields: ['name'] } })
       expect(result.totalItems).toBe(1)
       expect(result.items.map(x => x.key)).toStrictEqual(['foo'])
     })

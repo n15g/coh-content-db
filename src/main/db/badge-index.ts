@@ -30,7 +30,8 @@ export class BadgeIndex extends AbstractIndex<Badge> {
 
   #satisfiesQueryPredicate(badge: Badge, query?: BadgeSearchOptions['query']): boolean {
     const queryString = query?.str?.toLowerCase() ?? ''
-    const fields = query?.on ? new Set(query?.on) : new Set(['name']) // Default to name if not provided
+    const fields = query?.fields ? new Set(query?.fields) : new Set(['name']) // Default to name if not provided
+    if (fields.size === 0) return true
 
     return !!((fields.has('name') && badge.name.canonical.some(x => x.value.toLowerCase().includes(queryString)))
       || (fields.has('badge-text') && badge.badgeText.canonical.some(x => x.value.toLowerCase().includes(queryString)))

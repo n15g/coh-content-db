@@ -53,7 +53,7 @@ describe(BadgeIndex.name, () => {
           new Badge(badgeDataFixture.create({ key: 'miss-1', name: [{ value: 'Bar 4' }] })),
         ])
 
-        const result = index.search({ query: { str: 'Foo', on: ['name'] } })
+        const result = index.search({ query: { str: 'Foo', fields: ['name'] } })
         const keys = result.items.map(x => x.key)
         expect(keys).toStrictEqual(['match-1', 'match-2', 'match-3'])
       })
@@ -67,7 +67,7 @@ describe(BadgeIndex.name, () => {
           new Badge(badgeDataFixture.create({ key: 'miss-2', badgeText: undefined })),
         ])
 
-        const result = index.search({ query: { str: 'Foo', on: ['badge-text'] } })
+        const result = index.search({ query: { str: 'Foo', fields: ['badge-text'] } })
         const keys = result.items.map(x => x.key)
         expect(keys).toStrictEqual(['match-1', 'match-2', 'match-3'])
       })
@@ -80,7 +80,7 @@ describe(BadgeIndex.name, () => {
           new Badge(badgeDataFixture.create({ key: 'miss-2', acquisition: undefined })),
         ])
 
-        const result = index.search({ query: { str: 'Foo', on: ['acquisition'] } })
+        const result = index.search({ query: { str: 'Foo', fields: ['acquisition'] } })
         const keys = result.items.map(x => x.key)
         expect(keys).toStrictEqual(['match-1', 'match-2'])
       })
@@ -93,7 +93,7 @@ describe(BadgeIndex.name, () => {
           new Badge(badgeDataFixture.create({ key: 'miss-2', effect: undefined })),
         ])
 
-        const result = index.search({ query: { str: 'Foo', on: ['effect'] } })
+        const result = index.search({ query: { str: 'Foo', fields: ['effect'] } })
         const keys = result.items.map(x => x.key)
         expect(keys).toStrictEqual(['match-1', 'match-2'])
       })
@@ -106,7 +106,7 @@ describe(BadgeIndex.name, () => {
           new Badge(badgeDataFixture.create({ key: 'miss-2', notes: undefined })),
         ])
 
-        const result = index.search({ query: { str: 'Foo', on: ['notes'] } })
+        const result = index.search({ query: { str: 'Foo', fields: ['notes'] } })
         const keys = result.items.map(x => x.key)
         expect(keys).toStrictEqual(['match-1', 'match-2'])
       })
@@ -119,7 +119,7 @@ describe(BadgeIndex.name, () => {
           new Badge(badgeDataFixture.create({ key: 'miss-2', setTitleId: undefined })),
         ])
 
-        const result = index.search({ query: { str: '123', on: ['set-title-id'] } })
+        const result = index.search({ query: { str: '123', fields: ['set-title-id'] } })
 
         expect(result.items).toHaveLength(2)
         const keys = result.items.map(x => x.key)
@@ -134,7 +134,7 @@ describe(BadgeIndex.name, () => {
           new Badge(badgeDataFixture.create({ key: 'miss-2', notes: 'bar' })),
         ])
 
-        const result = index.search({ query: { str: 'foo', on: ['name', 'notes'] } })
+        const result = index.search({ query: { str: 'foo', fields: ['name', 'notes'] } })
 
         expect(result.items).toHaveLength(2)
         const keys = result.items.map(x => x.key)
@@ -148,7 +148,7 @@ describe(BadgeIndex.name, () => {
           new Badge(badgeDataFixture.create({ key: 'miss-1', acquisition: 'Bar 1' })),
         ])
 
-        const result = index.search({ query: { str: 'Fo', on: ['acquisition'] } })
+        const result = index.search({ query: { str: 'Fo', fields: ['acquisition'] } })
         const keys = result.items.map(x => x.key)
         expect(keys).toStrictEqual(['match-1', 'match-2'])
       })
@@ -160,7 +160,7 @@ describe(BadgeIndex.name, () => {
           new Badge(badgeDataFixture.create({ key: 'miss-1', acquisition: 'Bar 1' })),
         ])
 
-        const result = index.search({ query: { str: 'foo', on: ['acquisition'] } })
+        const result = index.search({ query: { str: 'foo', fields: ['acquisition'] } })
         const keys = result.items.map(x => x.key)
         expect(keys).toStrictEqual(['match-1', 'match-2'])
       })
@@ -176,6 +176,19 @@ describe(BadgeIndex.name, () => {
 
         const keys = result.items.map(x => x.key)
         expect(keys).toStrictEqual(['match-1'])
+      })
+
+      test(`should return everything if no query fields are set`, () => {
+        const index = new BadgeIndex([
+          new Badge(badgeDataFixture.create({ key: 'match-1', name: [{ value: 'Foo 1' }] })),
+          new Badge(badgeDataFixture.create({ key: 'match-2', acquisition: 'Foo 2' })),
+          new Badge(badgeDataFixture.create({ key: 'match-3', name: [{ value: 'Bar 1' }] })),
+        ])
+
+        const result = index.search({ query: { str: 'no-hit', fields: [] } })
+
+        const keys = result.items.map(x => x.key)
+        expect(keys).toStrictEqual(['match-1', 'match-2', 'match-3'])
       })
     })
 
