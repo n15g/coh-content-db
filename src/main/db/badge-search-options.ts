@@ -1,6 +1,9 @@
 import { BadgeType } from '../api/badge-type'
 import { MoralityExtended } from '../api/morality'
 
+export type BadgeQueryableField = 'name' | 'badge-text' | 'acquisition' | 'notes' | 'effect' | 'set-title-id'
+export type BadgeSortableField = 'canonical' | 'badge-name' | 'zone-key'
+
 export interface BadgeSearchOptions {
 
   /**
@@ -10,7 +13,7 @@ export interface BadgeSearchOptions {
    */
   query?: {
     str?: string
-    fields?: ('name' | 'badge-text' | 'acquisition' | 'notes' | 'effect' | 'set-title-id')[]
+    fields?: BadgeQueryableField[]
   }
 
   /**
@@ -28,7 +31,7 @@ export interface BadgeSearchOptions {
    * Badges are assumed to be in canonical order in the content bundle, and should match the in-game display order.
    */
   sort?: {
-    by?: 'canonical' | 'badge-name' | 'zone-key'
+    by?: BadgeSortableField
     dir?: 'asc' | 'desc'
   }
 
