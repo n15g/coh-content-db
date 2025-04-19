@@ -7,9 +7,10 @@ import { Alternates } from './alternates'
 import { MarkdownString } from '../api/markdown-string'
 import { coalesceToArray } from '../util'
 import { MoralityList } from './morality-list'
+import { AbstractIndex } from './abstract-index'
 
 export class Badge {
-  readonly #requirementsIndex: Record<string, BadgeRequirement> = {}
+  readonly #requirementsIndex: AbstractIndex<BadgeRequirement>
   readonly #zoneKeys = new Set<string>()
 
   /**
@@ -73,11 +74,6 @@ export class Badge {
   readonly effect?: MarkdownString
 
   /**
-   * Represents the requirements for badges with multiple fulfillment steps, such as visiting monuments for history badges, completing missions, or collecting other badges.
-   */
-  readonly requirements?: BadgeRequirement[]
-
-  /**
    * Some badges are not included in the badge total count... such as Flames of Prometheus, which can be removed by redeeming it for a Notice of the Well.
    */
   readonly ignoreInTotals: boolean
@@ -96,21 +92,24 @@ export class Badge {
     this.setTitleId = badgeData.setTitleId
     this.ignoreInTotals = badgeData.ignoreInTotals ?? false
 
-    this.requirements = badgeData.requirements?.map((requirementData) => {
-      if (this.#requirementsIndex[requirementData.key]) throw new Error(`Duplicate badge requirement key [${badgeData.key}:${requirementData.key}]`)
-      const requirement = new BadgeRequirement(requirementData)
-      this.#requirementsIndex[requirement.key] = requirement
+    this.#requirementsIndex = new AbstractIndex<BadgeRequirement>('key', badgeData.requirements?.map(x => new BadgeRequirement(x)))
+
+    for (const requirement of this.#requirementsIndex.values) {
       if (requirement.location) for (const location of requirement.location) {
         if (location.zoneKey) this.#zoneKeys.add(location.zoneKey)
       }
-      return requirement
-    })
+    }
   }
 
-  getRequirement(key: string): BadgeRequirement {
-    const result = this.#requirementsIndex[key]
-    if (result === undefined) throw new Error(`Unknown badge requirement key [${key}]`)
-    return result
+  /**
+   * Represents the requirements for badges with multiple fulfillment steps, such as visiting monuments for history badges, completing missions, or collecting other badges.
+   */
+  get requirements(): BadgeRequirement[] {
+    return this.#requirementsIndex.values
+  }
+
+  getRequirement(key: string): BadgeRequirement | undefined {
+    return this.#requirementsIndex.get(key)
   }
 
   /**

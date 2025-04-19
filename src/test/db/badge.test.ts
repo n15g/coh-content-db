@@ -159,7 +159,19 @@ describe(Badge.name, () => {
           badgeRequirementDataFixture.create({ key: 'foo' }),
         ],
       })
-      expect(() => new Badge(data)).toThrow('Duplicate badge requirement key [badge:foo]')
+      expect(() => new Badge(data)).toThrow('Duplicate key [foo]')
+    })
+
+    test(`should return requirement list`, () => {
+      const data = badgeDataFixture.create({
+        requirements: [
+          badgeRequirementDataFixture.create({ key: 'foo' }),
+          badgeRequirementDataFixture.create({ key: 'bar' }),
+        ],
+      })
+      const badge = new Badge(data)
+
+      expect(badge.requirements.map(x => x.key)).toStrictEqual(['foo', 'bar'])
     })
   })
 
@@ -172,12 +184,12 @@ describe(Badge.name, () => {
       expect(new Badge(data).getRequirement('foo')).not.toBeUndefined()
     })
 
-    test(`should throw error for unknown requirement`, () => {
+    test(`should return undefined for unknown requirement`, () => {
       const data = badgeDataFixture.create({
         requirements: [],
       })
 
-      expect(() => new Badge(data).getRequirement('foo')).toThrow('Unknown badge requirement key [foo]')
+      expect(new Badge(data).getRequirement('foo')).toBeUndefined()
     })
   })
 

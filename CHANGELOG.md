@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [2.0.0-rc.10] - 2025-04-16
+## [2.0.0-rc.11] - 2025-04-19
 
 ### Added
 
@@ -24,6 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Database instance is now immutable and bundle data is loaded in the constructor.
 - `GameMap` was renamed to `Zone`.
 - Badge partials are now referred to as badge requirements.
+- `Badge.getRequirement()` now returns undefined instead of throwing an error on unknown key.
 - Exploration badge locations were moved into the badge requirements list.
 - References to zones and badges now use a standard Markdown link format (`badge://`, `map://`).
 - Some field names were updated for consistent pluralization (e.g., `name`, `icon`).
