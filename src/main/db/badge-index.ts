@@ -1,4 +1,4 @@
-import { Badge, compareByDefaultName, compareByZoneKey } from './badge'
+import { Badge, compareByDefaultName, compareByReleaseDate, compareByZoneKey } from './badge'
 import { BadgeSearchOptions } from './badge-search-options'
 import { Paged } from './paged'
 import { AbstractIndex } from './abstract-index'
@@ -52,8 +52,8 @@ export class BadgeIndex extends AbstractIndex<Badge> {
     const ascending = sort.dir !== 'desc'
 
     if (sort.by === 'badge-name') return badges.sort((a, b) => ascending ? compareByDefaultName(a, b) : compareByDefaultName(b, a))
-
     if (sort.by === 'zone-key') return badges.sort((a, b) => ascending ? compareByZoneKey(a, b) : compareByZoneKey(b, a))
+    if (sort.by === 'release-date') return badges.sort((a, b) => ascending ? compareByReleaseDate(a, b) : compareByReleaseDate(b, a))
 
     return sort.dir === 'desc' ? badges.reverse() : badges
   }

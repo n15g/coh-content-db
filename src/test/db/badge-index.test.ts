@@ -542,6 +542,30 @@ describe(BadgeIndex.name, () => {
         const keys = result.items.map(x => x.key)
         expect(keys).toStrictEqual(['badge-5', 'badge-1', 'badge-3', 'badge-2', 'badge-4'])
       })
+
+      test(`should sort by release date`, () => {
+        const index = new BadgeIndex([
+          new Badge(badgeDataFixture.create({ key: 'badge-1', releaseDate: '2025-02-03' })),
+          new Badge(badgeDataFixture.create({ key: 'badge-2', releaseDate: '2025-02-03' })),
+          new Badge(badgeDataFixture.create({ key: 'badge-3', releaseDate: '2020-01-01' })),
+        ])
+
+        const result = index.search({ sort: { by: 'release-date' } })
+        const keys = result.items.map(x => x.key)
+        expect(keys).toStrictEqual(['badge-3', 'badge-1', 'badge-2'])
+      })
+
+      test(`should sort by release date descending`, () => {
+        const index = new BadgeIndex([
+          new Badge(badgeDataFixture.create({ key: 'badge-1', releaseDate: '2025-02-03' })),
+          new Badge(badgeDataFixture.create({ key: 'badge-2', releaseDate: '2020-01-01' })),
+          new Badge(badgeDataFixture.create({ key: 'badge-3', releaseDate: '2025-02-03' })),
+        ])
+
+        const result = index.search({ sort: { by: 'release-date', dir: 'desc' } })
+        const keys = result.items.map(x => x.key)
+        expect(keys).toStrictEqual(['badge-1', 'badge-3', 'badge-2'])
+      })
     })
   })
 })

@@ -27,6 +27,11 @@ export interface BadgeData {
   readonly name: string | AlternateData<string>[]
 
   /**
+   * The date that the badge was added to the game.
+   */
+  readonly releaseDate: string
+
+  /**
    * The {@link MoralityExtended|moralities} that this badge is available to. If undefined then all moralities will be assumed.
    */
   readonly morality?: MoralityExtended | MoralityExtended[]

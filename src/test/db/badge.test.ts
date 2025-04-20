@@ -1,4 +1,4 @@
-import { Badge, compareByDefaultName, compareByZoneKey } from '../../main'
+import { Badge, compareByDefaultName, compareByReleaseDate, compareByZoneKey } from '../../main'
 import { badgeDataFixture } from '../api/badge-data.fixture'
 import { badgeRequirementDataFixture } from '../api/badge-requirement-data.fixture'
 
@@ -28,6 +28,18 @@ describe(Badge.name, () => {
       const badge = new Badge(badgeDataFixture.create({ name: [{ value: 'foo' }] }))
       expect(badge.name.default).toEqual({ value: 'foo' })
     })
+
+    test('should accept a string', () => {
+      const badge = new Badge(badgeDataFixture.create({ name: 'foo' }))
+      expect(badge.name.default).toEqual({ value: 'foo' })
+    })
+  })
+
+  describe('releaseDate', () => {
+    test('should be set from the data', () => {
+      const badge = new Badge(badgeDataFixture.create({ releaseDate: '2025-08-08' }))
+      expect(badge.releaseDate).toEqual(new Date('2025-08-08'))
+    })
   })
 
   describe('morality', () => {
@@ -55,6 +67,11 @@ describe(Badge.name, () => {
       expect(badge.badgeText.default).toEqual({ value: 'foo' })
     })
 
+    test('should accept a string', () => {
+      const badge = new Badge(badgeDataFixture.create({ badgeText: 'foo' }))
+      expect(badge.badgeText.default).toEqual({ value: 'foo' })
+    })
+
     test('should be optional', () => {
       const badge = new Badge(badgeDataFixture.omit('badgeText').create())
       expect(badge.badgeText.default).toBeUndefined()
@@ -76,6 +93,11 @@ describe(Badge.name, () => {
   describe('icon', () => {
     test('should be set from the data', () => {
       const badge = new Badge(badgeDataFixture.create({ icon: [{ value: 'foo' }] }))
+      expect(badge.icon.default).toEqual({ value: 'foo' })
+    })
+
+    test('should accept a string', () => {
+      const badge = new Badge(badgeDataFixture.create({ icon: 'foo' }))
       expect(badge.icon.default).toEqual({ value: 'foo' })
     })
 
@@ -344,6 +366,37 @@ describe(Badge.name, () => {
       }))
       expect([badgeA, badgeB].sort(compareByZoneKey)).toStrictEqual([badgeA, badgeB])
       expect([badgeB, badgeA].sort(compareByZoneKey)).toStrictEqual([badgeA, badgeB])
+    })
+  })
+
+  describe(compareByReleaseDate.name, () => {
+    test(`should compare two badges by releaseDate`, () => {
+      const badgeA = new Badge(badgeDataFixture.create({ releaseDate: '2024-01-01' }))
+      const badgeB = new Badge(badgeDataFixture.create({ releaseDate: '2025-01-01' }))
+      expect(compareByReleaseDate(badgeA, badgeB)).toBeLessThan(0)
+      expect([badgeB, badgeA].sort(compareByReleaseDate)).toStrictEqual([badgeA, badgeB])
+    })
+
+    test(`should return 0 for equal releaseDates`, () => {
+      const badgeA = new Badge(badgeDataFixture.create({ releaseDate: '2025-01-01' }))
+      const badgeB = new Badge(badgeDataFixture.create({ releaseDate: '2025-01-01' }))
+      expect(compareByReleaseDate(badgeA, badgeB)).toEqual(0)
+    })
+
+    test(`should equate two undefined values`, () => {
+      const badgeA = undefined
+      const badgeB = undefined
+      expect(compareByReleaseDate(badgeA, badgeB)).toEqual(0)
+    })
+
+    test(`should compare undefined value as higher`, () => {
+      const badgeA = undefined
+      const badgeB = new Badge(badgeDataFixture.create({ releaseDate: '2025-01-01' }))
+      expect(compareByReleaseDate(badgeA, badgeB)).toBeGreaterThan(0)
+      expect([badgeA, badgeB].sort(compareByReleaseDate)).toStrictEqual([badgeB, badgeA])
+
+      expect(compareByReleaseDate(badgeB, badgeA)).toBeLessThan(0)
+      expect([badgeB, badgeA].sort(compareByReleaseDate)).toStrictEqual([badgeB, badgeA])
     })
   })
 })

@@ -5,12 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [2.0.0-rc.11] - 2025-04-19
+## [2.0.0-rc.12] - 2025-04-21
 
 ### Added
 
 - Introduced a simple indexing and search function for badge names, text, and acquisition info.
 - Enabled formal support for Missions and Contacts in badge requirements.
+- Badges now require a `releaseDate`.
 - Added GitHub Actions for continuous integration (CI).
 - Included `eslint` for linting.
 - Added `jest` for unit testing.

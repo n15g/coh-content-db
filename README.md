@@ -41,6 +41,7 @@ export const TEST_BADGE: BadgeData = {
     key: 'test-badge',
     type: 'achievement',
     name: [{ value: 'Test Badge' }, { alignment: 'praetorian', value: 'My Badge for Praetorians' }],
+    releaseDate: '2020-03-01',
     alignment: ['hero', 'praetorian'],
 }
 ```

@@ -31,6 +31,11 @@ export class Badge {
   readonly name: Alternates<string>
 
   /**
+   * The date that the badge was added to the game.
+   */
+  readonly releaseDate: Date
+
+  /**
    * The character moralities that this badge is available to.
    */
   readonly morality: MoralityList
@@ -82,6 +87,7 @@ export class Badge {
     this.key = new Key(badgeData.key).value
     this.type = badgeData.type
     this.name = new Alternates(badgeData.name)
+    this.releaseDate = new Date(badgeData.releaseDate)
     this.morality = new MoralityList(coalesceToArray(badgeData.morality))
     this.badgeText = new Alternates(badgeData.badgeText ?? [])
     this.acquisition = badgeData.acquisition
@@ -143,4 +149,13 @@ export function compareByZoneKey(a?: Badge, b?: Badge): number {
   if (!aZone) return 1
   if (!bZone) return -1
   return aZone.localeCompare(bZone)
+}
+
+export function compareByReleaseDate(a?: Badge, b?: Badge): number {
+  const aReleaseDate = a?.releaseDate?.getTime()
+  const bReleaseDate = b?.releaseDate?.getTime()
+  if (aReleaseDate === bReleaseDate) return 0
+  if (!aReleaseDate) return 1
+  if (!bReleaseDate) return -1
+  return aReleaseDate < bReleaseDate ? -1 : 1
 }

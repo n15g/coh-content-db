@@ -2,7 +2,7 @@ import { BadgeType } from '../api/badge-type'
 import { MoralityExtended } from '../api/morality'
 
 export type BadgeQueryableField = 'name' | 'badge-text' | 'acquisition' | 'notes' | 'effect' | 'set-title-id'
-export type BadgeSortableField = 'canonical' | 'badge-name' | 'zone-key'
+export type BadgeSortableField = 'canonical' | 'badge-name' | 'zone-key' | 'release-date'
 
 export interface BadgeSearchOptions {
 
