@@ -1,12 +1,23 @@
 import { Link } from '../api/link'
 import { MarkdownString } from '../api/markdown-string'
 import { BundleHeaderData } from '../api/bundle-header-data'
+import { toDate } from '../to-date'
 
 export class BundleHeader {
   /**
-   * Name of the content bundle.
+   * Name of the fork this bundle contains data for.
    */
-  readonly name?: string
+  readonly name: string
+
+  /**
+   * Version number for this data package.
+   */
+  readonly version: string
+
+  /**
+   * The time this bundle was last updated.
+   */
+  readonly lastUpdateTime: Date
 
   /**
    * Description of the fork.
@@ -28,17 +39,14 @@ export class BundleHeader {
    */
   readonly links?: Link[]
 
-  /**
-   * The current version of the data package.
-   */
-  readonly version?: string
-
-  constructor(data: BundleHeaderData | undefined) {
-    this.name = data?.name
+  constructor(data: BundleHeaderData) {
+    if (!data) throw new Error('Missing header data')
+    this.name = data.name
+    this.version = data.version
+    this.lastUpdateTime = toDate(data.lastUpdateTime)
     this.description = data?.description
     this.repositoryUrl = data?.repositoryUrl
     this.changelogUrl = data?.changelogUrl
     this.links = data?.links ?? []
-    this.version = data?.version
   }
 }

@@ -8,6 +8,7 @@ import { MarkdownString } from '../api/markdown-string'
 import { coalesceToArray } from '../util'
 import { MoralityList } from './morality-list'
 import { AbstractIndex } from './abstract-index'
+import { toDate } from '../to-date'
 
 export class Badge {
   readonly #requirementsIndex: AbstractIndex<BadgeRequirement>
@@ -87,7 +88,7 @@ export class Badge {
     this.key = new Key(badgeData.key).value
     this.type = badgeData.type
     this.name = new Alternates(badgeData.name)
-    this.releaseDate = new Date(badgeData.releaseDate)
+    this.releaseDate = toDate(badgeData.releaseDate)
     this.morality = new MoralityList(coalesceToArray(badgeData.morality))
     this.badgeText = new Alternates(badgeData.badgeText ?? [])
     this.acquisition = badgeData.acquisition

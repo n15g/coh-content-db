@@ -12,7 +12,7 @@ export interface BundleData {
   /**
    * Bundle header.
    */
-  readonly header?: BundleHeaderData
+  readonly header: BundleHeaderData
 
   /**
    * List of the game server names in this fork.

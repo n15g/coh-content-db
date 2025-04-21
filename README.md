@@ -37,7 +37,7 @@ To define content, create a new instance using the appropriate `Data` interface 
 ///test-badge.ts
 import { BadgeData } from 'coh-content-db'
 
-export const TEST_BADGE: BadgeData = {
+export const TestBadge: BadgeData = {
     key: 'test-badge',
     type: 'achievement',
     name: [{ value: 'Test Badge' }, { alignment: 'praetorian', value: 'My Badge for Praetorians' }],
@@ -50,11 +50,10 @@ Then, create a `BundleData` instance and load your content into the appropriate 
 
 ```typescript
 import { BundleData } from 'coh-content-db'
-import { TEST_BADGE } from './test-badge'
 
-export const MY_CONTENT_BUNDLE: BundleData = {
-    header: { name: 'My Content Bundle' },
-    badges: [TEST_BADGE],
+export const MyBundle: BundleData = {
+    header: { name: 'My Content Bundle', version: '1.0.0', lastUpdateTime: '2025-04-21T00:00:00Z' },
+    badges: [TestBadge],
 }
 ```
 

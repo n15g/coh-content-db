@@ -8,7 +8,19 @@ export interface BundleHeaderData {
   /**
    * Name of the fork this bundle contains data for.
    */
-  readonly name?: string
+  readonly name: string
+
+  /**
+   * Version number for this data package.
+   */
+  readonly version: string
+
+  /**
+   * The time this bundle was last updated.
+   *
+   * Must be an ISO-8601 string in UTC.
+   */
+  readonly lastUpdateTime: string
 
   /**
    * Description of the fork.
@@ -29,9 +41,4 @@ export interface BundleHeaderData {
    * List of external links. Wiki, forums, etc.
    */
   readonly links?: Link[]
-
-  /**
-   * Version number for this data package.
-   */
-  readonly version?: string
 }

@@ -14,6 +14,31 @@ describe(BundleHeader.name, () => {
     })
   })
 
+  describe('version', () => {
+    test(`should be set from the data`, () => {
+      const header = new BundleHeader(bundleHeaderDataFixture.create({ version: 'foo' }))
+      expect(header.version).toEqual('foo')
+    })
+
+    test(`should be optional`, () => {
+      const header = new BundleHeader(bundleHeaderDataFixture.omit('version').create())
+      expect(header.version).toBeUndefined()
+    })
+  })
+
+  describe('releaseDate', () => {
+    test('should be set from the data', () => {
+      const header = new BundleHeader(bundleHeaderDataFixture.create({ lastUpdateTime: '2025-04-21T01:02:03Z' }))
+      expect(header.lastUpdateTime).toStrictEqual(new Date('2025-04-21T01:02:03Z'))
+    })
+
+    test('should not accept an invalid date', () => {
+      expect(() =>
+        new BundleHeader(bundleHeaderDataFixture.create({ lastUpdateTime: 'blah' })),
+      ).toThrow('Invalid date')
+    })
+  })
+
   describe('description', () => {
     test(`should be set from the data`, () => {
       const header = new BundleHeader(bundleHeaderDataFixture.create({ description: 'foo' }))
@@ -59,18 +84,6 @@ describe(BundleHeader.name, () => {
     test(`should be optional`, () => {
       const header = new BundleHeader(bundleHeaderDataFixture.omit('links').create())
       expect(header.links).toHaveLength(0)
-    })
-  })
-
-  describe('version', () => {
-    test(`should be set from the data`, () => {
-      const header = new BundleHeader(bundleHeaderDataFixture.create({ version: 'foo' }))
-      expect(header.version).toEqual('foo')
-    })
-
-    test(`should be optional`, () => {
-      const header = new BundleHeader(bundleHeaderDataFixture.omit('version').create())
-      expect(header.version).toBeUndefined()
     })
   })
 })

@@ -40,6 +40,12 @@ describe(Badge.name, () => {
       const badge = new Badge(badgeDataFixture.create({ releaseDate: '2025-08-08' }))
       expect(badge.releaseDate).toEqual(new Date('2025-08-08'))
     })
+
+    test('should not accept an invalid date', () => {
+      expect(() =>
+        new Badge(badgeDataFixture.create({ releaseDate: '2025-??-08' })),
+      ).toThrow('Invalid date')
+    })
   })
 
   describe('morality', () => {

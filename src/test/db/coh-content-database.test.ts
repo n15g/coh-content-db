@@ -14,12 +14,12 @@ describe(CohContentDatabase.name, () => {
   })
 
   describe('header', () => {
-    test(`should accept an undefined field`, () => {
-      const database = new CohContentDatabase(
-        bundleDataFixture.omit('header').create(),
-      )
-      expect(database.header).toBeDefined()
-      expect(database.header?.name).toBeUndefined()
+    test(`should not accept an undefined field`, () => {
+      expect(() =>
+        new CohContentDatabase(
+          bundleDataFixture.omit('header').create(),
+        ),
+      ).toThrow('Missing header data')
     })
 
     test(`should load values from bundle`, () => {
