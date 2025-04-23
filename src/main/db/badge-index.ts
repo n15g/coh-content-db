@@ -48,13 +48,31 @@ export class BadgeIndex extends AbstractIndex<Badge> {
   }
 
   #sort(badges: Badge[], sort?: BadgeSearchOptions['sort']): Badge[] {
-    if (!sort) return badges
-    const ascending = sort.dir !== 'desc'
-
-    if (sort.by === 'name') return badges.sort((a, b) => ascending ? compareByDefaultName(a, b) : compareByDefaultName(b, a))
-    if (sort.by === 'zone-key') return badges.sort((a, b) => ascending ? compareByZoneKey(a, b) : compareByZoneKey(b, a))
-    if (sort.by === 'release-date') return badges.sort((a, b) => ascending ? compareByReleaseDate(a, b) : compareByReleaseDate(b, a))
-
-    return sort.dir === 'desc' ? badges.reverse() : badges
+    switch (sort) {
+      case 'name.asc': {
+        return badges.sort(compareByDefaultName)
+      }
+      case 'name.desc': {
+        return badges.sort((a, b) => compareByDefaultName(b, a))
+      }
+      case 'zone-key.asc': {
+        return badges.sort(compareByZoneKey)
+      }
+      case 'zone-key.desc': {
+        return badges.sort((a, b) => compareByZoneKey(b, a))
+      }
+      case 'release-date.asc': {
+        return badges.sort(compareByReleaseDate)
+      }
+      case 'release-date.desc': {
+        return badges.sort((a, b) => compareByReleaseDate(b, a))
+      }
+      case 'canonical.desc': {
+        return badges.reverse()
+      }
+      default: {
+        return [...badges]
+      }
+    }
   }
 }
