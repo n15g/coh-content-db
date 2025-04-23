@@ -566,6 +566,27 @@ describe(BadgeIndex.name, () => {
         const keys = result.items.map(x => x.key)
         expect(keys).toStrictEqual(['badge-1', 'badge-3', 'badge-2'])
       })
+
+      test(`sort should apply before paging`, () => {
+        const index = new BadgeIndex([
+          new Badge(badgeDataFixture.create({ key: 'badge-a', name: 'A' })),
+          new Badge(badgeDataFixture.create({ key: 'badge-c', name: 'C' })),
+          new Badge(badgeDataFixture.create({ key: 'badge-e', name: 'E' })),
+          new Badge(badgeDataFixture.create({ key: 'badge-d', name: 'D' })),
+          new Badge(badgeDataFixture.create({ key: 'badge-b', name: 'B' })),
+          new Badge(badgeDataFixture.create({ key: 'badge-f', name: 'F' })),
+        ])
+
+        const page1 = index.search({ sort: 'name.asc', page: 1, pageSize: 2 })
+        const page2 = index.search({ sort: 'name.asc', page: 2, pageSize: 2 })
+        const page3 = index.search({ sort: 'name.asc', page: 3, pageSize: 2 })
+        const page1Keys = page1.items.map(x => x.key)
+        const page2Keys = page2.items.map(x => x.key)
+        const page3Keys = page3.items.map(x => x.key)
+        expect(page1Keys).toStrictEqual(['badge-a', 'badge-b'])
+        expect(page2Keys).toStrictEqual(['badge-c', 'badge-d'])
+        expect(page3Keys).toStrictEqual(['badge-e', 'badge-f'])
+      })
     })
   })
 })

@@ -13,14 +13,14 @@ export class BadgeIndex extends AbstractIndex<Badge> {
       ? this._values.filter(badge => this.#satisfiesQueryPredicate(badge, options?.query) && this.#satisfiesFilterPredicate(badge, options?.filter))
       : this._values
 
+    const sorted = this.#sort(filtered, options?.sort)
+
     const totalPages = options?.pageSize ? Math.ceil(filtered.length / (options?.pageSize)) : 1
     const page = Math.max(1, Math.min(totalPages, options?.page ?? 1))
-    const paged = options?.pageSize ? filtered.slice((page - 1) * options.pageSize, page * options?.pageSize) : filtered
-
-    const sorted = this.#sort(paged, options?.sort)
+    const paged = options?.pageSize ? sorted.slice((page - 1) * options.pageSize, page * options?.pageSize) : sorted
 
     return {
-      items: sorted,
+      items: paged,
       page: page,
       pageSize: options?.pageSize,
       totalItems: filtered.length,
