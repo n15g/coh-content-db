@@ -458,7 +458,7 @@ describe(BadgeIndex.name, () => {
           new Badge(badgeDataFixture.create({ key: 'badge-3', name: [{ value: 'AAB' }] })),
         ])
 
-        const result = index.search({ sort: { by: 'badge-name' } })
+        const result = index.search({ sort: { by: 'name' } })
         const keys = result.items.map(x => x.key)
         expect(keys).toStrictEqual(['badge-3', 'badge-1', 'badge-2'])
       })
@@ -470,7 +470,7 @@ describe(BadgeIndex.name, () => {
           new Badge(badgeDataFixture.create({ key: 'badge-3', name: [{ value: 'AAB' }] })),
         ])
 
-        const result = index.search({ sort: { by: 'badge-name', dir: 'desc' } })
+        const result = index.search({ sort: { by: 'name', dir: 'desc' } })
         const keys = result.items.map(x => x.key)
         expect(keys).toStrictEqual(['badge-2', 'badge-1', 'badge-3'])
       })
@@ -482,7 +482,7 @@ describe(BadgeIndex.name, () => {
           new Badge(badgeDataFixture.create({ key: 'badge-3', name: [{ value: 'AAB' }] })),
         ])
 
-        const result = index.search({ sort: { by: 'badge-name' } })
+        const result = index.search({ sort: { by: 'name' } })
         const keys = result.items.map(x => x.key)
         expect(keys).toStrictEqual(['badge-3', 'badge-1', 'badge-2'])
       })

@@ -51,7 +51,7 @@ export class BadgeIndex extends AbstractIndex<Badge> {
     if (!sort) return badges
     const ascending = sort.dir !== 'desc'
 
-    if (sort.by === 'badge-name') return badges.sort((a, b) => ascending ? compareByDefaultName(a, b) : compareByDefaultName(b, a))
+    if (sort.by === 'name') return badges.sort((a, b) => ascending ? compareByDefaultName(a, b) : compareByDefaultName(b, a))
     if (sort.by === 'zone-key') return badges.sort((a, b) => ascending ? compareByZoneKey(a, b) : compareByZoneKey(b, a))
     if (sort.by === 'release-date') return badges.sort((a, b) => ascending ? compareByReleaseDate(a, b) : compareByReleaseDate(b, a))
 
