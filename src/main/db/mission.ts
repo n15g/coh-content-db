@@ -3,8 +3,8 @@ import { MarkdownString } from '../api/markdown-string'
 import { Link } from '../api/link'
 import { MissionData } from '../api/mission-data'
 import { Key } from './key'
-import { coalesceToArray } from '../util'
 import { MoralityList } from './morality-list'
+import { coalesceToArray } from '../util/coalesce-to-array'
 
 export class Mission {
   /**

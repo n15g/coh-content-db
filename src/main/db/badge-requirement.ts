@@ -5,7 +5,7 @@ import { Key } from './key'
 import { MarkdownString } from '../api/markdown-string'
 import { Link } from '../api/link'
 import { Location } from './location'
-import { coalesceToArray } from '../util'
+import { coalesceToArray } from '../util/coalesce-to-array'
 
 export class BadgeRequirement {
   /**

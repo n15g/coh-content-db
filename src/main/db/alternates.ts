@@ -11,7 +11,7 @@ export class Alternates<T> {
    */
   constructor(value: AlternateData<T>[] | T) {
     if (Array.isArray(value)) {
-      this.#sortedValues = value.sort()
+      this.#sortedValues = value.toSorted()
       this.#sortedValues.sort((a, b) => this.#compareAlternates(a, b))
     } else {
       this.#sortedValues = [{ value }]

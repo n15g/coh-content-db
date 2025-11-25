@@ -1,4 +1,4 @@
-import { toDate } from '../main/to-date'
+import { toDate } from '../../main/util/to-date'
 
 describe(toDate.name, () => {
   test('should return a valid date', () => {

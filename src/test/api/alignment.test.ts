@@ -51,14 +51,14 @@ describe('compareAlignment', () => {
 
   test('should work as a compare function', () => {
     const unsorted: (Alignment | undefined)[] = [undefined, 'hero', 'villain', 'praetorian', undefined, 'villain', 'praetorian']
-    const sorted = unsorted.sort(compareAlignment)
+    const sorted = unsorted.toSorted(compareAlignment)
 
     expect(sorted).toStrictEqual(['hero', 'villain', 'villain', 'praetorian', 'praetorian', undefined, undefined])
   })
 
   test('should sort against undefined', () => {
     const unsorted: (Alignment | undefined)[] = [undefined, 'hero']
-    const sorted = unsorted.sort(compareAlignment)
+    const sorted = unsorted.toSorted(compareAlignment)
 
     expect(sorted).toStrictEqual(['hero', undefined])
   })

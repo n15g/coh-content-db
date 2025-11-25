@@ -4,7 +4,7 @@ import { MarkdownString } from '../api/markdown-string'
 import { ContactData } from '../api/contact-data'
 import { Location } from './location'
 import { MoralityList } from './morality-list'
-import { coalesceToArray } from '../util'
+import { coalesceToArray } from '../util/coalesce-to-array'
 
 export class Contact {
   /**

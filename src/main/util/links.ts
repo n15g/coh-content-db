@@ -1,11 +1,11 @@
-import { BadgeData } from './api/badge-data'
-import { Badge } from './db/badge'
-import { ZoneData } from './api/zone-data'
-import { Zone } from './db/zone'
-import { Contact } from './db/contact'
-import { ContactData } from './api/contact-data'
-import { Mission } from './db/mission'
-import { MissionData } from './api/mission-data'
+import { BadgeData } from '../api/badge-data'
+import { Badge } from '../db/badge'
+import { ZoneData } from '../api/zone-data'
+import { Zone } from '../db/zone'
+import { Contact } from '../db/contact'
+import { ContactData } from '../api/contact-data'
+import { Mission } from '../db/mission'
+import { MissionData } from '../api/mission-data'
 
 /**
  * Returns the URI of the given badge that can be used in {@link MarkdownString} fields.
@@ -101,18 +101,4 @@ export function zoneUri(target: string | Zone | ZoneData): string {
 export function zoneLink(target: string | Zone | ZoneData): string {
   const key = typeof target === 'string' ? target : target.key
   return `[${key}](${zoneUri(target)})`
-}
-
-/**
- * For fields that accept either an array of values or a single value, coalesces the value to an array.
- *
- * Arrays are returned as-is.
- * Single values are returned as a single-value array.
- * Undefined values are returned as undefined.
- *
- * @param value The value to coalesce.
- */
-export function coalesceToArray<T>(value?: T | T[]): T[] | undefined {
-  if (!value) return undefined
-  return Array.isArray(value) ? value as T[] : [value]
 }

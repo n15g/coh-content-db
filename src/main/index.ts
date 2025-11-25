@@ -37,5 +37,5 @@ export * from './db/morality-list'
 export * from './db/paged'
 export * from './db/zone'
 
-// ROOT
-export * from './util'
+// UTILS
+export * from './util/links'

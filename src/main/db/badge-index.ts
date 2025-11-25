@@ -50,25 +50,25 @@ export class BadgeIndex extends AbstractIndex<Badge> {
   #sort(badges: Badge[], sort?: BadgeSearchOptions['sort']): Badge[] {
     switch (sort) {
       case 'name.asc': {
-        return badges.sort(compareByDefaultName)
+        return badges.toSorted(compareByDefaultName)
       }
       case 'name.desc': {
-        return badges.sort((a, b) => compareByDefaultName(b, a))
+        return badges.toSorted((a, b) => compareByDefaultName(b, a))
       }
       case 'zone-key.asc': {
-        return badges.sort(compareByZoneKey)
+        return badges.toSorted(compareByZoneKey)
       }
       case 'zone-key.desc': {
-        return badges.sort((a, b) => compareByZoneKey(b, a))
+        return badges.toSorted((a, b) => compareByZoneKey(b, a))
       }
       case 'release-date.asc': {
-        return badges.sort(compareByReleaseDate)
+        return badges.toSorted(compareByReleaseDate)
       }
       case 'release-date.desc': {
-        return badges.sort((a, b) => compareByReleaseDate(b, a))
+        return badges.toSorted((a, b) => compareByReleaseDate(b, a))
       }
       case 'canonical.desc': {
-        return badges.reverse()
+        return badges.toReversed()
       }
       default: {
         return [...badges]

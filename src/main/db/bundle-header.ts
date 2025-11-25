@@ -1,7 +1,7 @@
 import { Link } from '../api/link'
 import { MarkdownString } from '../api/markdown-string'
 import { BundleHeaderData } from '../api/bundle-header-data'
-import { toDate } from '../to-date'
+import { toDate } from '../util/to-date'
 
 export class BundleHeader {
   /**

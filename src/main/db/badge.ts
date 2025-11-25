@@ -5,10 +5,10 @@ import { BadgeRequirement } from './badge-requirement'
 import { Key } from './key'
 import { Alternates } from './alternates'
 import { MarkdownString } from '../api/markdown-string'
-import { coalesceToArray } from '../util'
 import { MoralityList } from './morality-list'
 import { AbstractIndex } from './abstract-index'
-import { toDate } from '../to-date'
+import { toDate } from '../util/to-date'
+import { coalesceToArray } from '../util/coalesce-to-array'
 
 export class Badge {
   readonly #requirementsIndex: AbstractIndex<BadgeRequirement>

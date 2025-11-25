@@ -254,6 +254,17 @@ describe(Badge.name, () => {
       }))
       expect(badge.zoneKeys).toStrictEqual(['a', 'c'])
     })
+
+    test(`should ignore locations with no zone key`, () => {
+      const badge = new Badge(badgeDataFixture.create({
+        requirements: [
+          badgeRequirementDataFixture.create({ location: { zoneKey: 'a' } }),
+          badgeRequirementDataFixture.create({ location: { coords: [1, 2, 3] } }),
+          badgeRequirementDataFixture.create({ location: { zoneKey: 'c' } }),
+        ],
+      }))
+      expect(badge.zoneKeys).toStrictEqual(['a', 'c'])
+    })
   })
 
   describe('zoneKey', () => {
@@ -291,7 +302,7 @@ describe(Badge.name, () => {
       const badgeA = new Badge(badgeDataFixture.create({ name: 'A' }))
       const badgeB = new Badge(badgeDataFixture.create({ name: 'B' }))
       expect(compareByDefaultName(badgeA, badgeB)).toBeLessThan(0)
-      expect([badgeB, badgeA].sort(compareByDefaultName)).toStrictEqual([badgeA, badgeB])
+      expect([badgeB, badgeA].toSorted(compareByDefaultName)).toStrictEqual([badgeA, badgeB])
     })
 
     test(`should return 0 for equal names`, () => {
@@ -309,8 +320,8 @@ describe(Badge.name, () => {
     test(`should sort undefined values last`, () => {
       const badgeA = new Badge(badgeDataFixture.create({ name: 'A' }))
       const badgeB = new Badge(badgeDataFixture.create({ name: [] }))
-      expect([badgeA, badgeB].sort(compareByDefaultName)).toStrictEqual([badgeA, badgeB])
-      expect([badgeB, badgeA].sort(compareByDefaultName)).toStrictEqual([badgeA, badgeB])
+      expect([badgeA, badgeB].toSorted(compareByDefaultName)).toStrictEqual([badgeA, badgeB])
+      expect([badgeB, badgeA].toSorted(compareByDefaultName)).toStrictEqual([badgeA, badgeB])
     })
   })
 
@@ -327,7 +338,7 @@ describe(Badge.name, () => {
         ],
       }))
       expect(compareByZoneKey(badgeA, badgeB)).toBeLessThan(0)
-      expect([badgeB, badgeA].sort(compareByZoneKey)).toStrictEqual([badgeA, badgeB])
+      expect([badgeB, badgeA].toSorted(compareByZoneKey)).toStrictEqual([badgeA, badgeB])
     })
 
     test(`should return 0 for equal zoneKeys`, () => {
@@ -370,8 +381,8 @@ describe(Badge.name, () => {
           badgeRequirementDataFixture.create({ location: { zoneKey: 'c' } }),
         ],
       }))
-      expect([badgeA, badgeB].sort(compareByZoneKey)).toStrictEqual([badgeA, badgeB])
-      expect([badgeB, badgeA].sort(compareByZoneKey)).toStrictEqual([badgeA, badgeB])
+      expect([badgeA, badgeB].toSorted(compareByZoneKey)).toStrictEqual([badgeA, badgeB])
+      expect([badgeB, badgeA].toSorted(compareByZoneKey)).toStrictEqual([badgeA, badgeB])
     })
   })
 
@@ -380,7 +391,7 @@ describe(Badge.name, () => {
       const badgeA = new Badge(badgeDataFixture.create({ releaseDate: '2024-01-01' }))
       const badgeB = new Badge(badgeDataFixture.create({ releaseDate: '2025-01-01' }))
       expect(compareByReleaseDate(badgeA, badgeB)).toBeLessThan(0)
-      expect([badgeB, badgeA].sort(compareByReleaseDate)).toStrictEqual([badgeA, badgeB])
+      expect([badgeB, badgeA].toSorted(compareByReleaseDate)).toStrictEqual([badgeA, badgeB])
     })
 
     test(`should return 0 for equal releaseDates`, () => {
@@ -399,10 +410,10 @@ describe(Badge.name, () => {
       const badgeA = undefined
       const badgeB = new Badge(badgeDataFixture.create({ releaseDate: '2025-01-01' }))
       expect(compareByReleaseDate(badgeA, badgeB)).toBeGreaterThan(0)
-      expect([badgeA, badgeB].sort(compareByReleaseDate)).toStrictEqual([badgeB, badgeA])
+      expect([badgeA, badgeB].toSorted(compareByReleaseDate)).toStrictEqual([badgeB, badgeA])
 
       expect(compareByReleaseDate(badgeB, badgeA)).toBeLessThan(0)
-      expect([badgeB, badgeA].sort(compareByReleaseDate)).toStrictEqual([badgeB, badgeA])
+      expect([badgeB, badgeA].toSorted(compareByReleaseDate)).toStrictEqual([badgeB, badgeA])
     })
   })
 })

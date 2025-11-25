@@ -49,14 +49,14 @@ describe('compareSex', () => {
 
   test('should work as a compare function', () => {
     const unsorted: (Sex | undefined)[] = [undefined, 'M', 'F', 'M', undefined, 'F', 'M']
-    const sorted = unsorted.sort(compareSex)
+    const sorted = unsorted.toSorted(compareSex)
 
     expect(sorted).toStrictEqual(['M', 'M', 'M', 'F', 'F', undefined, undefined])
   })
 
   test('should sort against undefined', () => {
     const unsorted: (Sex | undefined)[] = [undefined, 'M']
-    const sorted = unsorted.sort(compareSex)
+    const sorted = unsorted.toSorted(compareSex)
 
     expect(sorted).toStrictEqual(['M', undefined])
   })
