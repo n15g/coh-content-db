@@ -9,6 +9,7 @@ import { MoralityList } from './morality-list'
 import { AbstractIndex } from './abstract-index'
 import { toDate } from '../util/to-date'
 import { coalesceToArray } from '../util/coalesce-to-array'
+import { SetTitleIds } from './set-title-ids'
 
 export class Badge {
   readonly #requirementsIndex: AbstractIndex<BadgeRequirement>
@@ -72,7 +73,7 @@ export class Badge {
    * The id used with the in-game `/settitle` command to apply the badge.
    * The first value is the id for primal characters and the (optional) second number is the id for praetorian characters.
    */
-  readonly setTitleId?: [number, number?]
+  readonly setTitleId?: SetTitleIds
 
   /**
    * A description of the effect the badge will have, such as a buff or granting a temporary power.
@@ -96,7 +97,7 @@ export class Badge {
     this.notes = badgeData.notes
     this.links = badgeData.links ?? []
     this.effect = badgeData.effect
-    this.setTitleId = badgeData.setTitleId
+    this.setTitleId = badgeData.setTitleId ? new SetTitleIds(badgeData.setTitleId) : undefined
     this.ignoreInTotals = badgeData.ignoreInTotals ?? false
 
     this.#requirementsIndex = new AbstractIndex<BadgeRequirement>('key', badgeData.requirements?.map(x => new BadgeRequirement(x)))

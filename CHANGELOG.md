@@ -5,12 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [2.0.0-rc.16] - 2025-11-26
+## [2.0.0-rc.17] - 2025-12-16
 
 ### Added
 
 - Introduced a simple indexing and search function for badge names, text, and acquisition info.
 - Enabled formal support for Missions and Contacts in badge requirements.
+- Optional level range and morality to `Zone` data.
+- Formal objects for level range and set title ids.
 - Badges now require a `releaseDate`.
 - Bundle header is now mandatory and requires at least a name, version and last update time.
 - Added GitHub Actions for continuous integration (CI).

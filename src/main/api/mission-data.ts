@@ -2,6 +2,8 @@ import { Link } from './link'
 import { MarkdownString } from './markdown-string'
 import { MissionType } from './mission-type'
 import { MoralityExtended } from './morality'
+import { LevelRangeData } from './level-range-data'
+import { MissionFlashbackData } from './mission-flashback-data'
 
 export interface MissionData {
   /**
@@ -36,7 +38,7 @@ export interface MissionData {
   /**
    * The level range this mission is available for.
    */
-  readonly levelRange?: [number, number?]
+  readonly levelRange?: LevelRangeData
 
   /**
    * Freeform notes or tips about the mission.
@@ -52,32 +54,4 @@ export interface MissionData {
    * If the mission is available in Ouroboros as a Flashback.
    */
   readonly flashback?: MissionFlashbackData
-}
-
-export interface MissionFlashbackData {
-
-  /**
-   * The id of the mission as seen in the Flashback menu, i.e. '14.01'.
-   */
-  readonly id: string
-
-  /**
-   * The level range this mission appears under as a Flashback. Leave undefined if the same as the base mission.
-   */
-  readonly levelRange?: [number, number?]
-
-  /**
-   * The name as it appears in the Flashback list. Leave undefined if the same as the base mission.
-   */
-  readonly name?: string
-
-  /**
-   * The character moralities that the mission will appear for in the Flashback list. Leave undefined if the same as the base mission.
-   */
-  readonly morality?: MoralityExtended | MoralityExtended[]
-
-  /**
-   * Freeform notes or tips about the Flashback version of the mission.
-   */
-  readonly notes?: MarkdownString
 }

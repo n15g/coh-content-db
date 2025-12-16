@@ -152,12 +152,14 @@ describe(Badge.name, () => {
   describe('setTitle', () => {
     test('should be set from the data', () => {
       const badge = new Badge(badgeDataFixture.create({ setTitleId: [123, 456] }))
-      expect(badge.setTitleId).toStrictEqual([123, 456])
+      expect(badge.setTitleId?.primal).toEqual(123)
+      expect(badge.setTitleId?.praetorian).toEqual(456)
     })
 
     test('should treat the praetorian id as optional', () => {
       const badge = new Badge(badgeDataFixture.create({ setTitleId: [123] }))
-      expect(badge.setTitleId).toStrictEqual([123])
+      expect(badge.setTitleId?.primal).toEqual(123)
+      expect(badge.setTitleId?.praetorian).toBeUndefined()
     })
 
     test('should be optional', () => {

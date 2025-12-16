@@ -5,6 +5,7 @@ import { MissionData } from '../api/mission-data'
 import { Key } from './key'
 import { MoralityList } from './morality-list'
 import { coalesceToArray } from '../util/coalesce-to-array'
+import { LevelRange } from './level-range'
 
 export class Mission {
   /**
@@ -39,7 +40,7 @@ export class Mission {
   /**
    * The level range this mission is available for.
    */
-  readonly levelRange?: [number, number?]
+  readonly levelRange?: LevelRange
 
   /**
    * Freeform notes or tips about the mission.
@@ -62,17 +63,17 @@ export class Mission {
     readonly id: string
 
     /**
-     * The level range this mission appears under as a Flashback. Leave undefined if the same as the base mission.
+     * The level range this mission appears under as a Flashback.
      */
-    readonly levelRange?: [number, number?]
+    readonly levelRange?: LevelRange
 
     /**
-     * The name as it appears in the Flashback list. Leave undefined if the same as the base mission.
+     * The name as it appears in the Flashback list.
      */
     readonly name?: string
 
     /**
-     * The character moralities that the mission will appear for in the Flashback list. Leave undefined if the same as the base mission.
+     * The character moralities that the mission will appear for in the Flashback list.
      */
     readonly morality?: MoralityList
 
@@ -88,7 +89,7 @@ export class Mission {
     this.type = data.type
     this.morality = new MoralityList(coalesceToArray(data.morality))
     this.contactKeys = coalesceToArray(data.contactKeys)
-    this.levelRange = data.levelRange
+    this.levelRange = data.levelRange ? new LevelRange(data.levelRange) : undefined
     this.notes = data.notes
     this.links = data.links ?? []
     this.flashback = createFlashback(data)
@@ -99,7 +100,7 @@ function createFlashback(data: MissionData): Mission['flashback'] {
   if (!data.flashback) return undefined
   return {
     id: data.flashback.id,
-    levelRange: data.flashback.levelRange ?? data.levelRange,
+    levelRange: data.flashback.levelRange ? new LevelRange(data.flashback.levelRange) : undefined,
     name: data.flashback.name ?? data.name,
     morality: new MoralityList(coalesceToArray(data.flashback.morality ?? data.morality)),
     notes: data.flashback.notes,

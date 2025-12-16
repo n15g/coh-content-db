@@ -4,4 +4,5 @@ export default {
   transform: {
     '^.+.tsx?$': ['ts-jest', {}],
   },
+  coverageReporters: ['clover', 'json', 'lcov', 'text', 'text-summary'],
 }

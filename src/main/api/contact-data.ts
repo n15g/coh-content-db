@@ -2,6 +2,7 @@ import { Link } from './link'
 import { MarkdownString } from './markdown-string'
 import { LocationData } from './location-data'
 import { MoralityExtended } from './morality'
+import { LevelRangeData } from './level-range-data'
 
 export interface ContactData {
   /**
@@ -34,7 +35,7 @@ export interface ContactData {
   /**
    * The level range this contact will offer missions for.
    */
-  readonly levelRange?: [number, number?]
+  readonly levelRange?: LevelRangeData
 
   /**
    * Freeform notes or tips about the contact.

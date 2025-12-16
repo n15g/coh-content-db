@@ -38,7 +38,9 @@ export class BadgeIndex extends AbstractIndex<Badge> {
       || (fields.has('acquisition') && badge.acquisition?.toLowerCase().includes(queryString))
       || (fields.has('effect') && badge.effect?.toLowerCase().includes(queryString))
       || (fields.has('notes') && badge.notes?.toLowerCase().includes(queryString))
-      || (fields.has('set-title-id') && (badge.setTitleId?.some(x => x?.toString().includes(queryString)))))
+      || (fields.has('set-title-id') && (badge.setTitleId?.primal.toString() === queryString))
+      || (fields.has('set-title-id') && (badge.setTitleId?.praetorian?.toString() === queryString))
+    )
   }
 
   #satisfiesFilterPredicate(badge: Badge, filter?: BadgeSearchOptions['filter']): boolean {

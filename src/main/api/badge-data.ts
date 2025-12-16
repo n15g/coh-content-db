@@ -4,6 +4,7 @@ import { BadgeType } from './badge-type'
 import { AlternateData } from './alternate-data'
 import { MarkdownString } from './markdown-string'
 import { MoralityExtended } from './morality'
+import { SetTitleData } from './set-title-data'
 
 export interface BadgeData {
 
@@ -67,7 +68,7 @@ export interface BadgeData {
    * The id used with the in-game `/settitle` command to apply the badge.
    * The first value is the id for primal characters and the (optional) second number is the id for praetorian characters.
    */
-  readonly setTitleId?: [number, number?]
+  readonly setTitleId?: SetTitleData
 
   /**
    * A description of the effect the badge will have, such as a buff or granting a temporary power.

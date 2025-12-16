@@ -62,7 +62,8 @@ describe(Contact.name, () => {
   describe('levelRange', () => {
     test(`should be set from the data`, () => {
       const contact = new Contact(contactDataFixture.create({ levelRange: [1, 2] }))
-      expect(contact.levelRange).toStrictEqual([1, 2])
+      expect(contact?.levelRange?.min).toEqual(1)
+      expect(contact?.levelRange?.max).toEqual(2)
     })
 
     test(`should be optional`, () => {

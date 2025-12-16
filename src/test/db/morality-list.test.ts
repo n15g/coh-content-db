@@ -29,7 +29,7 @@ describe(MoralityList.name, () => {
       expect(new MoralityList().items).toStrictEqual(['hero', 'vigilante', 'villain', 'rogue', 'resistance', 'loyalist'])
     })
 
-    test('should treat empty as no values', () => {
+    test('should treat explicit empty as no values', () => {
       expect(new MoralityList([]).items).toStrictEqual([])
     })
   })

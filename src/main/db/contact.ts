@@ -5,6 +5,7 @@ import { ContactData } from '../api/contact-data'
 import { Location } from './location'
 import { MoralityList } from './morality-list'
 import { coalesceToArray } from '../util/coalesce-to-array'
+import { LevelRange } from './level-range'
 
 export class Contact {
   /**
@@ -27,7 +28,7 @@ export class Contact {
   /**
    * The character moralities that this contact will interact with.
    */
-  readonly morality?: MoralityList
+  readonly morality: MoralityList
 
   /**
    * The location of this contact.
@@ -37,7 +38,7 @@ export class Contact {
   /**
    * The level range this contact will offer missions for.
    */
-  readonly levelRange?: [number, number?]
+  readonly levelRange?: LevelRange
 
   /**
    * Freeform notes or tips about the contact.
@@ -55,7 +56,7 @@ export class Contact {
     this.title = data.title
     this.morality = new MoralityList(coalesceToArray(data.morality))
     this.location = data.location
-    this.levelRange = data.levelRange
+    this.levelRange = data.levelRange ? new LevelRange(data.levelRange) : undefined
     this.notes = data.notes
     this.links = data.links ?? []
   }

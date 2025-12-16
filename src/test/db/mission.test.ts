@@ -56,8 +56,9 @@ describe(Mission.name, () => {
 
   describe('levelRange', () => {
     test(`should be set from the data`, () => {
-      const mission = new Mission(missionDataFixture.create({ levelRange: [1, 2] }))
-      expect(mission.levelRange).toStrictEqual([1, 2])
+      const mission = new Mission(missionDataFixture.create({ levelRange: 25 }))
+      expect(mission?.levelRange?.min).toEqual(25)
+      expect(mission?.levelRange?.max).toBeUndefined()
     })
 
     test(`should be optional`, () => {
@@ -105,13 +106,14 @@ describe(Mission.name, () => {
 
     describe('levelRange', () => {
       test(`should be set from the data`, () => {
-        const mission = new Mission(missionDataFixture.create({ flashback: { levelRange: [1, 2] } }))
-        expect(mission.flashback?.levelRange).toStrictEqual([1, 2])
+        const mission = new Mission(missionDataFixture.create({ flashback: { levelRange: [1, 20] } }))
+        expect(mission.flashback?.levelRange?.min).toEqual(1)
+        expect(mission.flashback?.levelRange?.max).toEqual(20)
       })
 
-      test(`should default to the mission value`, () => {
+      test(`should *not* default to the mission value due to Ouro level grouping`, () => {
         const mission = new Mission(missionDataFixture.create({ levelRange: [1, 2], flashback: missionFlashbackDataFixture.omit('levelRange').create() }))
-        expect(mission.flashback?.levelRange).toStrictEqual([1, 2])
+        expect(mission.flashback?.levelRange).toBeUndefined()
       })
 
       test(`should be optional`, () => {
