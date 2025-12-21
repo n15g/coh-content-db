@@ -70,12 +70,12 @@ export class Mission {
     /**
      * The name as it appears in the Flashback list.
      */
-    readonly name?: string
+    readonly name: string
 
     /**
      * The character moralities that the mission will appear for in the Flashback list.
      */
-    readonly morality?: MoralityList
+    readonly morality: MoralityList
 
     /**
      * Freeform notes or tips about the Flashback version of the mission.
