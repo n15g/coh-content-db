@@ -1,3 +1,5 @@
+import { Alignment } from './alignment'
+
 export const MORALITY = ['hero', 'vigilante', 'villain', 'rogue', 'resistance', 'loyalist'] as const
 export const MORALITY_EXTENDED = [
   ...MORALITY,
@@ -32,3 +34,16 @@ export const MORALITY_EXTENDED = [
 ] as const
 export type Morality = typeof MORALITY[number]
 export type MoralityExtended = typeof MORALITY_EXTENDED[number]
+
+/**
+ * Maps a morality to the underlying alignment
+ */
+export const MoralityMap: Record<Morality | Alignment, Alignment> = {
+  hero: 'hero',
+  vigilante: 'hero',
+  villain: 'villain',
+  rogue: 'villain',
+  loyalist: 'praetorian',
+  resistance: 'praetorian',
+  praetorian: 'praetorian',
+}

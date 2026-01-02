@@ -1,4 +1,4 @@
-import { Badge, compareByDefaultName, compareByReleaseDate, compareByZoneKey } from './badge'
+import { Badge, compareByName, compareByReleaseDate, compareByZoneKey } from './badge'
 import { BadgeSearchOptions } from './badge-search-options'
 import { Paged } from './paged'
 import { AbstractIndex } from './abstract-index'
@@ -13,7 +13,7 @@ export class BadgeIndex extends AbstractIndex<Badge> {
       ? this._values.filter(badge => this.#satisfiesQueryPredicate(badge, options?.query) && this.#satisfiesFilterPredicate(badge, options?.filter))
       : this._values
 
-    const sorted = this.#sort(filtered, options?.sort)
+    const sorted = this.#sort(filtered, options)
 
     const totalPages = options?.pageSize ? Math.ceil(filtered.length / (options?.pageSize)) : 1
     const page = Math.max(1, Math.min(totalPages, options?.page ?? 1))
@@ -50,13 +50,13 @@ export class BadgeIndex extends AbstractIndex<Badge> {
       && (!filter?.predicate || filter.predicate(badge))
   }
 
-  #sort(badges: Badge[], sort?: BadgeSearchOptions['sort']): Badge[] {
-    switch (sort) {
+  #sort(badges: Badge[], options?: BadgeSearchOptions): Badge[] {
+    switch (options?.sort) {
       case 'name.asc': {
-        return badges.toSorted(compareByDefaultName)
+        return badges.toSorted((a, b) => compareByName(a, b, options.variantContext))
       }
       case 'name.desc': {
-        return badges.toSorted((a, b) => compareByDefaultName(b, a))
+        return badges.toSorted((a, b) => compareByName(b, a, options.variantContext))
       }
       case 'zone-key.asc': {
         return badges.toSorted(compareByZoneKey)

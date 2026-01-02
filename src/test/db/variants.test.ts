@@ -1,9 +1,9 @@
-import { Alternates } from '../../main'
+import { Variants } from '../../main'
 
-describe(Alternates.name, () => {
+describe(Variants.name, () => {
   describe('Constructor', () => {
-    test('should accept a list of alternate values', () => {
-      new Alternates([
+    test('should accept a list of variant values', () => {
+      new Variants([
         { value: 'Default' },
         { sex: 'M', value: 'Male' },
         { alignment: 'hero', value: 'Hero' },
@@ -13,17 +13,17 @@ describe(Alternates.name, () => {
     })
 
     test('should accept a single value', () => {
-      expect(new Alternates('foo').default?.value).toBe('foo')
+      expect(new Variants('foo').default?.value).toBe('foo')
     })
   })
 
   describe('getValue', () => {
     test('should return undefined if there are no values', () => {
-      expect(new Alternates([]).getValue()).toBeUndefined()
+      expect(new Variants([]).getValue()).toBeUndefined()
     })
 
     test('should return the least-specific value when no classifiers are provided', () => {
-      expect(new Alternates([
+      expect(new Variants([
         { value: 'Default' },
         { sex: 'M', value: 'Male' },
         { alignment: 'hero', value: 'Hero' },
@@ -33,7 +33,7 @@ describe(Alternates.name, () => {
     })
 
     test('should return the least-specific value when no classifiers are provided, regardless of insert order', () => {
-      expect(new Alternates([
+      expect(new Variants([
         { alignment: 'villain', sex: 'M', value: 'Male Villain' },
         { alignment: 'hero', value: 'Hero' },
         { value: 'Default' },
@@ -43,27 +43,27 @@ describe(Alternates.name, () => {
     })
 
     test('should return the most specific match', () => {
-      expect(new Alternates([
+      expect(new Variants([
         { value: 'Default' },
         { sex: 'M', value: 'Male' },
         { alignment: 'hero', value: 'Hero' },
         { alignment: 'villain', sex: 'M', value: 'Male Villain' },
         { alignment: 'praetorian', sex: 'F', value: 'Praetorian Female' },
-      ]).getValue('villain', 'M')).toBe('Male Villain')
+      ]).getValue({ morality: 'villain', sex: 'M' })).toBe('Male Villain')
     })
 
     test('should return the most specific match, regardless of insert order', () => {
-      expect(new Alternates([
+      expect(new Variants([
         { alignment: 'praetorian', sex: 'F', value: 'Praetorian Female' },
         { sex: 'M', value: 'Male' },
         { alignment: 'hero', value: 'Hero' },
         { alignment: 'villain', sex: 'M', value: 'Male Villain' },
         { value: 'Default' },
-      ]).getValue('villain', 'M')).toBe('Male Villain')
+      ]).getValue({ morality: 'villain', sex: 'M' })).toBe('Male Villain')
     })
 
     test('should return the lowest canonical value if there is no default', () => {
-      expect(new Alternates([
+      expect(new Variants([
         { alignment: 'hero', value: 'Hero' },
         { sex: 'M', value: 'Male' },
         { alignment: 'praetorian', sex: 'F', value: 'Praetorian Female' },
@@ -72,22 +72,22 @@ describe(Alternates.name, () => {
     })
 
     test('should return the lowest canonical value if a specific is requested that does not exist', () => {
-      expect(new Alternates([
+      expect(new Variants([
         { alignment: 'hero', value: 'Hero' },
         { alignment: 'villain', value: 'Villain' },
         { alignment: 'villain', sex: 'M', value: 'Male Villain' },
         { alignment: 'praetorian', sex: 'F', value: 'Praetorian Female' },
-      ]).getValue(undefined, 'F')).toBe('Hero')
+      ]).getValue({ sex: 'F' })).toBe('Hero')
     })
   })
 
   describe('default', () => {
     test('should return undefined if there are no values', () => {
-      expect(new Alternates([]).default).toBeUndefined()
+      expect(new Variants([]).default).toBeUndefined()
     })
 
     test('should return the lowest priority value', () => {
-      expect(new Alternates([
+      expect(new Variants([
         { value: 'Default' },
         { sex: 'M', value: 'Male' },
         { alignment: 'hero', value: 'Hero' },
@@ -95,7 +95,7 @@ describe(Alternates.name, () => {
         { alignment: 'praetorian', sex: 'F', value: 'Praetorian Female' },
       ]).default?.value).toBe('Default')
 
-      expect(new Alternates([
+      expect(new Variants([
         { alignment: 'villain', sex: 'M', value: 'Male Villain' },
         { alignment: 'praetorian', sex: 'F', value: 'Praetorian Female' },
         { sex: 'M', value: 'Male' },
@@ -103,7 +103,7 @@ describe(Alternates.name, () => {
         { alignment: 'hero', value: 'Hero' },
       ]).default?.value).toBe('Default')
 
-      expect(new Alternates([
+      expect(new Variants([
         { alignment: 'villain', sex: 'M', value: 'Male Villain' },
         { alignment: 'praetorian', sex: 'F', value: 'Praetorian Female' },
         { sex: 'M', value: 'Male' },
@@ -114,11 +114,11 @@ describe(Alternates.name, () => {
 
   describe('canonical', () => {
     test('should be empty if there are no values', () => {
-      expect(new Alternates([]).canonical).toHaveLength(0)
+      expect(new Variants([]).canonical).toHaveLength(0)
     })
 
     test('should return values sorted in canonical order', () => {
-      const result = new Alternates([
+      const result = new Variants([
         { alignment: 'hero', sex: 'F', value: 'Female Hero' },
         { alignment: 'praetorian', value: 'Praetorian' },
         { sex: 'F', value: 'Female' },
@@ -150,7 +150,7 @@ describe(Alternates.name, () => {
     })
 
     test('should sort unspecified values by alpha', () => {
-      expect(new Alternates([
+      expect(new Variants([
         { value: 'A' },
         { value: 'C' },
         { value: 'B' },
@@ -162,7 +162,7 @@ describe(Alternates.name, () => {
     })
 
     test('should sort identical values by value alpha', () => {
-      expect(new Alternates([
+      expect(new Variants([
         { alignment: 'villain', value: 'B' },
         { sex: 'M', value: 'D' },
         { alignment: 'villain', value: 'A' },
@@ -178,7 +178,7 @@ describe(Alternates.name, () => {
 
   describe('toString', () => {
     test('should create a string separated by the separator', () => {
-      expect(new Alternates([
+      expect(new Variants([
         { sex: 'M', value: 'A' },
         { sex: 'F', value: 'B' },
         { alignment: 'hero', value: 'C' },

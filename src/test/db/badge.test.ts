@@ -1,4 +1,4 @@
-import { Badge, compareByDefaultName, compareByReleaseDate, compareByZoneKey } from '../../main'
+import { Badge, compareByName, compareByReleaseDate, compareByZoneKey } from '../../main'
 import { badgeDataFixture } from '../api/badge-data.fixture'
 import { badgeRequirementDataFixture } from '../api/badge-requirement-data.fixture'
 
@@ -299,31 +299,53 @@ describe(Badge.name, () => {
     })
   })
 
-  describe(compareByDefaultName.name, () => {
+  describe(compareByName.name, () => {
     test(`should compare two badges by name`, () => {
       const badgeA = new Badge(badgeDataFixture.create({ name: 'A' }))
       const badgeB = new Badge(badgeDataFixture.create({ name: 'B' }))
-      expect(compareByDefaultName(badgeA, badgeB)).toBeLessThan(0)
-      expect([badgeB, badgeA].toSorted(compareByDefaultName)).toStrictEqual([badgeA, badgeB])
+      expect(compareByName(badgeA, badgeB)).toBeLessThan(0)
+      expect([badgeB, badgeA].toSorted(compareByName)).toStrictEqual([badgeA, badgeB])
     })
 
     test(`should return 0 for equal names`, () => {
       const badgeA = new Badge(badgeDataFixture.create({ name: 'A' }))
       const badgeB = new Badge(badgeDataFixture.create({ name: 'A' }))
-      expect(compareByDefaultName(badgeA, badgeB)).toEqual(0)
+      expect(compareByName(badgeA, badgeB)).toEqual(0)
     })
 
     test(`should compare two undefined values`, () => {
       const badgeA = new Badge(badgeDataFixture.create({ name: [] }))
       const badgeB = new Badge(badgeDataFixture.create({ name: [] }))
-      expect(compareByDefaultName(badgeA, badgeB)).toEqual(0)
+      expect(compareByName(badgeA, badgeB)).toEqual(0)
     })
 
     test(`should sort undefined values last`, () => {
       const badgeA = new Badge(badgeDataFixture.create({ name: 'A' }))
       const badgeB = new Badge(badgeDataFixture.create({ name: [] }))
-      expect([badgeA, badgeB].toSorted(compareByDefaultName)).toStrictEqual([badgeA, badgeB])
-      expect([badgeB, badgeA].toSorted(compareByDefaultName)).toStrictEqual([badgeA, badgeB])
+      expect([badgeA, badgeB].toSorted(compareByName)).toStrictEqual([badgeA, badgeB])
+      expect([badgeB, badgeA].toSorted(compareByName)).toStrictEqual([badgeA, badgeB])
+    })
+
+    test(`should take morality context into account`, () => {
+      const badgeA = new Badge(badgeDataFixture.create({ name: [{ value: 'ZZZ' }, { alignment: 'villain', value: 'AAA' }] }))
+      const badgeB = new Badge(badgeDataFixture.create({ name: 'B' }))
+      expect([badgeA, badgeB].toSorted((a, b) => compareByName(a, b, { morality: 'villain' }))).toStrictEqual([badgeA, badgeB])
+      expect([badgeA, badgeB].toSorted((a, b) => compareByName(a, b, {}))).toStrictEqual([badgeB, badgeA])
+    })
+
+    test(`should take sex context into account`, () => {
+      const badgeA = new Badge(badgeDataFixture.create({ name: [{ value: 'ZZZ' }, { sex: 'F', value: 'AAA' }] }))
+      const badgeB = new Badge(badgeDataFixture.create({ name: 'B' }))
+      expect([badgeA, badgeB].toSorted((a, b) => compareByName(a, b, { sex: 'F' }))).toStrictEqual([badgeA, badgeB])
+      expect([badgeA, badgeB].toSorted((a, b) => compareByName(a, b, {}))).toStrictEqual([badgeB, badgeA])
+    })
+
+    test(`should take full variant context into account`, () => {
+      const badgeA = new Badge(badgeDataFixture.create({ name: [{ value: 'A' }, { sex: 'F', value: 'B' }] }))
+      const badgeB = new Badge(badgeDataFixture.create({ name: [{ value: 'B' }, { alignment: 'praetorian', sex: 'F', value: 'A' }] }))
+      const badgeC = new Badge(badgeDataFixture.create({ name: 'C' }))
+      expect([badgeA, badgeB, badgeC].toSorted((a, b) => compareByName(a, b, { morality: 'resistance', sex: 'F' }))).toStrictEqual([badgeB, badgeA, badgeC])
+      expect([badgeA, badgeB, badgeC].toSorted((a, b) => compareByName(a, b, {}))).toStrictEqual([badgeA, badgeB, badgeC])
     })
   })
 

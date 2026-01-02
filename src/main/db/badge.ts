@@ -3,13 +3,14 @@ import { Link } from '../api/link'
 import { BadgeData } from '../api/badge-data'
 import { BadgeRequirement } from './badge-requirement'
 import { Key } from './key'
-import { Alternates } from './alternates'
+import { Variants } from './variants'
 import { MarkdownString } from '../api/markdown-string'
 import { MoralityList } from './morality-list'
 import { AbstractIndex } from './abstract-index'
 import { toDate } from '../util/to-date'
 import { coalesceToArray } from '../util/coalesce-to-array'
 import { SetTitleIds } from './set-title-ids'
+import { VariantContext } from '../api/variant-context'
 
 export class Badge {
   readonly #requirementsIndex: AbstractIndex<BadgeRequirement>
@@ -30,7 +31,7 @@ export class Badge {
    *
    * May vary by character sex or alignment.
    */
-  readonly name: Alternates<string>
+  readonly name: Variants<string>
 
   /**
    * The date that the badge was added to the game.
@@ -45,7 +46,7 @@ export class Badge {
   /**
    * The badge text as it appears in-game. May vary by character sex or alignment.
    */
-  readonly badgeText: Alternates<MarkdownString>
+  readonly badgeText: Variants<MarkdownString>
 
   /**
    * Short description of how to acquire the badge. Detailed instructions will be in the notes field.
@@ -57,7 +58,7 @@ export class Badge {
    *
    * May vary by character sex or alignment.
    */
-  readonly icon: Alternates<string>
+  readonly icon: Variants<string>
 
   /**
    * Freeform notes or tips about the badge.
@@ -88,12 +89,12 @@ export class Badge {
   constructor(badgeData: BadgeData) {
     this.key = new Key(badgeData.key).value
     this.type = badgeData.type
-    this.name = new Alternates(badgeData.name)
+    this.name = new Variants(badgeData.name)
     this.releaseDate = toDate(badgeData.releaseDate)
     this.morality = new MoralityList(coalesceToArray(badgeData.morality))
-    this.badgeText = new Alternates(badgeData.badgeText ?? [])
+    this.badgeText = new Variants(badgeData.badgeText ?? [])
     this.acquisition = badgeData.acquisition
-    this.icon = new Alternates(badgeData.icon ?? [])
+    this.icon = new Variants(badgeData.icon ?? [])
     this.notes = badgeData.notes
     this.links = badgeData.links ?? []
     this.effect = badgeData.effect
@@ -135,9 +136,9 @@ export class Badge {
   }
 }
 
-export function compareByDefaultName(a?: Badge, b?: Badge): number {
-  const aName = a?.name.default?.value
-  const bName = b?.name.default?.value
+export function compareByName(a?: Badge, b?: Badge, context?: VariantContext): number {
+  const aName = a?.name?.getValue(context)
+  const bName = b?.name?.getValue(context)
   if (!aName && !bName) return 0
   if (!aName) return 1
   if (!bName) return -1

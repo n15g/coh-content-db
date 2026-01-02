@@ -478,6 +478,18 @@ describe(BadgeIndex.name, () => {
         expect(keys).toStrictEqual(['badge-3', 'badge-1', 'badge-2'])
       })
 
+      test(`should sort by badge name, taking variant context into account`, () => {
+        const index = new BadgeIndex([
+          new Badge(badgeDataFixture.create({ key: 'badge-1', name: [{ value: 'A' }, { value: 'C', alignment: 'praetorian', sex: 'F' }] })),
+          new Badge(badgeDataFixture.create({ key: 'badge-2', name: [{ value: 'B' }] })),
+          new Badge(badgeDataFixture.create({ key: 'badge-3', name: [{ value: 'C' }, { value: 'A', alignment: 'praetorian' }] })),
+        ])
+
+        const result = index.search({ sort: 'name.asc', variantContext: { morality: 'resistance', sex: 'F' } })
+        const keys = result.items.map(x => x.key)
+        expect(keys).toStrictEqual(['badge-3', 'badge-2', 'badge-1'])
+      })
+
       test(`should sort by badge name descending`, () => {
         const index = new BadgeIndex([
           new Badge(badgeDataFixture.create({ key: 'badge-1', name: [{ value: 'Abc' }] })),

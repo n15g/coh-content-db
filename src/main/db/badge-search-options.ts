@@ -1,6 +1,7 @@
 import { BadgeType } from '../api/badge-type'
 import { Morality } from '../api/morality'
 import { Badge } from './badge'
+import { VariantContext } from '../api/variant-context'
 
 export type BadgeQueryableField = 'name' | 'badge-text' | 'acquisition' | 'notes' | 'effect' | 'set-title-id'
 export type BadgeSort = `${'canonical' | 'name' | 'zone-key' | 'release-date'}.${'asc' | 'desc'}`
@@ -26,6 +27,11 @@ export interface BadgeSearchOptions {
     morality?: Morality
     predicate?: (badge: Badge) => boolean
   }
+
+  /**
+   * Adjust search results based on a given variant context (morality or sex of a character).
+   */
+  variantContext?: VariantContext
 
   /**
    * Sort results.

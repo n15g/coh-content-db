@@ -1,7 +1,7 @@
 import { BadgeRequirementData } from './badge-requirement-data'
 import { Link } from './link'
 import { BadgeType } from './badge-type'
-import { AlternateData } from './alternate-data'
+import { VariantData } from './variant-data'
 import { MarkdownString } from './markdown-string'
 import { MoralityExtended } from './morality'
 import { SetTitleData } from './set-title-data'
@@ -23,9 +23,9 @@ export interface BadgeData {
   /**
    * The name of this badge.
    *
-   * If the value differs by sex or alignment, include an {@link AlternateData} for each variant.
+   * If the value differs by sex or alignment, include an {@link VariantData} for each variant.
    */
-  readonly name: string | AlternateData<string>[]
+  readonly name: string | VariantData<string>[]
 
   /**
    * The date that the badge was added to the game.
@@ -40,7 +40,7 @@ export interface BadgeData {
   /**
    * The badge text as it appears in-game. May vary by character sex or alignment.
    */
-  readonly badgeText?: AlternateData<MarkdownString>[] | MarkdownString
+  readonly badgeText?: VariantData<MarkdownString>[] | MarkdownString
 
   /**
    * Short description of how to acquire the badge. Detailed instructions should go in the notes field.
@@ -50,9 +50,9 @@ export interface BadgeData {
   /**
    * List of absolute URLs for this badge's icons.
    *
-   * If the value differs by sex or alignment, include an {@link AlternateData} for each variant.
+   * If the value differs by sex or alignment, include an {@link VariantData} for each variant.
    */
-  readonly icon?: string | AlternateData<string>[]
+  readonly icon?: string | VariantData<string>[]
 
   /**
    * Freeform notes or tips about the badge.

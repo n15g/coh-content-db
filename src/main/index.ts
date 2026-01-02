@@ -1,6 +1,5 @@
 // API
 export * from './api/alignment'
-export * from './api/alternate-data'
 export * from './api/archetype-data'
 export * from './api/badge-data'
 export * from './api/badge-requirement-data'
@@ -20,12 +19,13 @@ export * from './api/mission-type'
 export * from './api/morality'
 export * from './api/set-title-data'
 export * from './api/sex'
+export * from './api/variant-context'
+export * from './api/variant-data'
 export * from './api/zone-data'
 export * from './api/zone-type'
 
 // DB
 export * from './db/alignment-list'
-export * from './db/alternates'
 export * from './db/archetype'
 export * from './db/badge'
 export * from './db/badge-index'
@@ -41,6 +41,7 @@ export * from './db/mission'
 export * from './db/morality-list'
 export * from './db/paged'
 export * from './db/set-title-ids'
+export * from './db/variants'
 export * from './db/zone'
 
 // UTILS

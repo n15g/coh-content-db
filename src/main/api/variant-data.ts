@@ -2,16 +2,16 @@ import { Sex } from './sex'
 import { Alignment } from './alignment'
 
 /**
- * Some badge values differ based on the alignment or sex of the character.
+ * Some badge values differ based on the alignment or sex of a character.
  */
-export interface AlternateData<V> {
+export interface VariantData<V> {
   /**
-   * The character alignment this alternate applies to.
+   * The character alignment this variant applies to.
    */
   readonly alignment?: Alignment
 
   /**
-   * The character sex this alternate applies to.
+   * The character sex this variant applies to.
    */
   readonly sex?: Sex
 
