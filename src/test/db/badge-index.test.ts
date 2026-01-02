@@ -257,6 +257,21 @@ describe(BadgeIndex.name, () => {
         const keys = result.items.map(x => x.key)
         expect(keys).toStrictEqual(['badge-1', 'badge-4', 'badge-6'])
       })
+
+      test(`should filter on arbitrary predicate`, () => {
+        const index = new BadgeIndex([
+          new Badge(badgeDataFixture.create({ key: 'badge-1', effect: 'foo' })),
+          new Badge(badgeDataFixture.create({ key: 'badge-2', effect: 'foo' })),
+          new Badge(badgeDataFixture.create({ key: 'badge-3', effect: 'foo' })),
+          new Badge(badgeDataFixture.create({ key: 'badge-4', effect: 'bar' })),
+          new Badge(badgeDataFixture.create({ key: 'badge-5', effect: 'bar' })),
+          new Badge(badgeDataFixture.create({ key: 'badge-6', effect: 'foo' })),
+        ])
+
+        const result = index.search({ filter: { predicate: badge => badge.effect === 'bar' } })
+        const keys = result.items.map(x => x.key)
+        expect(keys).toStrictEqual(['badge-4', 'badge-5'])
+      })
     })
 
     describe('pagination', () => {

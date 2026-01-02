@@ -1,5 +1,6 @@
 import { BadgeType } from '../api/badge-type'
 import { Morality } from '../api/morality'
+import { Badge } from './badge'
 
 export type BadgeQueryableField = 'name' | 'badge-text' | 'acquisition' | 'notes' | 'effect' | 'set-title-id'
 export type BadgeSort = `${'canonical' | 'name' | 'zone-key' | 'release-date'}.${'asc' | 'desc'}`
@@ -23,6 +24,7 @@ export interface BadgeSearchOptions {
     type?: BadgeType
     zoneKey?: string
     morality?: Morality
+    predicate?: (badge: Badge) => boolean
   }
 
   /**

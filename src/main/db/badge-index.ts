@@ -47,6 +47,7 @@ export class BadgeIndex extends AbstractIndex<Badge> {
     return (!filter?.type || badge.type === filter.type)
       && (!filter?.zoneKey || badge.zoneKey === filter.zoneKey)
       && (!filter?.morality || badge.morality.has(filter.morality))
+      && (!filter?.predicate || filter.predicate(badge))
   }
 
   #sort(badges: Badge[], sort?: BadgeSearchOptions['sort']): Badge[] {
