@@ -8,7 +8,9 @@
 
 City of Heroes Content Database
 
-# Change Log
+----
+
+# Changelog
 
 [CHANGELOG.md](CHANGELOG.md)
 
@@ -17,6 +19,8 @@ City of Heroes Content Database
 ```
 npm install coh-content-db
 ```
+
+----
 
 # Usage
 
@@ -111,7 +115,17 @@ for (const badge of db.badges) {
 }
 ```
 
-## Release
+----
+
+# Development
+
+* `npm run lint`
+* `npm run test`
+* `npm run build`
+
+----
+
+# Release
 
 1. Determine the next [Semantic Release](https://semver.org) version, i.e. `2.0.0-rc.16`
 2. Update the version and release notes in the [CHANGELOG.md](CHANGELOG.md).
@@ -122,8 +136,3 @@ for (const badge of db.badges) {
 
 Tags matching the pattern `v<X>.<Y>.<Z>` will attempt to publish to npm (this can only be achieved by the package manager (n15g).
 The `npm version` command automatically prepends the `v` prefix to the version number.
-
-```shell
-npm version 1.4.x
-npm run push
-```
