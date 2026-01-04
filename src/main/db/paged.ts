@@ -1,7 +1,11 @@
 export interface Paged<T> {
   items: T[]
-  page: number
+
+  matchedItemCount: number
+  totalItemCount: number
+
   pageSize?: number
-  totalItems: number
-  totalPages: number
+  pageIndex: number
+  pageNumber: number
+  totalPageCount: number
 }

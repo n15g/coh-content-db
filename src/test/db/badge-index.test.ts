@@ -292,7 +292,27 @@ describe(BadgeIndex.name, () => {
 
       test(`should be 1-based for page number`, () => {
         const result = new BadgeIndex([]).search()
-        expect(result.page).toBe(1)
+        expect(result.pageNumber).toBe(1)
+      })
+
+      test(`should be 0-based for page index`, () => {
+        const result = new BadgeIndex([]).search()
+        expect(result.pageIndex).toBe(0)
+      })
+
+      test(`should return the correct page number and index`, () => {
+        const index = new BadgeIndex([
+          new Badge(badgeDataFixture.create({ key: 'badge-1' })),
+          new Badge(badgeDataFixture.create({ key: 'badge-2' })),
+          new Badge(badgeDataFixture.create({ key: 'badge-3' })),
+          new Badge(badgeDataFixture.create({ key: 'badge-4' })),
+          new Badge(badgeDataFixture.create({ key: 'badge-5' })),
+          new Badge(badgeDataFixture.create({ key: 'badge-6' })),
+        ])
+
+        const result = index.search({ page: 2, pageSize: 2 })
+        expect(result.pageIndex).toBe(1)
+        expect(result.pageNumber).toBe(2)
       })
 
       test(`should return the requested page size`, () => {
@@ -363,7 +383,21 @@ describe(BadgeIndex.name, () => {
         ])
 
         const result = index.search({ page: 1, pageSize: 2 })
-        expect(result.totalItems).toBe(5)
+        expect(result.totalItemCount).toBe(5)
+      })
+
+      test(`should return the correct matched entry count`, () => {
+        const index = new BadgeIndex([
+          new Badge(badgeDataFixture.create({ key: 'badge-1', type: 'exploration' })),
+          new Badge(badgeDataFixture.create({ key: 'badge-2', type: 'history' })),
+          new Badge(badgeDataFixture.create({ key: 'badge-3', type: 'exploration' })),
+          new Badge(badgeDataFixture.create({ key: 'badge-4', type: 'accomplishment' })),
+          new Badge(badgeDataFixture.create({ key: 'badge-5', type: 'exploration' })),
+        ])
+
+        const result = index.search({ page: 1, pageSize: 2, filter: { type: 'exploration' } })
+        expect(result.totalItemCount).toBe(5)
+        expect(result.matchedItemCount).toBe(3)
       })
 
       test(`should return the page size`, () => {
@@ -389,7 +423,7 @@ describe(BadgeIndex.name, () => {
         ])
 
         const result = index.search({ pageSize: 2 })
-        expect(result.totalPages).toBe(3)
+        expect(result.totalPageCount).toBe(3)
       })
 
       test(`should return a total page count of 1 when no page size is provided`, () => {
@@ -402,7 +436,7 @@ describe(BadgeIndex.name, () => {
         ])
 
         const result = index.search()
-        expect(result.totalPages).toBe(1)
+        expect(result.totalPageCount).toBe(1)
       })
 
       test(`should return the last page if a page is requested past the max`, () => {
@@ -417,12 +451,12 @@ describe(BadgeIndex.name, () => {
         const result = index.search({ pageSize: 2, page: 10 })
         const keys = result.items.map(x => x.key)
         expect(keys).toStrictEqual(['badge-5'])
-        expect(result.page).toBe(3)
+        expect(result.pageNumber).toBe(3)
       })
 
       test(`should return the first page if a page is requested lower than 1`, () => {
         const result = new BadgeIndex([]).search({ page: -10 })
-        expect(result.page).toBe(1)
+        expect(result.pageNumber).toBe(1)
       })
     })
 

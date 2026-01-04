@@ -9,22 +9,24 @@ export class BadgeIndex extends AbstractIndex<Badge> {
   }
 
   search(options?: BadgeSearchOptions): Paged<Badge> {
-    const filtered = (options?.query || options?.filter)
+    const matched = (options?.query || options?.filter)
       ? this._values.filter(badge => this.#satisfiesQueryPredicate(badge, options?.query) && this.#satisfiesFilterPredicate(badge, options?.filter))
       : this._values
 
-    const sorted = this.#sort(filtered, options)
+    const sorted = this.#sort(matched, options)
 
-    const totalPages = options?.pageSize ? Math.ceil(filtered.length / (options?.pageSize)) : 1
-    const page = Math.max(1, Math.min(totalPages, options?.page ?? 1))
-    const paged = options?.pageSize ? sorted.slice((page - 1) * options.pageSize, page * options?.pageSize) : sorted
+    const totalPages = options?.pageSize ? Math.ceil(matched.length / (options?.pageSize)) : 1
+    const pageNumber = Math.max(1, Math.min(totalPages, options?.page ?? 1))
+    const items = options?.pageSize ? sorted.slice((pageNumber - 1) * options.pageSize, pageNumber * options?.pageSize) : sorted
 
     return {
-      items: paged,
-      page: page,
+      items: items,
+      pageIndex: pageNumber - 1,
+      pageNumber: pageNumber,
       pageSize: options?.pageSize,
-      totalItems: filtered.length,
-      totalPages: totalPages,
+      matchedItemCount: matched.length,
+      totalItemCount: this._values.length,
+      totalPageCount: totalPages,
     }
   }
 
