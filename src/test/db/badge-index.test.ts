@@ -519,7 +519,7 @@ describe(BadgeIndex.name, () => {
           new Badge(badgeDataFixture.create({ key: 'badge-3', name: [{ value: 'C' }, { value: 'A', alignment: 'praetorian' }] })),
         ])
 
-        const result = index.search({ sort: 'name.asc', variantContext: { morality: 'resistance', sex: 'F' } })
+        const result = index.search({ sort: 'name.asc', context: { morality: 'resistance', sex: 'F' } })
         const keys = result.items.map(x => x.key)
         expect(keys).toStrictEqual(['badge-3', 'badge-2', 'badge-1'])
       })

@@ -55,10 +55,10 @@ export class BadgeIndex extends AbstractIndex<Badge> {
   #sort(badges: Badge[], options?: BadgeSearchOptions): Badge[] {
     switch (options?.sort) {
       case 'name.asc': {
-        return badges.toSorted((a, b) => compareByName(a, b, options.variantContext))
+        return badges.toSorted((a, b) => compareByName(a, b, options.context))
       }
       case 'name.desc': {
-        return badges.toSorted((a, b) => compareByName(b, a, options.variantContext))
+        return badges.toSorted((a, b) => compareByName(b, a, options.context))
       }
       case 'zone-key.asc': {
         return badges.toSorted(compareByZoneKey)

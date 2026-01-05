@@ -31,7 +31,7 @@ export interface BadgeSearchOptions {
   /**
    * Adjust search results based on a given variant context (morality or sex of a character).
    */
-  variantContext?: VariantContext
+  context?: VariantContext
 
   /**
    * Sort results.
