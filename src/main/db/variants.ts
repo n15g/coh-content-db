@@ -25,7 +25,10 @@ export class Variants<T> {
    * @param context The context
    */
   getVariant(context?: VariantContext): VariantData<T> | undefined {
-    const alignment = context?.morality ? MoralityMap[context.morality] : undefined
+    let alignment = context?.morality ? MoralityMap[context.morality] : undefined
+    if (context?.origin === 'praetorian') {
+      alignment = 'praetorian'
+    }
     const sex = context?.sex
 
     for (let index = this.#sortedValues.length; index--;) {

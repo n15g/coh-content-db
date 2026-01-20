@@ -52,6 +52,23 @@ describe(Variants.name, () => {
       ]).getValue({ morality: 'villain', sex: 'M' })).toBe('Male Villain')
     })
 
+    test('should prioritize the praetorian variant for a praetorian-origin character', () => {
+      expect(new Variants([
+        { alignment: 'hero', value: 'Adamant' },
+        { alignment: 'villain', sex: 'M', value: 'Ironman' },
+        { alignment: 'villain', sex: 'F', value: 'Ironwoman' },
+        { alignment: 'praetorian', value: 'Laughs it Off' },
+      ]).getValue({ origin: 'praetorian', morality: 'villain', sex: 'M' })).toBe('Laughs it Off')
+    })
+
+    test('should prioritize the praetorian variant when there are sex-specific defaults', () => {
+      expect(new Variants([
+        { sex: 'M', value: 'Medicine Man' },
+        { sex: 'F', value: 'Medicine Woman' },
+        { alignment: 'praetorian', value: 'Savior' },
+      ]).getValue({ origin: 'praetorian', morality: 'villain', sex: 'M' })).toBe('Savior')
+    })
+
     test('should return the most specific match, regardless of insert order', () => {
       expect(new Variants([
         { alignment: 'praetorian', sex: 'F', value: 'Praetorian Female' },
