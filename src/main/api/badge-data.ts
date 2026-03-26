@@ -16,7 +16,7 @@ export interface BadgeData {
   readonly key: string
 
   /**
-   * The id used by the game code and the `/buildsave` command.
+   * The id used by the game code and the `/build_save` command.
    */
   readonly gameId: string
 
