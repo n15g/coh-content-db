@@ -16,6 +16,11 @@ export interface BadgeData {
   readonly key: string
 
   /**
+   * The id used by the game code and the `/buildsave` command.
+   */
+  readonly gameId: string
+
+  /**
    * The type of badge.
    */
   readonly type: BadgeType
@@ -33,7 +38,7 @@ export interface BadgeData {
   readonly releaseDate: string
 
   /**
-   * The {@link MoralityExtended|moralities} that this badge is available to. If undefined then all moralities will be assumed.
+   * The {@link MoralityExtended|moralities} that this badge is available to. If undefined, then all moralities will be assumed.
    */
   readonly morality?: MoralityExtended | MoralityExtended[]
 
@@ -66,7 +71,7 @@ export interface BadgeData {
 
   /**
    * The id used with the in-game `/settitle` command to apply the badge.
-   * The first value is the id for primal characters and the (optional) second number is the id for praetorian characters.
+   * The first value is the id for primal characters, and the (optional) second number is the id for praetorian characters.
    */
   readonly setTitleId?: SetTitleData
 

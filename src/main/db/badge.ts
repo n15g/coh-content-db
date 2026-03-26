@@ -22,6 +22,11 @@ export class Badge {
   readonly key: string
 
   /**
+   * The id used by the game code and the `/buildsave` command.
+   */
+  readonly gameId: string
+
+  /**
    * The type of badge.
    */
   readonly type: BadgeType
@@ -72,7 +77,7 @@ export class Badge {
 
   /**
    * The id used with the in-game `/settitle` command to apply the badge.
-   * The first value is the id for primal characters and the (optional) second number is the id for praetorian characters.
+   * The first value is the id for primal characters, and the (optional) second number is the id for praetorian characters.
    */
   readonly setTitleId?: SetTitleIds
 
@@ -88,6 +93,7 @@ export class Badge {
 
   constructor(badgeData: BadgeData) {
     this.key = new Key(badgeData.key).value
+    this.gameId = badgeData.gameId
     this.type = badgeData.type
     this.name = new Variants(badgeData.name)
     this.releaseDate = toDate(badgeData.releaseDate)
