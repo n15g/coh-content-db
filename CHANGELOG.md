@@ -5,11 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.2.0] - 2026-03-26
+
+### Added
+
+- [2.2.0] [#31](https://github.com/n15g/coh-content-db/pull/31) - New required field `gameId` on badge data. Represents the in-game id of the badge for tools like `/build_save`.
+
+---
+
 ## [2.1.0] - 2026-01-20
 
 ### Added
 
 - Character origin can now be passed in a variant context to prioritize praetorian-origin variants.
+
+---
 
 ## [2.0.0] - 2026-01-05
 
