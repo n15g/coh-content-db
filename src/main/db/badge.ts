@@ -9,7 +9,7 @@ import { MoralityList } from './morality-list'
 import { AbstractIndex } from './abstract-index'
 import { toDate } from '../util/to-date'
 import { coalesceToArray } from '../util/coalesce-to-array'
-import { SetTitleIds } from './set-title-ids'
+import { OriginBased } from './origin-based'
 import { VariantContext } from '../api/variant-context'
 
 export class Badge {
@@ -22,9 +22,9 @@ export class Badge {
   readonly key: string
 
   /**
-   * The id used by the game code and the `/build_save` command.
+   * The ids used by the game code and the `/build_save` command.
    */
-  readonly gameId: string
+  readonly gameId: OriginBased<string>
 
   /**
    * The type of badge.
@@ -79,7 +79,7 @@ export class Badge {
    * The id used with the in-game `/settitle` command to apply the badge.
    * The first value is the id for primal characters, and the (optional) second number is the id for praetorian characters.
    */
-  readonly setTitleId?: SetTitleIds
+  readonly setTitleId?: OriginBased<number>
 
   /**
    * A description of the effect the badge will have, such as a buff or granting a temporary power.
@@ -93,7 +93,7 @@ export class Badge {
 
   constructor(badgeData: BadgeData) {
     this.key = new Key(badgeData.key).value
-    this.gameId = badgeData.gameId
+    this.gameId = new OriginBased(badgeData.gameId)
     this.type = badgeData.type
     this.name = new Variants(badgeData.name)
     this.releaseDate = toDate(badgeData.releaseDate)
@@ -104,7 +104,7 @@ export class Badge {
     this.notes = badgeData.notes
     this.links = badgeData.links ?? []
     this.effect = badgeData.effect
-    this.setTitleId = badgeData.setTitleId ? new SetTitleIds(badgeData.setTitleId) : undefined
+    this.setTitleId = badgeData.setTitleId ? new OriginBased(badgeData.setTitleId) : undefined
     this.ignoreInTotals = badgeData.ignoreInTotals ?? false
 
     this.#requirementsIndex = new AbstractIndex<BadgeRequirement>('key', badgeData.requirements?.map(x => new BadgeRequirement(x)))

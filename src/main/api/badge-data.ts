@@ -4,7 +4,7 @@ import { BadgeType } from './badge-type'
 import { VariantData } from './variant-data'
 import { MarkdownString } from './markdown-string'
 import { MoralityExtended } from './morality'
-import { SetTitleData } from './set-title-data'
+import { OriginBasedData } from './origin-based-data'
 
 export interface BadgeData {
 
@@ -16,9 +16,9 @@ export interface BadgeData {
   readonly key: string
 
   /**
-   * The id used by the game code and the `/build_save` command.
+   * The id, or a pair of ids [primal, praetorian] used by the game code and the `/build_save` command.
    */
-  readonly gameId: string
+  readonly gameId: OriginBasedData<string>
 
   /**
    * The type of badge.
@@ -73,7 +73,7 @@ export interface BadgeData {
    * The id used with the in-game `/settitle` command to apply the badge.
    * The first value is the id for primal characters, and the (optional) second number is the id for praetorian characters.
    */
-  readonly setTitleId?: SetTitleData
+  readonly setTitleId?: OriginBasedData<number>
 
   /**
    * A description of the effect the badge will have, such as a buff or granting a temporary power.

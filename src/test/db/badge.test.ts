@@ -18,8 +18,9 @@ describe(Badge.name, () => {
 
   describe('gameId', () => {
     test('should be set from the data', () => {
-      const badge = new Badge(badgeDataFixture.create({ gameId: 'Badge123' }))
-      expect(badge.gameId).toEqual('Badge123')
+      const badge = new Badge(badgeDataFixture.create({ gameId: ['Badge123', 'P123'] }))
+      expect(badge.gameId.primal).toEqual('Badge123')
+      expect(badge.gameId.praetorian).toEqual('P123')
     })
   })
 
