@@ -6,7 +6,8 @@ export class OriginBased<T> {
 
   constructor(value: OriginBasedData<T>) {
     if (Array.isArray(value)) {
-      [this.primal, this.praetorian] = value
+      this.primal = value[0]
+      this.praetorian = value[1]
     } else {
       this.primal = value
       this.praetorian = undefined

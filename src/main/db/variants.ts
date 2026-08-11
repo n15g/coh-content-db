@@ -10,14 +10,25 @@ export class Variants<T> {
   /**
    * Create a variant set from either a list of categorized values, or a single value when there are no variants.
    * @param value List of variants, or a single value.
-   */
+  */
   constructor(value: VariantData<T>[] | T) {
-    if (Array.isArray(value)) {
-      this.#sortedValues = value.toSorted()
-      this.#sortedValues.sort((a, b) => this.#compareVariants(a, b))
-    } else {
-      this.#sortedValues = [{ value }]
-    }
+    this.#sortedValues = Array.isArray(value)
+      ? value.toSorted((a, b) => this.#compareVariants(a, b))
+      : [{ value }]
+  }
+
+  #compareVariants(a: VariantData<T>, b: VariantData<T>): number {
+    const aSpecificity = (a.alignment ? 2 : 0) + (a.sex ? 1 : 0)
+    const bSpecificity = (b.alignment ? 2 : 0) + (b.sex ? 1 : 0)
+    if (aSpecificity !== bSpecificity) return aSpecificity - bSpecificity // Order first by least-specific
+
+    const alignmentComparison = compareAlignment(a.alignment, b.alignment) // Next by alignment
+    if (alignmentComparison !== 0) return alignmentComparison
+
+    const sexComparison = compareSex(a.sex, b.sex) // Last by sex
+    if (sexComparison !== 0) return sexComparison
+
+    return String(a.value).localeCompare(String(b.value))
   }
 
   /**
@@ -69,19 +80,5 @@ export class Variants<T> {
    */
   toString(separator: string): string {
     return this.canonical.map(x => x.value).join(separator)
-  }
-
-  #compareVariants(a: VariantData<T>, b: VariantData<T>): number {
-    const aSpecificity = (a.alignment ? 2 : 0) + (a.sex ? 1 : 0)
-    const bSpecificity = (b.alignment ? 2 : 0) + (b.sex ? 1 : 0)
-    if (aSpecificity !== bSpecificity) return aSpecificity - bSpecificity // Order first by least-specific
-
-    const alignmentComparison = compareAlignment(a.alignment, b.alignment) // Next by alignment
-    if (alignmentComparison !== 0) return alignmentComparison
-
-    const sexComparison = compareSex(a.sex, b.sex) // Last by sex
-    if (sexComparison !== 0) return sexComparison
-
-    return String(a.value).localeCompare(String(b.value))
   }
 }

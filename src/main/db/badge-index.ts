@@ -8,34 +8,12 @@ export class BadgeIndex extends AbstractIndex<Badge> {
     super('key', values)
   }
 
-  search(options?: BadgeSearchOptions): Paged<Badge> {
-    const matched = (options?.query || options?.filter)
-      ? this._values.filter(badge => this.#satisfiesQueryPredicate(badge, options?.query) && this.#satisfiesFilterPredicate(badge, options?.filter))
-      : this._values
-
-    const sorted = this.#sort(matched, options)
-
-    const totalPages = options?.pageSize ? Math.ceil(matched.length / (options?.pageSize)) : 1
-    const pageNumber = Math.max(1, Math.min(totalPages, options?.page ?? 1))
-    const items = options?.pageSize ? sorted.slice((pageNumber - 1) * options.pageSize, pageNumber * options?.pageSize) : sorted
-
-    return {
-      items: items,
-      pageIndex: pageNumber - 1,
-      pageNumber: pageNumber,
-      pageSize: options?.pageSize,
-      matchedItemCount: matched.length,
-      totalItemCount: this._values.length,
-      totalPageCount: totalPages,
-    }
-  }
-
   #satisfiesQueryPredicate(badge: Badge, query?: BadgeSearchOptions['query']): boolean {
     const queryString = query?.str?.toLowerCase() ?? ''
     const fields = query?.fields ? new Set(query?.fields) : new Set(['name']) // Default to name if not provided
     if (fields.size === 0) return true
 
-    return !!((fields.has('name') && badge.name.canonical.some(x => x.value.toLowerCase().includes(queryString)))
+    return ((fields.has('name') && badge.name.canonical.some(x => x.value.toLowerCase().includes(queryString)))
       || (fields.has('badge-text') && badge.badgeText.canonical.some(x => x.value.toLowerCase().includes(queryString)))
       || (fields.has('acquisition') && badge.acquisition?.toLowerCase().includes(queryString))
       || (fields.has('effect') && badge.effect?.toLowerCase().includes(queryString))
@@ -78,6 +56,28 @@ export class BadgeIndex extends AbstractIndex<Badge> {
       default: {
         return [...badges]
       }
+    }
+  }
+
+  search(options?: BadgeSearchOptions): Paged<Badge> {
+    const matched = (options?.query || options?.filter)
+      ? this._values.filter(badge => this.#satisfiesQueryPredicate(badge, options?.query) && this.#satisfiesFilterPredicate(badge, options?.filter))
+      : this._values
+
+    const sorted = this.#sort(matched, options)
+
+    const totalPages = options?.pageSize ? Math.ceil(matched.length / (options?.pageSize)) : 1
+    const pageNumber = Math.max(1, Math.min(totalPages, options?.page ?? 1))
+    const items = options?.pageSize ? sorted.slice((pageNumber - 1) * options.pageSize, pageNumber * options?.pageSize) : sorted
+
+    return {
+      items: items,
+      pageIndex: pageNumber - 1,
+      pageNumber: pageNumber,
+      pageSize: options?.pageSize,
+      matchedItemCount: matched.length,
+      totalItemCount: this._values.length,
+      totalPageCount: totalPages,
     }
   }
 }

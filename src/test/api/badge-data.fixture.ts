@@ -8,3 +8,13 @@ export const badgeDataFixture = defineFixture<BadgeData>((t) => {
   t.name.as(index => [{ value: `Badge ${index}` }])
   t.releaseDate.as(() => '2025-02-03')
 })
+
+// If you change this fixture, update the example in the README as well
+export const TEST_BADGE: BadgeData = {
+  key: 'test-badge',
+  gameId: 'TestBadge',
+  type: 'achievement',
+  name: [{ value: 'Test Badge' }, { alignment: 'praetorian', value: 'My Badge for Praetorians' }],
+  releaseDate: '2020-03-01',
+  morality: ['hero', 'praetorian'],
+}

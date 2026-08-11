@@ -224,6 +224,8 @@ describe(BadgeIndex.name, () => {
       })
 
       test(`should filter on badge zone`, () => {
+        const atlasRequirement = badgeRequirementDataFixture.create({ location: { zoneKey: 'atlas-park' } })
+        const perezRequirement = badgeRequirementDataFixture.create({ location: { zoneKey: 'perez-park' } })
         const index = new BadgeIndex([
           new Badge(badgeDataFixture.create({ key: 'badge-1', requirements: [{ location: { zoneKey: 'atlas-park' } }] })),
           new Badge(badgeDataFixture.create({ key: 'badge-2', requirements: [{ location: { zoneKey: 'perez-park' } }] })),
@@ -231,8 +233,8 @@ describe(BadgeIndex.name, () => {
           new Badge(badgeDataFixture.create({ key: 'badge-4', requirements: [{ location: { zoneKey: 'atlas-park' } }] })),
           new Badge(badgeDataFixture.create({
             key: 'badge-5', requirements: [
-              badgeRequirementDataFixture.create({ location: { zoneKey: 'atlas-park' } }),
-              badgeRequirementDataFixture.create({ location: { zoneKey: 'perez-park' } }),
+              atlasRequirement,
+              perezRequirement,
             ],
           })),
           new Badge(badgeDataFixture.create({ key: 'badge-6', requirements: [{ location: undefined }] })),
@@ -586,14 +588,16 @@ describe(BadgeIndex.name, () => {
       })
 
       test(`should sort undefined or multiple zone names to the end`, () => {
+        const atlasRequirement = badgeRequirementDataFixture.create({ location: { zoneKey: 'atlas-park' } })
+        const perezRequirement = badgeRequirementDataFixture.create({ location: { zoneKey: 'perez-park' } })
         const index = new BadgeIndex([
           new Badge(badgeDataFixture.create({ key: 'badge-1', requirements: [{ location: { zoneKey: 'atlas-park' } }] })),
           new Badge(badgeDataFixture.create({ key: 'badge-2', requirements: [{ location: undefined }] })),
           new Badge(badgeDataFixture.create({ key: 'badge-3', requirements: [{ location: { zoneKey: 'perez-park' } }] })),
           new Badge(badgeDataFixture.create({
             key: 'badge-4', requirements: [
-              badgeRequirementDataFixture.create({ location: { zoneKey: 'atlas-park' } }),
-              badgeRequirementDataFixture.create({ location: { zoneKey: 'perez-park' } }),
+              atlasRequirement,
+              perezRequirement,
             ],
           })),
           new Badge(badgeDataFixture.create({ key: 'badge-5', requirements: [{ location: { zoneKey: 'abandoned-sewer-network' } }] })),

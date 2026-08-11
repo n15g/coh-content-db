@@ -1,14 +1,4 @@
-import { BadgeData } from '../../main'
-
-// If you change this test, update the example in the README as well
-export const TEST_BADGE: BadgeData = {
-  key: 'test-badge',
-  gameId: 'TestBadge',
-  type: 'achievement',
-  name: [{ value: 'Test Badge' }, { alignment: 'praetorian', value: 'My Badge for Praetorians' }],
-  releaseDate: '2020-03-01',
-  morality: ['hero', 'praetorian'],
-}
+import { TEST_BADGE } from './badge-data.fixture'
 
 describe('BadgeData', () => {
   test('should be a usable interface', () => {

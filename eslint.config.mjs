@@ -3,7 +3,9 @@ import eslintPluginUnicorn from 'eslint-plugin-unicorn'
 import stylistic from '@stylistic/eslint-plugin'
 import tseslint from 'typescript-eslint'
 
-/** @type {import('eslint').Linter.Config[]} */
+/**
+ * @type {import('eslint').Linter.Config[]}
+ */
 export default [
   { files: ['**/*.{js,mjs,cjs,ts}'] },
   { ignores: ['.github/', '.idea/', 'coverage/', 'dist/'] },
