@@ -24,7 +24,6 @@
   },
   "devDependencies": {
     "@stylistic/eslint-plugin": "^5.10.0",
-    "@stylistic/eslint-plugin-ts": "^4.4.1",
     "@types/jest": "^30.0.0",
     "efate": "^1.5.1",
     "eslint": "^10.8.1",
