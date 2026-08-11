@@ -47,4 +47,4 @@ jobs:
           files: 'dist/*'
 
       - name: Publish
-        run: npm publish --provenance --access public
+        run: npm publish --provenance --access public --tag ${{ contains(github.ref_name, '-') && 'beta' || 'latest' }}
