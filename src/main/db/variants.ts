@@ -10,7 +10,7 @@ export class Variants<T> {
   /**
    * Create a variant set from either a list of categorized values, or a single value when there are no variants.
    * @param value List of variants, or a single value.
-  */
+   */
   constructor(value: VariantData<T>[] | T) {
     this.#sortedValues = Array.isArray(value)
       ? value.toSorted((a, b) => this.#compareVariants(a, b))
