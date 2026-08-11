@@ -5,12 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [2.3.0-beta.0] - 2026-08-11
+
+### Added
+
+- Added an explicit root package export for CommonJS, ECMAScript modules, and TypeScript declarations.
 
 ### Changed
 
-- Simplified the development toolchain and added explicit TypeScript validation to continuous integration and release builds.
-- Defined an explicit root package export and limited published files to the distributable package.
+- Simplified the development toolchain and removed an unused lint dependency.
+- Consolidated push and pull-request validation into one continuous integration workflow.
+- Added explicit TypeScript validation to continuous integration and release builds.
+- Limited published files to the distributable package and its supporting documentation.
 
 ---
 
