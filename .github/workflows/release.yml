@@ -4,50 +4,51 @@ on:
     tags:
       - "v*.*.*"
 jobs:
-  build:
+  release:
+    name: Publish release
     runs-on: ubuntu-latest
     permissions:
       contents: write
       id-token: write
 
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v7
 
-      - name: Setup Node
+      - name: Set up Node.js
         uses: actions/setup-node@v6
         with:
           node-version: lts/krypton
-          cache: 'npm'
+          cache: npm
           registry-url: 'https://registry.npmjs.org'
 
-      - name: Install
+      - name: Install dependencies
         run: npm ci
 
       - name: Lint
         run: npm run lint
 
-      - name: Type Check
+      - name: Type check
         run: npm run typecheck
 
       - name: Test
         run: npm run test
 
-      - name: Build
+      - name: Build package
         run: npm run build
 
-      - name: Upload Artifact
+      - name: Upload build artifact
         uses: actions/upload-artifact@v7
         with:
-          name: 'dist'
-          path: 'dist'
+          name: package-dist
+          path: dist
           if-no-files-found: error
 
-      - name: Release
+      - name: Create GitHub release
         uses: softprops/action-gh-release@v3
         with:
           draft: true
-          files: 'dist/*'
+          files: dist/*
 
-      - name: Publish
+      - name: Publish package to npm
         run: npm publish --provenance --access public --tag ${{ contains(github.ref_name, '-') && 'beta' || 'latest' }}

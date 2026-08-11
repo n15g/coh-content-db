@@ -1,6 +1,6 @@
 # coh-content-db
 
-[![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/n15g/coh-content-db/build.yml?branch=master)](https://github.com/n15g/coh-content-db/actions)
+[![CI](https://img.shields.io/github/actions/workflow/status/n15g/coh-content-db/ci.yml?branch=master&label=CI)](https://github.com/n15g/coh-content-db/actions/workflows/ci.yml)
 [![Codecov](https://img.shields.io/codecov/c/github/n15g/coh-content-db)](https://app.codecov.io/gh/n15g/coh-content-db)
 [![GitHub Tag](https://img.shields.io/github/v/tag/n15g/coh-content-db)](https://github.com/n15g/coh-content-db/tags)
 [![NPM Version](https://img.shields.io/npm/v/coh-content-db)](https://www.npmjs.com/package/coh-content-db)
