@@ -12,6 +12,17 @@ jobs:
       id-token: write
 
     steps:
+      - name: Determine release metadata
+        id: release_metadata
+        run: |
+          if [[ "$GITHUB_REF_NAME" == *-* ]]; then
+            echo "npm_tag=beta" >> "$GITHUB_OUTPUT"
+            echo "prerelease=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "npm_tag=latest" >> "$GITHUB_OUTPUT"
+            echo "prerelease=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Checkout repository
         uses: actions/checkout@v7
 
@@ -48,7 +59,8 @@ jobs:
         uses: softprops/action-gh-release@v3
         with:
           draft: true
+          prerelease: ${{ steps.release_metadata.outputs.prerelease }}
           files: dist/*
 
       - name: Publish package to npm
-        run: npm publish --provenance --access public --tag ${{ contains(github.ref_name, '-') && 'beta' || 'latest' }}
+        run: npm publish --provenance --access public --tag ${{ steps.release_metadata.outputs.npm_tag }}
