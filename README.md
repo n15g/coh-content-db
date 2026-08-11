@@ -26,6 +26,8 @@ npm install coh-content-db
 
 There are two ways to use this package; As a data provider, or a db consumer.
 
+The package root, `coh-content-db`, is the supported entry point for all public types, utilities, and database classes. Other package paths are internal and are not part of the public API.
+
 ## As a data provider
 
 Data providers utilize the various `-Data` interfaces provided in this package to construct content bundles

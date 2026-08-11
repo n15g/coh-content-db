@@ -12,6 +12,19 @@
   },
   "license": "Unlicense",
   "author": "N15g",
+  "files": [
+    "dist",
+    "CHANGELOG.md",
+    "LICENSE",
+    "README.md"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/coh-content-db.d.ts",
+      "import": "./dist/coh-content-db.mjs",
+      "require": "./dist/coh-content-db.js"
+    }
+  },
   "main": "dist/coh-content-db.js",
   "module": "dist/coh-content-db.mjs",
   "types": "dist/coh-content-db.d.ts",
