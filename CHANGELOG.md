@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Simplified the development toolchain.
+- Simplified the development toolchain and added explicit TypeScript validation to continuous integration and release builds.
 
 ---
 
