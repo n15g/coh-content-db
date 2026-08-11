@@ -4,35 +4,28 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [2.3.0-beta.1] - 2026-08-11
+## [2.3.0] - 2026-08-11
 
-### Fixed
+**Packaging and build overhaul**
 
-- Regenerated the dependency lockfile with npm 12 to address npm CI package lock mismatch bug.
-
-## [2.3.0-beta.0] - 2026-08-11
+This release overhauls the development, validation, packaging, and release toolchain while preserving the supported package-root API. Undocumented source and distribution subpaths are no longer published or importable.
 
 ### Added
 
+- Added an aggregate validation command covering linting, type checking, tests, and package builds.
 - Added an explicit root package export for CommonJS, ECMAScript modules, and TypeScript declarations.
 
 ### Changed
 
-- Simplified the development toolchain and removed an unused lint dependency.
-- Consolidated push and pull-request validation into one continuous integration workflow.
-- Added explicit TypeScript validation to continuous integration and release builds.
-- Limited published files to the distributable package and its supporting documentation.
+- Simplified the development toolchain.
+- Consolidated continuous integration.
+- Added explicit TypeScript validation to CI and release builds.
+- Limited published files to the distributable package and supporting documentation.
 
----
+### Removed
 
-## [2.2.2-beta.0] - 2026-08-11
-
-### Changed
-
-- Updated the development toolchain, including TypeScript 6 and the latest lint rules.
-- Modernized continuous integration and release workflows for Node 24, reproducible installs, least-privilege permissions, and built-in GitHub authentication.
-- Configured npm publishing to use the `beta` tag for prereleases and `latest` for stable releases.
-- Updated transitive dependencies to address security advisories.
+- Removed source files, tests, project configuration, and GitHub workflow files from the published npm package.
+- Removed access to undocumented package subpaths; consumers must import from the supported `coh-content-db` package root.
 
 ---
 
